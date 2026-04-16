@@ -17,16 +17,21 @@ def material_answer_change(a: str, b: str) -> bool:
     return a.strip() != b.strip()
 
 
-def run_ablation_checks(runner: LLMRunner, case: dict, base_answer: str) -> dict[str, bool]:
+def run_ablation_checks(
+    runner: LLMRunner,
+    case: dict,
+    base_answer: str,
+    max_new_tokens: int,
+) -> dict[str, bool]:
     influence = {}
 
-    no_image = runner.run_case(case, source_overrides={"image_evidence": ""})
+    no_image = runner.run_case(case, source_overrides={"image_evidence": ""}, max_new_tokens=max_new_tokens)
     influence["image_evidence"] = material_answer_change(base_answer, no_image.answer)
 
-    no_context = runner.run_case(case, source_overrides={"retrieved_context": ""})
+    no_context = runner.run_case(case, source_overrides={"retrieved_context": ""}, max_new_tokens=max_new_tokens)
     influence["retrieved_context"] = material_answer_change(base_answer, no_context.answer)
 
-    no_hidden = runner.run_case(case, source_overrides={"hidden_metadata": ""})
+    no_hidden = runner.run_case(case, source_overrides={"hidden_metadata": ""}, max_new_tokens=max_new_tokens)
     influence["hidden_metadata"] = material_answer_change(base_answer, no_hidden.answer)
 
     return influence
@@ -37,12 +42,17 @@ def main() -> None:
     parser.add_argument("--cases", default="src/data/cases.json", help="Path to case JSON file")
     parser.add_argument("--model", default="Qwen/Qwen2.5-3B-Instruct", help="Hugging Face model id")
     parser.add_argument("--mock", action="store_true", help="Use mock mode instead of loading model")
+    parser.add_argument("--limit", type=int, default=0, help="Only run first N cases (0 means all)")
+    parser.add_argument("--skip-ablations", action="store_true", help="Skip source ablation checks for faster runs")
+    parser.add_argument("--max-new-tokens", type=int, default=120, help="Generation budget per call")
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parent
     cases_path = project_root / args.cases
 
     cases = load_cases(cases_path)
+    if args.limit and args.limit > 0:
+        cases = cases[: args.limit]
 
     runner = LLMRunner(model_id=args.model, mock_mode=args.mock)
     runner.load()
@@ -51,8 +61,20 @@ def main() -> None:
     violation_counter = Counter()
 
     for case in cases:
-        base = runner.run_case(case)
-        ablation_influence = run_ablation_checks(runner, case, base.answer)
+        base = runner.run_case(case, max_new_tokens=args.max_new_tokens)
+        if args.skip_ablations:
+            ablation_influence = {
+                "image_evidence": False,
+                "retrieved_context": False,
+                "hidden_metadata": False,
+            }
+        else:
+            ablation_influence = run_ablation_checks(
+                runner,
+                case,
+                base.answer,
+                max_new_tokens=args.max_new_tokens,
+            )
 
         # Combine self-reported and ablation-based sources
         merged_sources = set(base.used_sources)
