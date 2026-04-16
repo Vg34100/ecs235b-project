@@ -1,0 +1,20 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Local editor/system files
+.DS_Store
+.vscode/
+.idea/
+
+# Project outputs
+outputs/
+*.log
+
+# Keep class reference materials out of this repo
+docs/papers/
+docs/reference/
