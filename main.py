@@ -39,7 +39,7 @@ def run_ablation_checks(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Quick MVP: audit information flow in an LLM pipeline")
-    parser.add_argument("--cases", default="src/data/cases.json", help="Path to case JSON file")
+    parser.add_argument("--cases", default="data/cases/cases.json", help="Path to case JSON file")
     parser.add_argument("--model", default="Qwen/Qwen2.5-3B-Instruct", help="Hugging Face model id")
     parser.add_argument("--mock", action="store_true", help="Use mock mode instead of loading model")
     parser.add_argument("--limit", type=int, default=0, help="Only run first N cases (0 means all)")
@@ -78,6 +78,8 @@ def main() -> None:
 
         # Combine self-reported and ablation-based sources
         merged_sources = set(base.used_sources)
+        # Prompt is always part of model input in this prototype.
+        merged_sources.add("prompt")
         for source_name, changed in ablation_influence.items():
             if changed:
                 merged_sources.add(source_name)
@@ -89,7 +91,9 @@ def main() -> None:
         result_row = {
             "case_id": detection.case_id,
             "answer": detection.answer,
+            "reason": base.reason,
             "used_sources": detection.used_sources,
+            "raw_output": base.raw_output,
             "ablation_influence": ablation_influence,
             "violation": detection.violation,
             "violation_types": detection.violation_types,

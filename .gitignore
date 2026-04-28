@@ -15,6 +15,6 @@ venv/
 outputs/
 *.log
 
-# Keep class reference materials out of this repo
-docs/papers/
+# Keep large class reference materials out of this repo
+docs/papers/*.pdf
 docs/reference/

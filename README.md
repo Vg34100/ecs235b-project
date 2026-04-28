@@ -6,7 +6,7 @@ This phase validates the core idea with a small case suite and policy checks.
 
 ## What this MVP does
 
-- Loads curated safety cases (`src/data/cases.json`)
+- Loads curated safety cases (`data/cases/cases.json`)
 - Runs an LLM (or mock mode)
 - Requests structured output with `used_sources`
 - Runs ablations (remove source one at a time)
@@ -22,7 +22,7 @@ This phase validates the core idea with a small case suite and policy checks.
 - `src/policies.py`: policy checks
 - `src/pipeline.py`: LLM runner + prompt + JSON parser
 - `src/detector.py`: violation detection wrapper
-- `src/data/cases.json`: quick case suite
+- `data/cases/cases.json`: quick case suite
 
 ## Run
 
