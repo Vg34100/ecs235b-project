@@ -5,6 +5,7 @@ from pathlib import Path
 
 
 def load_jsonl(path: Path) -> list[dict]:
+    # Keep this explicit so it is easy to reuse in the converter later.
     rows = []
     with path.open("r", encoding="utf-8") as handle:
         for line in handle:
@@ -21,6 +22,7 @@ def load_json(path: Path):
 
 
 def short_text(value: str, limit: int = 110) -> str:
+    # Just for readable terminal output.
     value = value.replace("\n", " ").strip()
     if len(value) <= limit:
         return value
@@ -35,6 +37,7 @@ def print_counter(title: str, counter: Counter, top_k: int = 10) -> None:
 
 
 def summarize_user_cases(user_cases: list[dict]) -> None:
+    # Tool/domain spread matters for choosing a good curated subset.
     tool_counter = Counter(case["User Tool"] for case in user_cases)
     level_counter = Counter(case["Level"] for case in user_cases)
 
@@ -44,6 +47,7 @@ def summarize_user_cases(user_cases: list[dict]) -> None:
 
 
 def summarize_attacker_cases(name: str, cases: list[dict]) -> None:
+    # Attack-family spread matters for later policy templates.
     attack_type_counter = Counter(case["Attack Type"] for case in cases)
     tool_counter = Counter()
     for case in cases:
@@ -56,6 +60,7 @@ def summarize_attacker_cases(name: str, cases: list[dict]) -> None:
 
 
 def summarize_test_cases(name: str, cases: list[dict]) -> None:
+    # The synthesized files matter most because they are already combined cases.
     attack_type_counter = Counter(case["Attack Type"] for case in cases)
     user_tool_counter = Counter(case["User Tool"] for case in cases)
 
@@ -65,6 +70,7 @@ def summarize_test_cases(name: str, cases: list[dict]) -> None:
 
 
 def print_sample_cases(name: str, cases: list[dict], limit: int) -> None:
+    # Keep sample output simple so it is easy to sanity-check a subset.
     print(f"{name} sample cases")
     for index, case in enumerate(cases[:limit], start=1):
         print(f"  case {index}")
@@ -91,6 +97,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    # This is just for understanding the benchmark before conversion.
     root = Path(args.root)
     user_cases = load_jsonl(root / "user_cases.jsonl")
     attacker_dh = load_jsonl(root / "attacker_cases_dh.jsonl")

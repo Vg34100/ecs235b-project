@@ -8,6 +8,7 @@ from typing import Any
 
 @dataclass
 class PipelineResponse:
+    # Keep the raw output because parser failures are common and worth inspecting.
     answer: str
     used_sources: list[str]
     reason: str
@@ -15,7 +16,11 @@ class PipelineResponse:
 
 
 class LLMRunner:
-    """Small wrapper so we can switch between real HF model and mock mode."""
+    """Small wrapper so we can switch between real HF model and mock mode.
+
+    This is not meant to be a full serving layer. It just gives us one place to
+    swap between a real local model and a mock path.
+    """
 
     def __init__(self, model_id: str, mock_mode: bool = False) -> None:
         self.model_id = model_id
@@ -39,6 +44,7 @@ class LLMRunner:
             )
             self._tokenizer = tokenizer
 
+            # Pipeline API keeps the MVP simple. We can drop lower later if needed.
             self._generator = pipeline(
                 task="text-generation",
                 model=model,
@@ -60,10 +66,12 @@ class LLMRunner:
     ) -> PipelineResponse:
         source_overrides = source_overrides or {}
 
+        # For ablations we can blank out one source without rewriting the case.
         prompt = build_prompt(case, source_overrides)
         generation_input = prompt
         has_chat_template = bool(getattr(self._tokenizer, "chat_template", None))
         if self._tokenizer is not None and has_chat_template and hasattr(self._tokenizer, "apply_chat_template"):
+            # Some instruction models behave better with the native chat template.
             messages = [
                 {
                     "role": "system",
@@ -91,8 +99,7 @@ class LLMRunner:
         return parse_model_json(text)
 
     def _mock_response(self, case: dict[str, Any], source_overrides: dict[str, str]) -> PipelineResponse:
-        # Mock tries to behave differently when sources are removed,
-        # so we can still test policy checks quickly.
+        # Mock mode is just for fast policy/debug runs.
         used = ["prompt"]
         image_value = source_overrides.get("image_evidence", case.get("image_evidence", ""))
         if image_value:
@@ -115,6 +122,7 @@ class LLMRunner:
 
 
 def build_prompt(case: dict[str, Any], source_overrides: dict[str, str]) -> str:
+    # Keep source names explicit because the detector reasons over these labels.
     prompt = case.get("prompt", "")
     image_evidence = source_overrides.get("image_evidence", case.get("image_evidence", ""))
     retrieved_context = source_overrides.get("retrieved_context", case.get("retrieved_context", ""))
@@ -139,7 +147,7 @@ def build_prompt(case: dict[str, Any], source_overrides: dict[str, str]) -> str:
 def parse_model_json(text: str) -> PipelineResponse:
     allowed_sources = {"prompt", "image_evidence", "retrieved_context", "hidden_metadata"}
 
-    # Tries to recover JSON even if the model adds extra text.
+    # Try strict JSON first, then fall back to a looser heuristic path.
     match = re.search(r"\{.*\}", text, re.DOTALL)
     if not match:
         return heuristic_parse(text, "no json object found", allowed_sources)
@@ -156,11 +164,13 @@ def parse_model_json(text: str) -> PipelineResponse:
     if not isinstance(used_sources, list):
         used_sources = []
 
+    # Keep only source names we actually model.
     used_sources = [str(s) for s in used_sources if str(s) in allowed_sources]
 
     if not answer.strip():
         answer = "parse_fallback_empty_answer"
     if not used_sources:
+        # Try to recover a usable source signal before giving up.
         used_sources = infer_used_sources_from_text(text, allowed_sources)
         if not used_sources:
             used_sources = ["prompt"]
@@ -169,6 +179,7 @@ def parse_model_json(text: str) -> PipelineResponse:
 
 
 def heuristic_parse(text: str, parse_reason: str, allowed_sources: set[str]) -> PipelineResponse:
+    # This is the "salvage what we can" path.
     answer = extract_answer_line(text)
     used_sources = infer_used_sources_from_text(text, allowed_sources)
 
@@ -187,6 +198,7 @@ def heuristic_parse(text: str, parse_reason: str, allowed_sources: set[str]) -> 
 
 
 def extract_answer_line(text: str) -> str:
+    # Weak outputs still often include "answer: ..." even without valid JSON.
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     for line in lines:
         low = line.lower()
@@ -200,6 +212,7 @@ def extract_answer_line(text: str) -> str:
 
 
 def infer_used_sources_from_text(text: str, allowed_sources: set[str]) -> list[str]:
+    # This is not true attribution, just a fallback signal.
     found = []
     low = text.lower()
     for source in sorted(allowed_sources):
@@ -215,7 +228,7 @@ def resolve_model_source(model_id: str) -> str:
     if os.path.isdir(model_id):
         return model_id
 
-    # Convert "org/name" into huggingface cache folder name.
+    # Prefer local snapshots because some runs happen without network access.
     normalized = model_id.replace("/", "--")
     cache_root = Path.home() / ".cache" / "huggingface" / "hub" / f"models--{normalized}" / "snapshots"
     if cache_root.exists():

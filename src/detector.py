@@ -6,6 +6,7 @@ from src.policies import FlowPolicy, evaluate_policy
 
 @dataclass
 class DetectionResult:
+    # Final policy judgment for one run of one case.
     case_id: str
     violation: bool
     violation_types: list[str]
@@ -15,6 +16,7 @@ class DetectionResult:
 
 
 def detect_case(case: dict[str, Any], used_sources: list[str], answer: str) -> DetectionResult:
+    # Keep the detector thin; policy logic lives in policies.py.
     policy = FlowPolicy(
         case_id=case["case_id"],
         required_sources=case.get("required_sources", []),
