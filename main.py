@@ -5,6 +5,7 @@ from pathlib import Path
 
 from src.detector import detect_case
 from src.pipeline import LLMRunner, get_ablation_source_candidates
+from src.traces import PolicyTrace, get_available_sources, get_case_prompt, get_primary_prompt_source
 
 
 def load_cases(path: Path) -> list[dict]:
@@ -30,6 +31,53 @@ def run_ablation_checks(
     return influence
 
 
+def build_final_used_sources(
+    case: dict,
+    reported_sources: list[str],
+    ablation_influence: dict[str, bool],
+) -> list[str]:
+    # Keep the merge rule simple and stable for now.
+    merged_sources = set(reported_sources)
+    merged_sources.add(get_primary_prompt_source(case))
+    for source_name, changed in ablation_influence.items():
+        if changed:
+            merged_sources.add(source_name)
+    return sorted(merged_sources)
+
+
+def build_trace(
+    case: dict,
+    model_name: str,
+    base_answer: str,
+    reported_sources: list[str],
+    ablation_influence: dict[str, bool],
+    raw_output: str,
+    run_reason: str,
+) -> PolicyTrace:
+    inferred_sources = sorted([source_name for source_name, changed in ablation_influence.items() if changed])
+    final_used_sources = build_final_used_sources(case, reported_sources, ablation_influence)
+    detection = detect_case(case, final_used_sources, base_answer)
+
+    return PolicyTrace(
+        case_id=detection.case_id,
+        model_name=model_name,
+        prompt=get_case_prompt(case),
+        available_sources=get_available_sources(case),
+        required_sources=list(case.get("required_sources", [])),
+        forbidden_sources=list(case.get("forbidden_sources", [])),
+        model_answer=detection.answer,
+        used_sources_reported=sorted(reported_sources),
+        used_sources_inferred=inferred_sources,
+        final_used_sources=detection.used_sources,
+        violation=detection.violation,
+        violation_types=detection.violation_types,
+        policy_explanation=detection.explanation,
+        ablation_influence=ablation_influence,
+        raw_output=raw_output,
+        run_reason=run_reason,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Quick MVP: audit information flow in an LLM pipeline")
     parser.add_argument("--cases", default="data/cases/cases.json", help="Path to case JSON file")
@@ -50,7 +98,7 @@ def main() -> None:
     runner = LLMRunner(model_id=args.model, mock_mode=args.mock)
     runner.load()
 
-    results = []
+    traces = []
     violation_counter = Counter()
 
     for case in cases:
@@ -65,40 +113,31 @@ def main() -> None:
                 max_new_tokens=args.max_new_tokens,
             )
 
-        # Combine self-reported and ablation-based sources
-        merged_sources = set(base.used_sources)
-        # One prompt-like source is always present in every run.
-        if "sources" in case:
-            merged_sources.add("user_prompt")
-        else:
-            merged_sources.add("prompt")
-        for source_name, changed in ablation_influence.items():
-            if changed:
-                merged_sources.add(source_name)
+        trace = build_trace(
+            case=case,
+            model_name=args.model if not args.mock else "mock",
+            base_answer=base.answer,
+            reported_sources=base.used_sources,
+            ablation_influence=ablation_influence,
+            raw_output=base.raw_output,
+            run_reason=base.reason,
+        )
 
-        detection = detect_case(case, sorted(merged_sources), base.answer)
-        for vt in detection.violation_types:
+        for vt in trace.violation_types:
             violation_counter[vt] += 1
 
-        result_row = {
-            "case_id": detection.case_id,
-            "answer": detection.answer,
-            "reason": base.reason,
-            "used_sources": detection.used_sources,
-            "raw_output": base.raw_output,
-            "ablation_influence": ablation_influence,
-            "violation": detection.violation,
-            "violation_types": detection.violation_types,
-            "explanation": detection.explanation,
-        }
-        results.append(result_row)
+        traces.append(trace)
 
-    total = len(results)
-    violations = sum(1 for r in results if r["violation"])
+    total = len(traces)
+    violations = sum(1 for trace in traces if trace.violation)
     compliant = total - violations
 
     outputs_dir = project_root / "outputs"
     outputs_dir.mkdir(exist_ok=True)
+
+    trace_json_path = outputs_dir / "policy_traces.json"
+    with trace_json_path.open("w", encoding="utf-8") as f:
+        json.dump([trace.to_dict() for trace in traces], f, indent=2)
 
     summary_json_path = outputs_dir / "mvp_summary.json"
     with summary_json_path.open("w", encoding="utf-8") as f:
@@ -108,7 +147,8 @@ def main() -> None:
                 "compliant_cases": compliant,
                 "violating_cases": violations,
                 "violation_counts": dict(violation_counter),
-                "results": results,
+                "trace_file": str(trace_json_path.name),
+                "results": [trace.to_dict() for trace in traces],
             },
             f,
             indent=2,
@@ -123,12 +163,13 @@ def main() -> None:
         f.write(f"- Violation counts: {dict(violation_counter)}\n\n")
 
         f.write("## Example Results\n")
-        for row in results[:5]:
-            f.write(f"- {row['case_id']}: violation={row['violation']} ")
-            f.write(f"types={row['violation_types']} ")
-            f.write(f"used={row['used_sources']}\n")
-            f.write(f"  explanation: {row['explanation']}\n")
+        for trace in traces[:5]:
+            f.write(f"- {trace.case_id}: violation={trace.violation} ")
+            f.write(f"types={trace.violation_types} ")
+            f.write(f"final_used={trace.final_used_sources}\n")
+            f.write(f"  explanation: {trace.policy_explanation}\n")
 
+    print(f"Saved {trace_json_path}")
     print(f"Saved {summary_json_path}")
     print(f"Saved {summary_md_path}")
     print(f"Total={total}, Compliant={compliant}, Violating={violations}")
