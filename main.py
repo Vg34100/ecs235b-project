@@ -4,7 +4,7 @@ from collections import Counter
 from pathlib import Path
 
 from src.detector import detect_case
-from src.pipeline import LLMRunner
+from src.pipeline import LLMRunner, get_ablation_source_candidates
 
 
 def load_cases(path: Path) -> list[dict]:
@@ -24,16 +24,9 @@ def run_ablation_checks(
     max_new_tokens: int,
 ) -> dict[str, bool]:
     influence = {}
-
-    no_image = runner.run_case(case, source_overrides={"image_evidence": ""}, max_new_tokens=max_new_tokens)
-    influence["image_evidence"] = material_answer_change(base_answer, no_image.answer)
-
-    no_context = runner.run_case(case, source_overrides={"retrieved_context": ""}, max_new_tokens=max_new_tokens)
-    influence["retrieved_context"] = material_answer_change(base_answer, no_context.answer)
-
-    no_hidden = runner.run_case(case, source_overrides={"hidden_metadata": ""}, max_new_tokens=max_new_tokens)
-    influence["hidden_metadata"] = material_answer_change(base_answer, no_hidden.answer)
-
+    for source_name in get_ablation_source_candidates(case):
+        ablated = runner.run_case(case, source_overrides={source_name: ""}, max_new_tokens=max_new_tokens)
+        influence[source_name] = material_answer_change(base_answer, ablated.answer)
     return influence
 
 
@@ -63,11 +56,7 @@ def main() -> None:
     for case in cases:
         base = runner.run_case(case, max_new_tokens=args.max_new_tokens)
         if args.skip_ablations:
-            ablation_influence = {
-                "image_evidence": False,
-                "retrieved_context": False,
-                "hidden_metadata": False,
-            }
+            ablation_influence = {source_name: False for source_name in get_ablation_source_candidates(case)}
         else:
             ablation_influence = run_ablation_checks(
                 runner,
@@ -78,8 +67,11 @@ def main() -> None:
 
         # Combine self-reported and ablation-based sources
         merged_sources = set(base.used_sources)
-        # Prompt is always part of model input in this prototype.
-        merged_sources.add("prompt")
+        # One prompt-like source is always present in every run.
+        if "sources" in case:
+            merged_sources.add("user_prompt")
+        else:
+            merged_sources.add("prompt")
         for source_name, changed in ablation_influence.items():
             if changed:
                 merged_sources.add(source_name)
