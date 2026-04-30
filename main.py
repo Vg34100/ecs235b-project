@@ -1,4 +1,5 @@
 import argparse
+import csv
 import json
 import re
 from collections import Counter
@@ -133,6 +134,57 @@ def significant_words(text: str) -> set[str]:
     return {word for word in words if len(word) > 2 and word not in stopwords}
 
 
+def write_trace_csv(path: Path, traces: list[PolicyTrace]) -> None:
+    fieldnames = [
+        "case_id",
+        "model_name",
+        "violation",
+        "violation_types",
+        "required_sources",
+        "forbidden_sources",
+        "used_sources_reported",
+        "used_sources_inferred",
+        "final_used_sources",
+        "policy_explanation",
+        "model_answer",
+        "run_reason",
+    ]
+    with path.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for trace in traces:
+            writer.writerow(
+                {
+                    "case_id": trace.case_id,
+                    "model_name": trace.model_name,
+                    "violation": trace.violation,
+                    "violation_types": "|".join(trace.violation_types),
+                    "required_sources": "|".join(trace.required_sources),
+                    "forbidden_sources": "|".join(trace.forbidden_sources),
+                    "used_sources_reported": "|".join(trace.used_sources_reported),
+                    "used_sources_inferred": "|".join(trace.used_sources_inferred),
+                    "final_used_sources": "|".join(trace.final_used_sources),
+                    "policy_explanation": trace.policy_explanation,
+                    "model_answer": trace.model_answer,
+                    "run_reason": trace.run_reason,
+                }
+            )
+
+
+def write_trace_table(path: Path, traces: list[PolicyTrace]) -> None:
+    with path.open("w", encoding="utf-8") as f:
+        f.write("# Trace Table\n\n")
+        f.write("| Case | Violation | Types | Final Used Sources | Note |\n")
+        f.write("| --- | --- | --- | --- | --- |\n")
+        for trace in traces:
+            types = ", ".join(trace.violation_types) if trace.violation_types else "none"
+            used = ", ".join(trace.final_used_sources)
+            note = trace.policy_explanation.replace("\n", " ")
+            f.write(
+                f"| {trace.case_id} | {trace.violation} | {types} | {used} | {note} |\n"
+            )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Quick MVP: audit information flow in an LLM pipeline")
     parser.add_argument("--cases", default="data/cases/cases.json", help="Path to case JSON file")
@@ -194,6 +246,12 @@ def main() -> None:
     with trace_json_path.open("w", encoding="utf-8") as f:
         json.dump([trace.to_dict() for trace in traces], f, indent=2)
 
+    trace_csv_path = outputs_dir / "policy_traces.csv"
+    write_trace_csv(trace_csv_path, traces)
+
+    trace_table_path = outputs_dir / "policy_trace_table.md"
+    write_trace_table(trace_table_path, traces)
+
     summary_json_path = outputs_dir / "mvp_summary.json"
     with summary_json_path.open("w", encoding="utf-8") as f:
         json.dump(
@@ -203,6 +261,8 @@ def main() -> None:
                 "violating_cases": violations,
                 "violation_counts": dict(violation_counter),
                 "trace_file": str(trace_json_path.name),
+                "trace_csv_file": str(trace_csv_path.name),
+                "trace_table_file": str(trace_table_path.name),
                 "results": [trace.to_dict() for trace in traces],
             },
             f,
@@ -216,6 +276,8 @@ def main() -> None:
         f.write(f"- Compliant cases: {compliant}\n")
         f.write(f"- Violating cases: {violations}\n")
         f.write(f"- Violation counts: {dict(violation_counter)}\n\n")
+        f.write(f"- Trace CSV: {trace_csv_path.name}\n")
+        f.write(f"- Trace Table: {trace_table_path.name}\n\n")
 
         f.write("## Example Results\n")
         for trace in traces[:5]:
@@ -225,6 +287,8 @@ def main() -> None:
             f.write(f"  explanation: {trace.policy_explanation}\n")
 
     print(f"Saved {trace_json_path}")
+    print(f"Saved {trace_csv_path}")
+    print(f"Saved {trace_table_path}")
     print(f"Saved {summary_json_path}")
     print(f"Saved {summary_md_path}")
     print(f"Total={total}, Compliant={compliant}, Violating={violations}")
