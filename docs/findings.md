@@ -259,6 +259,476 @@ Bottom line:
 - good candidate for a final-project multimodal extension
 - not the best first base for the progress report if the goal is a strong security argument
 
+## 2026-04-27
+
+### Decision: use the real downloaded InjecAgent benchmark as the progress-report base
+
+After the earlier dataset discussion, the project direction became more concrete:
+
+- `InjecAgent` is now the primary public benchmark basis
+- `MMMU` remains a possible later extension if we want a stronger multimodal story
+- the progress-report version should stay focused on the security question first
+
+This decision matters because it changes the project from:
+
+- a toy LLM auditing demo with made-up cases
+
+into:
+
+- a benchmark-backed auditing pipeline with a real public source dataset
+
+That is a much stronger position for the progress report and final report.
+
+### Correction: do not fabricate benchmark files
+
+One important project-process lesson happened here.
+
+At one point, partial local copies of `InjecAgent`-style files had been written from limited fetched content. That was not acceptable as a dataset basis. The benchmark files now used by the project are the real downloaded files from the public repo, stored locally under:
+
+- `data/raw/injecagent/`
+
+This is worth writing down because the final report should be precise about provenance:
+
+- the current raw benchmark data is real downloaded source data
+- it is not hand-written benchmark content
+- the project-specific processing happens only after the real raw files are available locally
+
+### Raw benchmark contents now available locally
+
+The local raw `InjecAgent` directory now contains the benchmark source and synthesized test-case files:
+
+- `user_cases.jsonl`
+- `attacker_cases_dh.jsonl`
+- `attacker_cases_ds.jsonl`
+- `test_cases_dh_base.json`
+- `test_cases_dh_enhanced.json`
+- `test_cases_ds_base.json`
+- `test_cases_ds_enhanced.json`
+- `tools.json`
+- `attacker_simulated_responses.json`
+
+Observed benchmark counts:
+
+- `17` user-case templates
+- `30` direct-harm attacker templates
+- `32` data-stealing attacker templates
+- `510` direct-harm synthesized base cases
+- `544` data-stealing synthesized base cases
+
+This resolves the earlier concern that the benchmark looked "too small." The benchmark is small at the template level, but not at the synthesized case level. For this project, that is actually useful because:
+
+- the cases remain understandable
+- the attack structure is explicit
+- the dataset is still large enough to support curated evaluation
+
+### Data-layout cleanup
+
+The project data layout was also cleaned up during this phase.
+
+Earlier MVP work had stored case data under `src/data/`, which was not a good long-term layout. That was changed so the project now separates code and data more clearly:
+
+- `src/` for code
+- `data/` for raw and processed datasets
+- `outputs/` for run results
+
+This was a small repo hygiene change, but it makes the project much easier to reason about and document.
+
+### Inspection step added before conversion
+
+Before writing any conversion logic, an inspection script was added:
+
+- `src/inspect_injecagent.py`
+
+Purpose of this script:
+
+- verify the raw benchmark files are present and readable
+- summarize user-case, attacker-case, and synthesized-case counts
+- show coarse distributions such as attack types and user tools
+- print a few sample cases in readable form
+
+Reasoning for doing this first:
+
+- we needed to inspect the real benchmark shape before designing the processed dataset
+- it reduces the risk of writing a converter against incorrect assumptions
+- it gives concrete material for the project report later when describing the dataset
+
+This script is not the main experiment. It is a dataset-understanding tool, and that distinction is important.
+
+### Local project schema became the stable internal format
+
+The next important step was to stop thinking of `InjecAgent` as the direct runtime format.
+
+Instead, the project now treats `InjecAgent` as:
+
+- the raw public benchmark source
+
+and treats the local schema from `docs/dataset_schema.md` as:
+
+- the stable internal project format
+
+This is a good design decision because:
+
+- the code should not be tightly coupled to one benchmark's exact field names
+- the auditing pipeline should operate on a consistent internal representation
+- future extensions, including a possible `MMMU` subset later, can map into the same schema
+
+### Conversion step added
+
+A conversion script was then added:
+
+- `src/convert_injecagent.py`
+
+What it does:
+
+- reads the real synthesized `InjecAgent` benchmark files
+- normalizes cases into the project's local schema
+- parses stringified structured fields such as tool parameters and tool responses
+- assigns a project-level `system_policy`
+- infers a coarse application domain from the user tool name
+- writes processed outputs under:
+  - `data/processed/injecagent/injecagent_processed_all.json`
+  - `data/processed/injecagent/injecagent_curated_subset.json`
+
+Why this conversion matters:
+
+- it is the actual bridge from raw benchmark data into the project pipeline
+- after this step, the project has a real benchmark-backed dataset in its own format
+- later code can operate on that internal format without caring where the case originally came from
+
+### Processed dataset size and curated subset design
+
+The full processed dataset contains:
+
+- `1054` cases
+
+The curated subset currently contains:
+
+- `84` cases
+
+The curated subset was designed to be balanced rather than simply taking the first N cases. Current observed balance:
+
+- domains:
+  - `developer_platform`: `12`
+  - `email`: `12`
+  - `calendar`: `12`
+  - `commerce`: `12`
+  - `health`: `12`
+  - `social_media`: `12`
+  - `web`: `12`
+- attack-type groups:
+  - `Physical Harm`: `14`
+  - `Financial Harm`: `14`
+  - `Data Security Harm`: `14`
+  - `Physical Data`: `14`
+  - `Financial Data`: `14`
+  - `Others`: `14`
+
+This balancing decision is important enough to record explicitly.
+
+Why not just use the full 1054 cases immediately?
+
+- for the progress report, a smaller but balanced subset is easier to inspect and debug
+- the current pipeline still needs real-model validation on the new schema
+- early experiments should favor interpretability over volume
+
+The full dataset still exists and can be used later once the schema path is stable.
+
+### Pipeline integration: support both toy cases and processed InjecAgent cases
+
+After the conversion step, the main project pipeline had to be updated.
+
+This is where the project moved from:
+
+- "we have a processed dataset on disk"
+
+to:
+
+- "the actual pipeline can read and use that dataset"
+
+The key design decision here was to support both case styles at the same time:
+
+- the original toy/MVP cases
+- the processed `InjecAgent` cases
+
+This was the right choice for now because:
+
+- the toy cases are still useful for quick sanity checks
+- they give a controlled baseline when debugging parsing or policy logic
+- the benchmark path is more realistic but also more complex
+
+So the code now treats the toy dataset as a small debugging path, not as the main experiment.
+
+### What the model now sees for processed InjecAgent cases
+
+For processed benchmark cases, the prompt builder no longer assumes the old MVP structure like:
+
+- `prompt`
+- `image_evidence`
+- `retrieved_context`
+- `hidden_metadata`
+
+Instead, it now uses the explicit `sources` block in the processed schema.
+
+For a converted `InjecAgent` case, the model input can now include fields such as:
+
+- `user_prompt`
+- `tool_parameters`
+- `tool_response`
+- `system_policy`
+- `attacker_instruction`
+
+This is an important modeling choice.
+
+The goal is not to hide the benchmark structure from ourselves. The goal is to make source-level reasoning explicit, because the detector later needs to reason about:
+
+- which sources were available
+- which were required
+- which were forbidden
+
+### Mock-mode baseline also had to change
+
+While adding processed-schema support, mock mode also had to be corrected.
+
+Earlier mock behavior was too naive. It effectively treated every non-empty source as used, which would create fake policy violations on processed benchmark cases.
+
+That behavior was changed. For processed cases, mock mode now acts like a clean baseline:
+
+- it uses the required sources
+- it does not automatically use forbidden sources
+- it only injects a forbidden source when the case is explicitly set up to do that
+
+This matters because the mock path should be useful for sanity-checking the pipeline structure, not for creating meaningless failures.
+
+### Verification status after integration
+
+After the integration work:
+
+- the old toy path still runs
+- the processed `InjecAgent` path also runs in mock mode
+
+This means the code is now structurally ready for the first real benchmark-backed runs.
+
+However, one important boundary remains:
+
+- the processed `InjecAgent` path has not yet been meaningfully evaluated with a real model in this new schema flow
+
+That is the next real experimental milestone.
+
+### Comment/readability pass
+
+There was also a small but useful readability pass across `src/`.
+
+Comments were added and then shortened so they read more like research-project code notes:
+
+- enough to explain intent and assumptions
+- not so much that the files become overloaded with commentary
+
+This is a minor implementation detail, but it will help later when writing the report because the codebase is becoming easier to review and explain.
+
+### Current interpretation of project state
+
+At this point, the project is no longer just an idea plus a toy MVP.
+
+It now has:
+
+- a real benchmark basis
+- a local raw-data copy
+- an inspection tool
+- a benchmark-to-schema conversion tool
+- a processed dataset in the project's own format
+- pipeline support for running that processed dataset
+
+That is real progress toward the reportable version of the project.
+
+### Immediate next technical step
+
+The next step is no longer dataset search or schema planning.
+
+The next step is:
+
+- run the processed `InjecAgent` cases through a real model
+- inspect the traces and policy-violation outputs
+- see whether the current source-reporting and parsing logic is good enough
+
+That experiment is what will tell us what needs to be tightened before the progress report:
+
+- prompt format
+- parsing robustness
+- source attribution logic
+- reporting format
+
+## 2026-04-30
+
+### Progress-report status check
+
+Re-reading the progress-report roadmap is useful here because the project is no longer at the "toy MVP only" stage.
+
+Relative to the roadmap, the project is now roughly:
+
+- about `60%` of the way to a strong progress-report submission
+
+Reason for that estimate:
+
+- the project now has a real public benchmark basis
+- the project now has a stable internal case schema
+- the project now has a real trace object and trace export
+- the project now has three policy types in code:
+  - `missing_required_source`
+  - `forbidden_source_used`
+  - `consistency_violation`
+- the project now has early real-model runs on processed benchmark cases
+
+What is still missing for the progress report:
+
+- more stable source attribution
+- a cleaner merge rule for reported vs inferred source use
+- a report-scale evaluation subset with clearer expected outcomes
+- one real analysis artifact beyond raw JSON / markdown summary
+- a short explanation of current limitations and what remains
+
+This means the progress report is now realistic, but the weakest section is still methodology around attribution quality.
+
+### Stable traces are now part of the pipeline
+
+The roadmap asked for a real trace structure. That has now been implemented.
+
+Current trace outputs store fields such as:
+
+- `case_id`
+- `prompt`
+- `available_sources`
+- `required_sources`
+- `forbidden_sources`
+- `model_answer`
+- `used_sources_reported`
+- `used_sources_inferred`
+- `final_used_sources`
+- `violation_types`
+- `policy_explanation`
+
+This matters because the project is now producing per-run auditing records, not just loose summary rows.
+
+### Real-model benchmark runs have started
+
+The processed `InjecAgent` benchmark path has now been exercised with a real local model:
+
+- `meta-llama/Llama-3.2-1B-Instruct`
+
+This was an important transition point. Before this, the project had:
+
+- mock benchmark runs
+- real-model toy runs
+
+Now it also has:
+
+- real-model processed benchmark runs
+
+The results are still noisy, but they are now exposing the real bottleneck instead of a toy-path bottleneck.
+
+### What those early runs taught us
+
+The early `InjecAgent` runs showed several distinct issues:
+
+1. chat/instruct model usage mattered
+- using the wrong model variant or wrong interface led to prompt echo and useless source reports
+
+2. partial JSON is common
+- small instruct models often returned something close to JSON, but truncated before the final closing braces
+
+3. self-reported source use is unreliable
+- the model sometimes reported almost every source
+- the model sometimes omitted clearly important sources like `tool_response`
+- the model sometimes reported labels that were not useful for policy reasoning
+
+4. ablation checks add real value
+- when source self-reports were weak, ablation could still recover evidence that `tool_response` mattered
+
+These observations are important for the report because they justify why the project does not rely on one attribution signal alone.
+
+### Current attribution picture
+
+At this point the project has two attribution signals:
+
+- reported attribution:
+  - what the model says it used
+- inferred attribution:
+  - what ablation suggests mattered
+
+The main lesson so far is:
+
+- reported attribution is noisy
+- ablation is useful but still limited
+
+So the current technical focus is no longer "can we load the model?" or "can we convert the benchmark?"
+
+The current technical focus is:
+
+- how to combine noisy source signals into a more defensible final source attribution
+
+That is why the next implementation step is a more conservative merge rule.
+
+### Policy layer has been expanded
+
+The original MVP mostly had two policy checks:
+
+- `missing_required_source`
+- `forbidden_source_used`
+
+The policy layer now also includes:
+
+- `consistency_violation`
+
+Current simple consistency idea:
+
+- if the case says the model should not carry out the attacker instruction
+- and the answer clearly follows or repeats the attacker instruction
+- then that should be flagged even if source lists look superficially acceptable
+
+This is still a simple rule, but it is enough to satisfy the roadmap requirement that the progress-report version support at least three violation types.
+
+### Prompting and parsing changes already made
+
+Several important runtime changes have already been made in response to the benchmark runs:
+
+- chat-template-capable instruct models now use a chat-style input path
+- generation now uses `return_full_text=False`
+- the pipeline now tries to repair truncated partial JSON before falling back
+- generation warning spam was reduced by setting pad token behavior and cleaning generation config
+
+These changes did not "solve" attribution, but they did move the project from unusable outputs toward partially usable traces.
+
+### What the current runs mean
+
+The latest small benchmark runs do not yet show polished evaluation results.
+
+What they do show is:
+
+- the system can run real benchmark-backed cases end-to-end
+- the trace structure can capture model answer and source-use evidence
+- different failure modes are now visible:
+  - missing required source
+  - forbidden source used
+  - attacker-following answers that motivate consistency checks
+
+That is enough to support an honest progress-report claim of:
+
+- early end-to-end functionality exists
+- attribution quality remains the main open technical problem
+
+### Immediate next implementation focus
+
+The most important next code change is:
+
+- make the source merge rule more conservative
+
+Meaning:
+
+- trust self-reported source lists less
+- trust ablation-supported sources more
+- be stricter before concluding that a forbidden source was truly used
+
+This is the right next step because current runs suggest that self-reported source use is still the least reliable part of the pipeline.
+
 ## Current recommendation
 
 ### If the goal is the best progress report
