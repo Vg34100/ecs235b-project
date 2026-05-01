@@ -82,6 +82,7 @@ def build_trace(
     return PolicyTrace(
         case_id=detection.case_id,
         model_name=model_name,
+        domain=str(case.get("domain", "unknown")),
         prompt=get_case_prompt(case),
         available_sources=get_available_sources(case),
         required_sources=list(case.get("required_sources", [])),
@@ -185,6 +186,36 @@ def write_trace_table(path: Path, traces: list[PolicyTrace]) -> None:
             )
 
 
+def write_eval_summary(path: Path, traces: list[PolicyTrace]) -> None:
+    domain_totals = Counter()
+    domain_violations = Counter()
+    violation_totals = Counter()
+
+    for trace in traces:
+        domain_totals[trace.domain] += 1
+        if trace.violation:
+            domain_violations[trace.domain] += 1
+        for violation_type in trace.violation_types:
+            violation_totals[violation_type] += 1
+
+    with path.open("w", encoding="utf-8") as f:
+        f.write("# Evaluation Summary\n\n")
+        f.write("## By Domain\n\n")
+        f.write("| Domain | Total Cases | Violating Cases |\n")
+        f.write("| --- | --- | --- |\n")
+        for domain in sorted(domain_totals):
+            f.write(f"| {domain} | {domain_totals[domain]} | {domain_violations[domain]} |\n")
+
+        f.write("\n## By Violation Type\n\n")
+        f.write("| Violation Type | Count |\n")
+        f.write("| --- | --- |\n")
+        if violation_totals:
+            for violation_type, count in sorted(violation_totals.items()):
+                f.write(f"| {violation_type} | {count} |\n")
+        else:
+            f.write("| none | 0 |\n")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Quick MVP: audit information flow in an LLM pipeline")
     parser.add_argument("--cases", default="data/cases/cases.json", help="Path to case JSON file")
@@ -252,6 +283,9 @@ def main() -> None:
     trace_table_path = outputs_dir / "policy_trace_table.md"
     write_trace_table(trace_table_path, traces)
 
+    eval_summary_path = outputs_dir / "evaluation_summary.md"
+    write_eval_summary(eval_summary_path, traces)
+
     summary_json_path = outputs_dir / "mvp_summary.json"
     with summary_json_path.open("w", encoding="utf-8") as f:
         json.dump(
@@ -263,6 +297,7 @@ def main() -> None:
                 "trace_file": str(trace_json_path.name),
                 "trace_csv_file": str(trace_csv_path.name),
                 "trace_table_file": str(trace_table_path.name),
+                "evaluation_summary_file": str(eval_summary_path.name),
                 "results": [trace.to_dict() for trace in traces],
             },
             f,
@@ -278,6 +313,7 @@ def main() -> None:
         f.write(f"- Violation counts: {dict(violation_counter)}\n\n")
         f.write(f"- Trace CSV: {trace_csv_path.name}\n")
         f.write(f"- Trace Table: {trace_table_path.name}\n\n")
+        f.write(f"- Evaluation Summary: {eval_summary_path.name}\n\n")
 
         f.write("## Example Results\n")
         for trace in traces[:5]:
@@ -289,6 +325,7 @@ def main() -> None:
     print(f"Saved {trace_json_path}")
     print(f"Saved {trace_csv_path}")
     print(f"Saved {trace_table_path}")
+    print(f"Saved {eval_summary_path}")
     print(f"Saved {summary_json_path}")
     print(f"Saved {summary_md_path}")
     print(f"Total={total}, Compliant={compliant}, Violating={violations}")

@@ -7,6 +7,7 @@ class PolicyTrace:
     # This is the main record we want to carry into evaluation and reporting.
     case_id: str
     model_name: str
+    domain: str
     prompt: str
     available_sources: list[str]
     required_sources: list[str]
