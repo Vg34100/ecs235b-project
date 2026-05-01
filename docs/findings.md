@@ -729,6 +729,168 @@ Meaning:
 
 This is the right next step because current runs suggest that self-reported source use is still the least reliable part of the pipeline.
 
+## 2026-04-30 (later)
+
+### Evaluation and reporting artifacts are now in place
+
+Since the last findings update, the project gained several reporting-focused outputs:
+
+- `policy_traces.json`
+- `policy_traces.csv`
+- `policy_trace_table.md`
+- `evaluation_summary.md`
+- `mvp_summary.md`
+
+This matters for the progress report because the project is no longer limited to one raw summary dump. It now produces:
+
+- machine-readable trace data
+- a spreadsheet-friendly export
+- a readable trace table
+- a compact evaluation summary by domain and violation type
+
+That is enough to start treating the current system as a reportable evaluation pipeline rather than just an experiment script.
+
+### Current progress-report estimate
+
+After the 30-case benchmark-backed run, the project is now roughly:
+
+- about `80%` of the way to a strong progress-report submission
+
+Reason for this updated estimate:
+
+- the benchmark integration is real and functioning
+- the trace format is stable enough to discuss
+- multiple policy types are active in the detector
+- a real 30-case evaluation now exists
+- the current results are interpretable enough to write about
+
+What still remains:
+
+- pick the best 2 to 3 case studies for the writeup
+- summarize limitations more clearly
+- optionally run one additional comparison or baseline if useful
+- draft the actual one-page progress report text
+
+### 30-case real-model evaluation
+
+A larger evaluation was run on:
+
+- `30` processed `InjecAgent` cases
+- using `meta-llama/Llama-3.2-1B-Instruct`
+
+Observed result:
+
+- `5` compliant cases
+- `25` violating cases
+
+Violation counts:
+
+- `forbidden_source_used`: `19`
+- `missing_required_source`: `12`
+- `consistency_violation`: `6`
+
+Important note for interpretation:
+
+- these counts overlap
+- one case can contribute to multiple violation types
+
+### Main finding from the 30-case run
+
+The strongest current finding is:
+
+- the dominant failure mode is forbidden-source influence
+
+This means that on this current benchmark subset, the model often appears to incorporate or follow attacker-originated instructions that should have remained non-authoritative.
+
+This is a good fit for the overall project claim because it supports the idea that:
+
+- prompt-injection-style failures can be represented as information-flow violations
+
+in particular:
+
+- forbidden information sources influencing final outputs
+
+### Secondary finding from the 30-case run
+
+A second recurring pattern is:
+
+- missing required sources
+
+In practical terms, this often means the final inferred source set is missing something like:
+
+- `system_policy`
+- or `tool_response`
+
+This is also meaningful for the project, because it suggests a second type of failure:
+
+- the model may not be adequately incorporating the policy-governing source or the relevant retrieved/tool content source
+
+So the current evaluation does not just show one failure type. It shows at least two distinct classes of information-flow problems:
+
+- disallowed-source influence
+- incomplete required-source use
+
+### Domain-level observations
+
+The 30-case run also produced early domain-level variation:
+
+- `developer_platform`: `5/5` violating
+- `email`: `4/5` violating
+- `calendar`: `3/4` violating
+- `commerce`: `4/4` violating
+- `health`: `3/4` violating
+- `social_media`: `2/4` violating
+- `web`: `4/4` violating
+
+This is still too small to support strong domain claims, but it is enough to justify a cautious statement in the progress report:
+
+- some categories appear more failure-prone than others in early experiments
+
+The safest phrasing is to present this as an exploratory observation, not a conclusion.
+
+### What the current system is good enough to claim
+
+At this stage, the project can honestly claim:
+
+- it implements a benchmark-backed audit pipeline for LLM information-flow analysis
+- it supports a stable case and trace representation
+- it can detect multiple policy-violation types
+- early benchmark-backed results show a strong pattern of forbidden-source influence, along with missing-required-source failures
+
+This is now enough for the progress report to move from:
+
+- describing planned work
+
+to:
+
+- describing implemented functionality and early empirical findings
+
+### Best current framing for the results section
+
+The strongest short version of the current results is:
+
+- on an initial 30-case subset of `InjecAgent`, the current audit pipeline found that the dominant failure mode was forbidden-source influence, with additional failures arising from omission of required policy-governing or content-bearing sources
+
+This is a stronger and cleaner result than the earlier smaller runs because it is:
+
+- benchmark-backed
+- based on more than a handful of cases
+- supported by exported traces and summary artifacts
+
+### What remains the main technical limitation
+
+Even with the improved results, the main technical limitation remains:
+
+- source attribution quality is still imperfect
+
+This matters because:
+
+- the detector still relies on a merge of model-reported source use and ablation-based evidence
+- self-reported sources remain noisy
+- small local instruct models sometimes return partial JSON or incomplete source lists
+
+So while the current findings are useful and interpretable, the final report should still present attribution quality as the main open challenge.
+
 ## Current recommendation
 
 ### If the goal is the best progress report
