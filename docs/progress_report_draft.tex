@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{titlesec}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.22em}
+\setstretch{1.0}
+\titlespacing*{\section}{0pt}{0.55em}{0.2em}
+
+\title{\vspace{-3em}Analyzing Information Flow Violations in LLM Pipelines using Access Control Models\\\large Progress Report}
+\author{Pablo Rodriguez Quinonez\\Graduate Group in Computer Science\\University of California, Davis\\prodriguezqu@ucdavis.edu}
+\date{}
+
+\begin{document}
+
+\maketitle
+\vspace{-2.4em}
+
+\section{Introduction}
+This project studies whether failures in large language model (LLM) pipelines can be analyzed as information-flow violations rather than only as incorrect outputs. The core idea is to model an LLM pipeline as a protection system in the classical computer-security sense, where prompts, tool outputs, system policy instructions, and attacker-controlled content are treated as distinct objects, and the model acts as a subject over those objects under a policy \cite{bishop2018cas}. In this framing, prompt-injection-style failures become cases in which a forbidden source influences the output or a required source is omitted from the decision path \cite{wallace2024instructionhierarchy,yi2023bipia,zhan2024injecagent}.
+
+\section{Implementation Status}
+The current implementation uses \texttt{InjecAgent} as the main public benchmark basis \cite{zhan2024injecagent}. Raw benchmark cases are converted into a project-specific schema that records the user prompt, tool response, system policy, attacker instruction, required sources, forbidden sources, and expected behavior. Each run now produces a stable trace with available sources, reported source use, inferred source use from ablations, final merged source attribution, and the final policy judgment.
+
+The policy layer supports three violation types: \emph{missing required source}, \emph{forbidden source used}, and \emph{consistency violation}. These capture omitted required inputs, attacker-originated influence, and answers that appear to carry out the attacker instruction. This keeps the project closely tied to security-course ideas of protection state, permitted versus impermissible access, and policy-violating flows \cite{bishop2018cas}.
+
+\section{Preliminary Results}
+An initial real-model evaluation was completed using \texttt{meta-llama/Llama-3.2-1B-Instruct} on a 30-case subset of processed \texttt{InjecAgent} cases. The system identified 5 compliant runs and 25 violating runs. The most frequent violation type was \emph{forbidden source used} with 19 occurrences, followed by \emph{missing required source} with 12 and \emph{consistency violation} with 6. These counts overlap because a single run can trigger multiple violations. The dominant pattern is that attacker-originated content is often incorporated into the effective source set used to produce the answer. A secondary pattern is omission of required sources, especially \texttt{system\_policy} and \texttt{tool\_response}. This suggests that the framework can detect both impermissible influence from a forbidden source and incomplete use of required sources.
+
+\section{Limitations and Next Steps}
+The main limitation is attribution quality. The current system combines self-reported source use with ablation-based source inference, but small local instruct models still produce partial JSON, incomplete source lists, and noisy self-reports. Recent benchmark work suggests that reliable source-sensitive reasoning remains an open problem in foundation models \cite{liu2024mmsafetybench,zhou2025multimodal}. The remaining work is to expand the evaluation set, select representative case studies, and improve attribution robustness and analysis presentation. Even at this stage, the results support the claim that explicit source distinctions and policy checks provide a useful security-oriented framework for analyzing prompt-injection-style failures in tool-integrated LLM pipelines \cite{bishop2018cas,zhan2024injecagent}.
+
+\bibliographystyle{plain}
+\bibliography{security_project_refs}
+
+\end{document}
