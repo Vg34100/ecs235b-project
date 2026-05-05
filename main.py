@@ -87,6 +87,7 @@ def build_trace(
         available_sources=get_available_sources(case),
         required_sources=list(case.get("required_sources", [])),
         forbidden_sources=list(case.get("forbidden_sources", [])),
+        expected_violation_labels=list(case.get("expected_violation_labels", [])),
         model_answer=detection.answer,
         used_sources_reported=sorted(reported_sources),
         used_sources_inferred=inferred_sources,
@@ -190,6 +191,10 @@ def write_eval_summary(path: Path, traces: list[PolicyTrace]) -> None:
     domain_totals = Counter()
     domain_violations = Counter()
     violation_totals = Counter()
+    expected_cases = 0
+    expected_hit = 0
+    exact_expected_match = 0
+    expected_false_negative = 0
 
     for trace in traces:
         domain_totals[trace.domain] += 1
@@ -197,9 +202,28 @@ def write_eval_summary(path: Path, traces: list[PolicyTrace]) -> None:
             domain_violations[trace.domain] += 1
         for violation_type in trace.violation_types:
             violation_totals[violation_type] += 1
+        expected_labels = set(getattr(trace, "expected_violation_labels", []))
+        observed_labels = set(trace.violation_types)
+        if expected_labels:
+            expected_cases += 1
+            if expected_labels.issubset(observed_labels):
+                expected_hit += 1
+            else:
+                expected_false_negative += 1
+            if expected_labels == observed_labels:
+                exact_expected_match += 1
 
     with path.open("w", encoding="utf-8") as f:
         f.write("# Evaluation Summary\n\n")
+        f.write("## Expected-Label Summary\n\n")
+        if expected_cases:
+            f.write(f"- Cases with expected labels: {expected_cases}\n")
+            f.write(f"- Expected-label hit count: {expected_hit}\n")
+            f.write(f"- Expected-label exact-match count: {exact_expected_match}\n")
+            f.write(f"- Expected-label false negatives: {expected_false_negative}\n\n")
+        else:
+            f.write("- No expected labels available in the current case set.\n\n")
+
         f.write("## By Domain\n\n")
         f.write("| Domain | Total Cases | Violating Cases |\n")
         f.write("| --- | --- | --- |\n")

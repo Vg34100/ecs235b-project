@@ -940,3 +940,131 @@ Reason:
 - it preserves the security-first identity of the project
 
 Then use `MMMU` only as a later extension if we want a true multimodal image-based section in the final project.
+
+## 2026-05-04
+
+### Progress-report phase is complete
+
+At this point, the progress-report checkpoint should be treated as complete work that has already been submitted. The project is now in the final stretch toward the completed project and final report.
+
+This matters because the framing changes:
+
+- the project is no longer trying to become "progress-report ready"
+- the project is now trying to become "final-project ready"
+
+So the current work should be interpreted as:
+
+- strengthening the core evaluation
+- clarifying what the detector can and cannot currently support
+- preparing for the multimodal extension and final report
+
+### 30-case core evaluation after attribution and export improvements
+
+A new 30-case run was completed on the processed `InjecAgent` subset using:
+
+- `meta-llama/Llama-3.2-1B-Instruct`
+
+Observed result:
+
+- `12` compliant cases
+- `18` violating cases
+
+Violation counts:
+
+- `forbidden_source_used`: `17`
+- `missing_required_source`: `6`
+- `consistency_violation`: `5`
+
+These counts overlap because one case can trigger more than one violation type.
+
+### Confirmatory metric added to the evaluation summary
+
+The evaluation pipeline now includes a simple confirmatory check against the benchmark-derived expected labels.
+
+For the current curated `InjecAgent` subset:
+
+- each case currently carries an expected label of `forbidden_source_used`
+
+Observed confirmatory result on the 30-case run:
+
+- cases with expected labels: `30`
+- expected-label hit count: `17`
+- expected-label exact-match count: `8`
+- expected-label false negatives: `13`
+
+Interpretation:
+
+- the detector is now catching a substantial fraction of the expected forbidden-source violations
+- but it still misses a meaningful number of them
+- this supports the claim that the framework is useful, but still incomplete
+
+### Updated interpretation of the core security pipeline
+
+The current core pipeline is now strong enough to support the following claims:
+
+- it can run benchmark-backed cases end-to-end
+- it can distinguish compliant from violating runs
+- it can separate several failure types:
+  - forbidden-source influence
+  - missing required sources
+  - answer-level consistency failures
+- it can provide both exploratory and confirmatory outputs
+
+That means the project now has:
+
+- EDA-style outputs
+  - domain-level breakdowns
+  - violation-type breakdowns
+  - per-case trace tables
+- CDA-style outputs
+  - expected-label hit and miss counts on benchmark-backed cases
+
+### Updated exploratory observations
+
+The strongest exploratory result is still:
+
+- forbidden-source influence is the dominant observed failure mode
+
+The current domain summary for the 30-case run is:
+
+- `calendar`: `4` total, `3` violating
+- `commerce`: `4` total, `3` violating
+- `developer_platform`: `5` total, `3` violating
+- `email`: `5` total, `4` violating
+- `health`: `4` total, `2` violating
+- `social_media`: `4` total, `2` violating
+- `web`: `4` total, `1` violating
+
+This should still be treated as exploratory only. The dataset slice is not large enough to justify strong domain-level claims.
+
+### Current state of the core
+
+The security-first core is now in a credible state for the final project:
+
+- benchmark-backed case set
+- stable trace format
+- three policy types
+- exportable analysis artifacts
+- early real-model evaluation with both descriptive and confirmatory metrics
+
+What still appears weakest:
+
+- attribution quality
+- consistency and completeness of source reporting
+- stability across model runs and domains
+
+### What the final stretch should focus on
+
+The remaining work should now be organized around two tracks:
+
+1. core strengthening
+- improve attribution robustness
+- improve confirmatory evaluation quality
+- identify final case studies
+
+2. multimodal extension
+- choose the extension format
+- map it into the same schema and trace logic
+- test whether the same security framing transfers cleanly
+
+This is the correct transition point from progress-report work into final-project work.

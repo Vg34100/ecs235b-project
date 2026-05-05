@@ -12,6 +12,7 @@ class PolicyTrace:
     available_sources: list[str]
     required_sources: list[str]
     forbidden_sources: list[str]
+    expected_violation_labels: list[str]
     model_answer: str
     used_sources_reported: list[str]
     used_sources_inferred: list[str]
