@@ -5,9 +5,9 @@ import re
 from collections import Counter
 from pathlib import Path
 
-from src.detector import detect_case
-from src.pipeline import LLMRunner, get_ablation_source_candidates
-from src.traces import PolicyTrace, get_available_sources, get_case_prompt, get_primary_prompt_source
+from src.core.detector import detect_case
+from src.core.pipeline import LLMRunner, get_ablation_source_candidates
+from src.core.traces import PolicyTrace, get_available_sources, get_case_prompt, get_primary_prompt_source
 
 
 def load_cases(path: Path) -> list[dict]:

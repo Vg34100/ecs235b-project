@@ -1068,3 +1068,88 @@ The remaining work should now be organized around two tracks:
 - test whether the same security framing transfers cleanly
 
 This is the correct transition point from progress-report work into final-project work.
+
+## 2026-05-05
+
+### HybridQA selected as the first multimodal extension path
+
+After revisiting the extension options, the next multimodal step is now:
+
+- `HybridQA` first
+- `MMMU` later
+
+Reasoning:
+
+- a text-plus-table extension is easier to align with the current policy framework than an image-first extension
+- the distinction between required, forbidden, and missing sources is clearer with tables and linked text
+- this gives a real multimodal result without immediately taking on the harder image-attribution problem
+
+This does not replace the image goal. It only changes the implementation order:
+
+- first extension: text + table
+- later extension: image + text
+
+### HybridQA raw data is now available locally
+
+The raw `HybridQA` files were downloaded into:
+
+- `data/raw/hybridqa/`
+
+Observed on-disk size:
+
+- about `208 MB`
+
+This includes:
+
+- the main Wikipedia tables and linked-text archive zip
+- `train.json`
+- `dev.json`
+- `test.json`
+
+Important structure note:
+
+- the split JSON files alone are not enough
+- they contain the question, table id, and answer
+- the large archive contains the actual table content and the linked text summaries referenced by each case
+
+So the raw data is genuinely multi-source:
+
+- question/prompt
+- structured table
+- linked text summaries
+
+That makes it a strong basis for a policy-based multimodal extension.
+
+### Why HybridQA is a good fit
+
+The current security pipeline already reasons over:
+
+- required sources
+- forbidden sources
+- missing required sources
+- consistency failures
+
+`HybridQA` is a good fit because it naturally provides:
+
+- a prompt/question source
+- a table source
+- a linked text source
+
+This means we can ask security-style questions such as:
+
+- did the answer require the table?
+- did it require the linked text?
+- did it ignore one of the required sources?
+- did an injected or disallowed hint influence the answer?
+
+This is much closer to the current core than a pure image-only extension would be.
+
+### Immediate next work for the HybridQA extension
+
+The next extension tasks are now:
+
+1. define the `HybridQA` to local-schema mapping
+2. build a small inspection and conversion script for a subset
+3. test a small number of extension cases before scaling up
+
+This is the right way to start the final-project multimodal phase without losing the stronger security-first core.

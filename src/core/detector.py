@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any
 
-from src.policies import FlowPolicy, evaluate_policy
+from src.core.policies import FlowPolicy, evaluate_policy
 
 
 @dataclass

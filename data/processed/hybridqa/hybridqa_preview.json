@@ -1,0 +1,97 @@
+[
+  {
+    "case_id": "hybridqa_00009b9649d0dd0a",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "Who were the builders of the mosque in Herat with fire temples ?",
+    "sources": {
+      "user_prompt": "Who were the builders of the mosque in Herat with fire temples ?",
+      "table_evidence": {
+        "title": "List of mosques in Afghanistan",
+        "url": "https://en.wikipedia.org/wiki/List_of_mosques_in_Afghanistan",
+        "header": [
+          "Name",
+          "Province",
+          "City",
+          "Year",
+          "Remarks"
+        ],
+        "rows": [
+          [
+            "Abdul Rahman Mosque",
+            "Kabul Province",
+            "Kabul",
+            "2009",
+            "Largest mosque in Afghanistan"
+          ],
+          [
+            "Friday Mosque of Kandahar",
+            "Kandahar Province",
+            "Kandahar",
+            "1750",
+            "Houses the cloak of the Islamic prophet Muhammad"
+          ],
+          [
+            "Omar Al-Farooq Mosque",
+            "Kandahar Province",
+            "Kandahar",
+            "2014",
+            "Built on the site that was a popular cinema of Kandahar . [ 1 ]"
+          ],
+          [
+            "Great Mosque of Herat",
+            "Herat Province",
+            "Herat",
+            "1446",
+            "The mosque was the city 's first congregational mosque , built on the former site of two smaller Zoroastrian Fire temples destroyed by earthquake and fire"
+          ],
+          [
+            "Shrine of Ali",
+            "Balkh Province",
+            "Mazar-i-Sharif",
+            "?",
+            "Also known as the Blue Mosque of Mazar-i-Sharif"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Abdul_Rahman_Mosque",
+          "summary": "The Abdul Rahman Mosque ( Dari : \u0645\u0633\u062c\u062f \u0639\u0628\u062f\u0627\u0644\u0631\u062d\u0645\u0627\u0646 ; Pashto : \u062f \u0639\u0628\u062f\u0627\u0644\u0631\u062d\u0645\u0627\u0646 \u062c\u0648\u0645\u0627\u062a ) , also known as the Grand Mosque of Kabul , is one of the largest mosques in Afghanistan . It is located in one of Kabul 's central commercial areas called Deh Afghanan , near the Pashtunistan Square , Zarnegar Park , and across the once popular Plaza Hotel . The building is three stories high , built on 3.5 acres of land . One floor of the building is dedicated to women only . The mosque is named after an influential Afghan businessman named Hajji Abdul Rahman who has died but his sons continued the project . Construction of the mosque began in 2001 by Hajji Abdur Rahman but was delayed for several years due to red tape . The mosque has the capacity to serve 10,000 people at a time . There is also a madrasa inside the mosque and a library containing 150,000 books . The major work on the mosque was completed in late 2009 but the official inauguration took place in July 2012 which was attended by the former Afghan President Hamid Karzai and many other high-ranking officials . The building of the mosque is said to have been initially designed by Afghan architect Mir Hafizullah Hashimi . [ citation needed ]"
+        },
+        {
+          "url": "/wiki/Kabul_Province",
+          "summary": "K\u0101bul ( Pashto : \u06a9\u0627\u0628\u0644 , romanized : K\u0101b\u0259l , Persian : \u06a9\u0627\u0628\u0644 , romanized : K\u0101bul ) , situated in the east of the country , is one of the thirty-four provinces of Afghanistan . The capital of the province is Kabul city , which is also Afghanistan 's capital . The population of the Kabul Province is nearly 4 million people as of 2012 , of which almost 80 percent live in the urban areas . The current governor of the province is Muhammad Yaqub Haidari ."
+        },
+        {
+          "url": "/wiki/Kabul",
+          "summary": "Kabul ( Persian : \u06a9\u0627\u0628\u0644 , romanized : K\u0101bol , Pashto : \u06a9\u0627\u0628\u0644 , romanized : K\u0101b\u0259l ) is the capital and largest city of Afghanistan , located in the eastern section of the country . It is also a municipality , forming part of the greater Kabul Province , and divided into 22 districts . According to estimates in 2019 , the population of Kabul is 4.114 million , which includes all the major ethnic groups of Afghanistan . Afghanistan 's only city with a population of over 1 million , Kabul serves as its political , cultural and economical center . Rapid urbanization had made Kabul the world 's 75th largest city . Kabul is located high up in a narrow valley between the Hindu Kush mountains , with an elevation of 1,790 metres ( 5,873 ft ) making it one of the highest capitals in the world . The city is said to be over 3,500 years old , mentioned since at least the time of the Achaemenid Empire . Located at crossroads in Asia - roughly halfway between Istanbul in the west and Hanoi in the east - it is in a strategic location along the trade routes of South and Central Asia , and a key location of the ancient Silk Road . It has been part of the Achaemenids followed by the Seleucids , Mauryans , Kushans , Kabul Shahis , Saffarids , Samanids , Ghaznavids , Ghurids , Khwarazmians , Qarlughids , Khaljis , Timurids , Mughals , and Hotaks , until finally becoming part of the Durrani Empire ( also known as the Afghan Empire ) in 1747 . Kabul became the capital of Afghanistan in 1776 , during the reign of Timur Shah Durrani , the son of Ahmad Shah Durrani . In the early 19th century , the British occupied the city , but after establishing foreign relations , they were compelled to withdraw all forces from Afghanistan . The city was occupied by the Soviets in 1979 but they too abandoned it after the 1988 Geneva Accords were signed ."
+        },
+        {
+          "url": "/wiki/Shrine_of_the_Cloak",
+          "summary": "The Shrine of the Cloak ( Pashto : \u062e\u0631\u0642\u0647 \u0634\u0631\u064a\u0641\u0647 Kherqa Shar\u012bfa ) is located adjacent to the main mosque in Kandahar , Afghanistan . It contains the Kherqa , a cloak believed to have been worn by the Islamic prophet Muhammad during the famous Night Journey in 621 CE . It is said to be one of the holiest sites in Islam , and even considered by some as the heart of Afghanistan . The building 's exteriors are of green marble from Lashkargah , with tiled surfaces and gilded archways . The cloak itself is locked away inside the mosque and is rarely seen . It has been guarded by the same family for over 250 years . Its guardians have traditionally only shown the cloak to recognized leaders of Afghanistan , although in times of great crisis such as natural disasters , it has been publicly displayed as a means of reassurance . The cloak was given to Amir Ahmad Shah Durrani ( regarded as the founder of modern Afghanistan ) by Amir Murad Beg of Bukhara ( in modern Uzbekistan ) in 1768 in order to solidify a treaty between the two leaders . An alternate account states that when Ahmad Shah had traveled to Bukhara , he saw the cloak of Muhammad . He then decided to take the artifact with him to Kandahar , and asked whether he could borrow the cloak from its keepers . They , worrying that he might try to remove it from Bukhara , told him it could not be taken from the city . Ahmad Shah then is said to have pointed to a heavy stela of stone firmly planted in the ground , saying that he would never take the cloak far from the stone ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the only authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Ghurids",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "table_id": "List_of_mosques_in_Afghanistan_0",
+      "answer_text": "Ghurids"
+    }
+  }
+]

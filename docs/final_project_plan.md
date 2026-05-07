@@ -160,13 +160,28 @@ Main tradeoff:
 
 - weaker as a “true multimodal” claim than real image input
 
+### Selected near-term extension path
+
+For the next phase of implementation, the most realistic extension order is:
+
+1. `HybridQA` as the first multimodal extension
+2. `MMMU` as the later image-focused extension
+
+Reason:
+
+- `HybridQA` gives a true text-plus-table setting
+- it has a cleaner source structure for policy reasoning than image inputs
+- it is better for strengthening the security model before taking on image attribution
+- `MMMU` remains valuable, but is better treated as a second extension once the table path is stable
+
 ## Recommended Final Strategy
 
 The recommended final strategy is:
 
 1. finish the security-first core well
-2. attempt a real multimodal extension
-3. if the real multimodal version becomes too costly or unstable, fall back to a structured or symbolic multimodal extension rather than forcing a weak image pipeline
+2. implement a tabular multimodal extension with `HybridQA`
+3. attempt a real image-text extension with `MMMU`
+4. if the image-based version becomes too costly or unstable, keep the stronger tabular extension as the main multimodal result rather than forcing a weak image pipeline
 
 This keeps the multimodal goal central without letting it destroy the core project.
 
@@ -304,10 +319,10 @@ Why:
 
 Needed work:
 
-- choose the multimodal input format
-- build a small but real case set
-- map it into the same schema
-- run the same detector and reporting pipeline
+- first, map `HybridQA` into the local schema and policy model
+- build a small but real text-plus-table extension set
+- run the same detector and reporting pipeline on that extension
+- then scope a smaller `MMMU` image-text extension if time and stability allow
 
 ### 5. Write the final report
 
