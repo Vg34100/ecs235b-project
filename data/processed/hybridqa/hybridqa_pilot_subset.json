@@ -1,0 +1,1094 @@
+[
+  {
+    "case_id": "hybridqa_00009b9649d0dd0a",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "Who were the builders of the mosque in Herat with fire temples ?",
+    "sources": {
+      "user_prompt": "Who were the builders of the mosque in Herat with fire temples ?",
+      "table_evidence": {
+        "title": "List of mosques in Afghanistan",
+        "url": "https://en.wikipedia.org/wiki/List_of_mosques_in_Afghanistan",
+        "header": [
+          "Name",
+          "Province",
+          "City",
+          "Year",
+          "Remarks"
+        ],
+        "rows": [
+          [
+            "Abdul Rahman Mosque",
+            "Kabul Province",
+            "Kabul",
+            "2009",
+            "Largest mosque in Afghanistan"
+          ],
+          [
+            "Friday Mosque of Kandahar",
+            "Kandahar Province",
+            "Kandahar",
+            "1750",
+            "Houses the cloak of the Islamic prophet Muhammad"
+          ],
+          [
+            "Omar Al-Farooq Mosque",
+            "Kandahar Province",
+            "Kandahar",
+            "2014",
+            "Built on the site that was a popular cinema of Kandahar . [ 1 ]"
+          ],
+          [
+            "Great Mosque of Herat",
+            "Herat Province",
+            "Herat",
+            "1446",
+            "The mosque was the city 's first congregational mosque , built on the former site of two smaller Zoroastrian Fire temples destroyed by earthquake and fire"
+          ],
+          [
+            "Shrine of Ali",
+            "Balkh Province",
+            "Mazar-i-Sharif",
+            "?",
+            "Also known as the Blue Mosque of Mazar-i-Sharif"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Abdul_Rahman_Mosque",
+          "summary": "The Abdul Rahman Mosque ( Dari : \u0645\u0633\u062c\u062f \u0639\u0628\u062f\u0627\u0644\u0631\u062d\u0645\u0627\u0646 ; Pashto : \u062f \u0639\u0628\u062f\u0627\u0644\u0631\u062d\u0645\u0627\u0646 \u062c\u0648\u0645\u0627\u062a ) , also known as the Grand Mosque of Kabul , is one of the largest mosques in Afghanistan . It is located in one of Kabul 's central commercial areas called Deh Afghanan , near the Pashtunistan Square , Zarnegar Park , and across the once popular Plaza Hotel . The building is three stories high , built on 3.5 acres of land . One floor of the building is dedicated to women only . The mosque is named after an influential Afghan businessman named Hajji Abdul Rahman who has died but his sons continued the project . Construction of the mosque began in 2001 by Hajji Abdur Rahman but was delayed for several years due to red tape . The mosque has the capacity to serve 10,000 people at a time . There is also a madrasa inside the mosque and a library containing 150,000 books . The major work on the mosque was completed in late 2009 but the official inauguration took place in July 2012 which was attended by the former Afghan President Hamid Karzai and many other high-ranking officials . The building of the mosque is said to have been initially designed by Afghan architect Mir Hafizullah Hashimi . [ citation needed ]"
+        },
+        {
+          "url": "/wiki/Kabul_Province",
+          "summary": "K\u0101bul ( Pashto : \u06a9\u0627\u0628\u0644 , romanized : K\u0101b\u0259l , Persian : \u06a9\u0627\u0628\u0644 , romanized : K\u0101bul ) , situated in the east of the country , is one of the thirty-four provinces of Afghanistan . The capital of the province is Kabul city , which is also Afghanistan 's capital . The population of the Kabul Province is nearly 4 million people as of 2012 , of which almost 80 percent live in the urban areas . The current governor of the province is Muhammad Yaqub Haidari ."
+        },
+        {
+          "url": "/wiki/Kabul",
+          "summary": "Kabul ( Persian : \u06a9\u0627\u0628\u0644 , romanized : K\u0101bol , Pashto : \u06a9\u0627\u0628\u0644 , romanized : K\u0101b\u0259l ) is the capital and largest city of Afghanistan , located in the eastern section of the country . It is also a municipality , forming part of the greater Kabul Province , and divided into 22 districts . According to estimates in 2019 , the population of Kabul is 4.114 million , which includes all the major ethnic groups of Afghanistan . Afghanistan 's only city with a population of over 1 million , Kabul serves as its political , cultural and economical center . Rapid urbanization had made Kabul the world 's 75th largest city . Kabul is located high up in a narrow valley between the Hindu Kush mountains , with an elevation of 1,790 metres ( 5,873 ft ) making it one of the highest capitals in the world . The city is said to be over 3,500 years old , mentioned since at least the time of the Achaemenid Empire . Located at crossroads in Asia - roughly halfway between Istanbul in the west and Hanoi in the east - it is in a strategic location along the trade routes of South and Central Asia , and a key location of the ancient Silk Road . It has been part of the Achaemenids followed by the Seleucids , Mauryans , Kushans , Kabul Shahis , Saffarids , Samanids , Ghaznavids , Ghurids , Khwarazmians , Qarlughids , Khaljis , Timurids , Mughals , and Hotaks , until finally becoming part of the Durrani Empire ( also known as the Afghan Empire ) in 1747 . Kabul became the capital of Afghanistan in 1776 , during the reign of Timur Shah Durrani , the son of Ahmad Shah Durrani . In the early 19th century , the British occupied the city , but after establishing foreign relations , they were compelled to withdraw all forces from Afghanistan . The city was occupied by the Soviets in 1979 but they too abandoned it after the 1988 Geneva Accords were signed ."
+        },
+        {
+          "url": "/wiki/Shrine_of_the_Cloak",
+          "summary": "The Shrine of the Cloak ( Pashto : \u062e\u0631\u0642\u0647 \u0634\u0631\u064a\u0641\u0647 Kherqa Shar\u012bfa ) is located adjacent to the main mosque in Kandahar , Afghanistan . It contains the Kherqa , a cloak believed to have been worn by the Islamic prophet Muhammad during the famous Night Journey in 621 CE . It is said to be one of the holiest sites in Islam , and even considered by some as the heart of Afghanistan . The building 's exteriors are of green marble from Lashkargah , with tiled surfaces and gilded archways . The cloak itself is locked away inside the mosque and is rarely seen . It has been guarded by the same family for over 250 years . Its guardians have traditionally only shown the cloak to recognized leaders of Afghanistan , although in times of great crisis such as natural disasters , it has been publicly displayed as a means of reassurance . The cloak was given to Amir Ahmad Shah Durrani ( regarded as the founder of modern Afghanistan ) by Amir Murad Beg of Bukhara ( in modern Uzbekistan ) in 1768 in order to solidify a treaty between the two leaders . An alternate account states that when Ahmad Shah had traveled to Bukhara , he saw the cloak of Muhammad . He then decided to take the artifact with him to Kandahar , and asked whether he could borrow the cloak from its keepers . They , worrying that he might try to remove it from Bukhara , told him it could not be taken from the city . Ahmad Shah then is said to have pointed to a heavy stela of stone firmly planted in the ground , saying that he would never take the cloak far from the stone ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Ghurids",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00009b9649d0dd0a",
+      "table_id": "List_of_mosques_in_Afghanistan_0",
+      "answer_text": "Ghurids"
+    }
+  },
+  {
+    "case_id": "hybridqa_00013190d4370f73",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "After what season did the number 7 competitor retire ?",
+    "sources": {
+      "user_prompt": "After what season did the number 7 competitor retire ?",
+      "table_evidence": {
+        "title": "1999 Kyalami Superbike World Championship round",
+        "url": "https://en.wikipedia.org/wiki/1999_Kyalami_Superbike_World_Championship_round",
+        "header": [
+          "No",
+          "Rider",
+          "Team",
+          "Motorcycle"
+        ],
+        "rows": [
+          [
+            "1",
+            "Carl Fogarty",
+            "Ducati Performance",
+            "Ducati 996"
+          ],
+          [
+            "4",
+            "Akira Yanagawa",
+            "Kawasaki Racing Team",
+            "Kawasaki ZX-7RR"
+          ],
+          [
+            "5",
+            "Colin Edwards",
+            "Castrol Honda",
+            "Honda RC45"
+          ],
+          [
+            "6",
+            "Gregorio Lavilla",
+            "Kawasaki Racing Team",
+            "Kawasaki ZX-7RR"
+          ],
+          [
+            "7",
+            "Pierfrancesco Chili",
+            "Suzuki Alstare F.S",
+            "Suzuki GSX-R750"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Carl_Fogarty",
+          "summary": "Carl George Fogarty , MBE ( born 1 July 1965 ) , often known as Foggy , is one of the most successful World Superbike racers of all time . He also holds the second highest number of race wins at 59 . He is the son of former motorcycle racer George Fogarty . Retired from racing since 2000 , Fogarty is renowned for his high corner speed riding style , combined with an aggressive competitiveness , which brought him 59 victories and four World Superbike Championships ( 1994 , 1995 , 1998 and 1999 ) . His greatest success came with the factory Ducati team . He was appointed Member of the Order of the British Empire ( MBE ) in the 1998 New Year Honours , and helped to develop the Petronas FP1 racing motorcycle campaigned in the early 2000s . He won the 14th series of I 'm a Celebrity.Get Me Out of Here ! in 2014 and was crowned 'King of the Jungle ' ."
+        },
+        {
+          "url": "/wiki/Ducati_996",
+          "summary": "The Ducati 996 is a Ducati sport bike motorcycle made from 1999 to 2002 , based upon the earlier 916 ."
+        },
+        {
+          "url": "/wiki/Akira_Yanagawa",
+          "summary": "Akira Yanagawa ( \u67f3\u5ddd \u660e , Yanagawa Akira , born 15 July 1971 ) is a motorcycle road racer from Japan . He won three World Superbike Championship races and finished on the podium on 20 further occasions ."
+        },
+        {
+          "url": "/wiki/Kawasaki_ZX-7R_and_7RR",
+          "summary": "The Kawasaki Ninja ZX-7R was a motorcycle in the Ninja sport bike series from the Japanese manufacturer Kawasaki produced from 1989 until 2003 . It remained largely unchanged through its production . Kawasaki used inverted forks starting in 1991 , added ram air using a single tube , and in 1996 , twin tube ram air and Tokico six piston brakes and fully adjustable suspension . From 1989 through 1995 in the US market , Kawasaki called the ZXR-750 and ZXR-750R the ZX-7 and ZX-7R respectively . Starting from 1996 Kawasaki dropped the ZXR name worldwide and the former ZXR-750 was now ZX-7R and the limited edition homologation special ZXR-750R/ZX-7R started in 1991 was now ZX-7RR ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "2006",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00013190d4370f73",
+      "table_id": "1999_Kyalami_Superbike_World_Championship_round_0",
+      "answer_text": "2006"
+    }
+  },
+  {
+    "case_id": "hybridqa_00023988273478d0",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What year was the 1971-72 ECAC Hockey Player of the Year born ?",
+    "sources": {
+      "user_prompt": "What year was the 1971-72 ECAC Hockey Player of the Year born ?",
+      "table_evidence": {
+        "title": "List of ECAC Hockey Player of the Year",
+        "url": "https://en.wikipedia.org/wiki/List_of_ECAC_Hockey_Player_of_the_Year",
+        "header": [
+          "Year",
+          "Winner",
+          "Position",
+          "School"
+        ],
+        "rows": [
+          [
+            "1961-62",
+            "Ron Ryan",
+            "Right wing",
+            "Colby"
+          ],
+          [
+            "1962-63",
+            "Bob Brinkworth",
+            "Center",
+            "Rensselaer"
+          ],
+          [
+            "1963-64",
+            "Bob Brinkworth",
+            "Center",
+            "Rensselaer"
+          ],
+          [
+            "1964-65",
+            "John Cunniff",
+            "Left wing",
+            "Boston College"
+          ],
+          [
+            "1965-66",
+            "Terry Yurkiewicz",
+            "Goaltender",
+            "Clarkson"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/1961\u201362_NCAA_Division_I_men's_ice_hockey_season",
+          "summary": "The 1961-62 NCAA men 's ice hockey season began in November 1961 and concluded with the 1962 NCAA Men 's Ice Hockey Tournament 's championship game on March 17 , 1962 at the Utica Memorial Auditorium in Utica , New York . This was the 15th season in which an NCAA ice hockey championship was held and is the 67th year overall where an NCAA school fielded a team . This was the premier season for ECAC Hockey which began as a conglomerate of 28 eastern schools among which 8 teams were selected by a committee to participate in a postseason tournament that would determine which university ( s ) would receive bids to the NCAA tournament . Due to the sheer number of schools and the lack of any scheduling criteria the teams played a vastly unbalanced schedule . As a result , the regular season standings were effectively immaterial in determining the conference tournament participants and the committee based their selections on which teams they felt were the best representatives . Despite already being in the Tri-State League Clarkson , Rensselaer and St. Lawrence were also founding members of ECAC Hockey and played concurrently in both conferences until the Tri-State League folded in 1972 . This was the first season for Minnesota-Duluth as a university sponsored program ."
+        },
+        {
+          "url": "/wiki/Ron_Ryan",
+          "summary": "Ronald Ryan ( born July 11 , 1938 ) is a Canadian former professional ice hockey coach and executive ."
+        },
+        {
+          "url": "/wiki/Winger_(ice_hockey)",
+          "summary": "Winger , in the game of ice hockey , is a forward position of a player whose primary zone of play on the ice is along the outer playing area . They typically work by flanking the centre forward . Originally the name was given to forward players who went up and down the sides of the rink . Nowadays , there are different types of wingers in the game - out-and-out goal scorers , checkers who disrupt the opponents , and forwards who work along the boards and in the corners . They tend to be bigger than centreman and smaller than defenseman . This position is commonly referred to by the side of the rink that the winger normally takes , i.e . left wing or right wing ."
+        },
+        {
+          "url": "/wiki/Colby_Mules",
+          "summary": "The Colby Mules ( formerly known as the White Mules ) are the varsity and club athletic teams of Colby College , a liberal arts college located in Waterville , Maine . Colby 's varsity teams compete in the New England Small College Athletic Conference of the National Collegiate Athletic Association ( NCAA ) Division III . The College offers 32 varsity teams , plus club sports , intramural sports called I-play ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "1950",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00023988273478d0",
+      "table_id": "List_of_ECAC_Hockey_Player_of_the_Year_0",
+      "answer_text": "1950"
+    }
+  },
+  {
+    "case_id": "hybridqa_000356071ebf888a",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What battle did the man born on 7 December 1839 fight in ?",
+    "sources": {
+      "user_prompt": "What battle did the man born on 7 December 1839 fight in ?",
+      "table_evidence": {
+        "title": "List of Zulu War Victoria Cross recipients",
+        "url": "https://en.wikipedia.org/wiki/List_of_Zulu_War_Victoria_Cross_recipients",
+        "header": [
+          "Name",
+          "Unit",
+          "Date of action",
+          "Place of action"
+        ],
+        "rows": [
+          [
+            "William Allan",
+            "024 24th Regiment of Foot",
+            "1879-02-22 22-23 January 1879",
+            "Battle of Rorke 's Drift , Natal Colony"
+          ],
+          [
+            "William Beresford",
+            "009 9th Lancers",
+            "1879-07-03 3 July 1879",
+            "White Umfolozi River ( near Ulundi ) , Zululand"
+          ],
+          [
+            "Anthony Booth",
+            "080 80th Regiment of Foot",
+            "1879-03-12 12 March 1879",
+            "Battle of Intombe , Transvaal"
+          ],
+          [
+            "Gonville Bromhead",
+            "024 24th Regiment of Foot",
+            "1879-02-22 22-23 January 1879",
+            "Battle of Rorke 's Drift , Natal Colony"
+          ],
+          [
+            "Edward Browne",
+            "024 24th Regiment of Foot",
+            "1879-03-28 28 March 1879",
+            "Battle of Kambula , Zululand"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/William_Wilson_Allen",
+          "summary": "William Wilson Allen , VC ( circa 1843 - 12 March 1890 ) was an English recipient of the Victoria Cross ( VC ) for his actions at the Battle of Rorke 's Drift in January 1879 , the highest and most prestigious award for valour in the face of the enemy that can be awarded to British and Commonwealth forces ."
+        },
+        {
+          "url": "/wiki/South_Wales_Borderers",
+          "summary": "The South Wales Borderers was a line infantry regiment of the British Army in existence for 280 years . It first came into existence , as the 24th Regiment of Foot in 1689 . Based at Brecon , the regiment recruited from the border counties of Monmouthshire , Herefordshire and Brecknockshire , but was not called the South Wales Borderers until the Childers Reforms of 1881 . The regiment served in a great many conflicts , including the American Revolutionary War , various conflicts in India , the Zulu War , Second Boer War , and World War I and World War II . In 1969 the regiment was amalgamated with the Welch Regiment to form the Royal Regiment of Wales ."
+        },
+        {
+          "url": "/wiki/Battle_of_Rorke's_Drift",
+          "summary": "The Battle of Rorke 's Drift , also known as the Defence of Rorke 's Drift , was an engagement in the Anglo-Zulu War . The successful defence of the mission station of Rorke 's Drift , under the command of Lieutenants John Chard of the Royal Engineers and Gonville Bromhead , followed Britain 's defeat at the Battle of Isandlwana on 22 January 1879 and continued into the following day . Just over 150 British and colonial troops defended the station against attacks by 3,000 to 4,000 Zulu warriors . The massive but piecemeal attacks by the Zulu on Rorke 's Drift came very close to defeating the much smaller garrison , but were repelled . Eleven Victoria Crosses were awarded to the defenders , along with a number of other decorations and honours ."
+        },
+        {
+          "url": "/wiki/Natal_Colony",
+          "summary": "The Colony of Natal was a British colony in south-eastern Africa . It was proclaimed a British colony on 4 May 1843 after the British government had annexed the Boer Republic of Natalia , and on 31 May 1910 combined with three other colonies to form the Union of South Africa , as one of its provinces . It is now the KwaZulu-Natal province of South Africa . It was originally only about half the size of the present province , with the north-eastern boundaries being formed by the Tugela and Buffalo rivers beyond which lay the independent Kingdom of Zululand ( kwaZulu in the Zulu language ) . Fierce conflict with the Zulu population led to the evacuation of Durban , and eventually , the Boers accepted British annexation in 1844 under military pressure . A British governor was appointed to the region and many settlers emigrated from Europe and the Cape Colony . The British established a sugar cane industry in the 1860s . Farm owners had a difficult time attracting Zulu labourers to work on their plantations , so the British brought thousands of indentured labourers from India . As a result of the importation of Indian labourers , Durban became the home to the largest concentration of Indians outside India ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Battle of Hlobane",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000356071ebf888a",
+      "table_id": "List_of_Zulu_War_Victoria_Cross_recipients_0",
+      "answer_text": "Battle of Hlobane"
+    }
+  },
+  {
+    "case_id": "hybridqa_0003d159df86ed53",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What is the borough in which Kia Oval is located ?",
+    "sources": {
+      "user_prompt": "What is the borough in which Kia Oval is located ?",
+      "table_evidence": {
+        "title": "List of sponsored sports venues",
+        "url": "https://en.wikipedia.org/wiki/List_of_sponsored_sports_venues",
+        "header": [
+          "Name",
+          "Location",
+          "Type"
+        ],
+        "rows": [
+          [
+            "Allianz Park",
+            "Hendon , London",
+            "Rugby union and athletics stadium"
+          ],
+          [
+            "Kia Oval",
+            "Kennington",
+            "Cricket stadium"
+          ],
+          [
+            "Banks 's Stadium",
+            "Walsall",
+            "Football stadium"
+          ],
+          [
+            "American Express Community Stadium",
+            "Falmer",
+            "Football stadium"
+          ],
+          [
+            "The Balfour Webnet Darlington Arena",
+            "Darlington",
+            "Football stadium"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Barnet_Copthall",
+          "summary": "Barnet Copthall is a leisure complex on the Hendon-Mill Hill borders in London NW4 . The complex houses a local authority-owned swimming pool and gymnasium facilities , a golf-driving range with 9 hole pitch and putt run by Metro Golf , and a stadium , Allianz Park , used primarily for rugby and athletics . The stadium is the home of rugby union Premiership side Saracens ."
+        },
+        {
+          "url": "/wiki/Hendon",
+          "summary": "Hendon is a London urban area in the Borough of Barnet , 7 miles ( 11 km ) northwest of Charing Cross , between the A41 , A406 and the M1 motorway . Hendon was an ancient parish in the county of Middlesex and has been part of Greater London since 1965 . It used to be the home for the London Aerodrome which later became RAF Hendon . From 1972 the site of the RAF station was gradually handed over to the RAF Museum London . Hendon had a population of 52,972 in 2011 which includes the West Hendon and Colindale wards ."
+        },
+        {
+          "url": "/wiki/The_Oval",
+          "summary": "The Oval , known for sponsorship reasons as the Kia Oval , is an international cricket ground in Kennington , in the London Borough of Lambeth , in south London . The Oval has been the home ground of Surrey County Cricket Club since it was opened in 1845 . It was the first ground in England to host international Test cricket in September 1880 . The final Test match of the English season is traditionally played there . In addition to cricket , The Oval has hosted a number of other historically significant sporting events . In 1870 , it staged England 's first international football match , versus Scotland . It hosted the first FA Cup final in 1872 , as well as those between 1874 and 1892 . In 1876 , it held both the England v. Wales and England v. Scotland rugby international matches and , in 1877 , rugby 's first varsity match . It also hosted the final of the 2017 ICC Champions Trophy ."
+        },
+        {
+          "url": "/wiki/Kennington",
+          "summary": "Kennington is a district in south London , England . It is mainly within the London Borough of Lambeth , running along the boundary with the London Borough of Southwark , a boundary which can be discerned from the early medieval period between the Lambeth and St George 's parishes of those boroughs respectively . It is located 1.4 miles ( 2.3 km ) south of Charing Cross in Inner London and is identified as a local centre in the London Plan . It was a royal manor in the parish of St Mary , Lambeth in the county of Surrey and was the administrative centre of the parish from 1853 . Proximity to central London was key to the development of the area as a residential suburb and it was incorporated into the metropolitan area of London in 1855 . Kennington is the location of three significant London landmarks : the Oval cricket ground , the Imperial War Museum , and Kennington Park . Its population at the United Kingdom Census 2011 was 15,106 . Kennington is served by Kennington Police Station ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Lambeth",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "0003d159df86ed53",
+      "table_id": "List_of_sports_venues_with_sole_naming_rights_36",
+      "answer_text": "Lambeth"
+    }
+  },
+  {
+    "case_id": "hybridqa_00046dbd53dd3200",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What is the capacity of the venue that was named in honor of Juan Antonio Samaranch in 2010 after his death ?",
+    "sources": {
+      "user_prompt": "What is the capacity of the venue that was named in honor of Juan Antonio Samaranch in 2010 after his death ?",
+      "table_evidence": {
+        "title": "Venues of the 1984 Winter Olympics",
+        "url": "https://en.wikipedia.org/wiki/Venues_of_the_1984_Winter_Olympics",
+        "header": [
+          "Venue",
+          "Sports",
+          "Capacity"
+        ],
+        "rows": [
+          [
+            "Bjela\u0161nica",
+            "Alpine skiing ( men )",
+            "Not listed"
+          ],
+          [
+            "Igman , Malo Polje",
+            "Nordic combined ( ski jumping ) , Ski jumping",
+            "Not listed"
+          ],
+          [
+            "Igman , Veliko Polje",
+            "Biathlon , Cross-country skiing , Nordic combined ( Cross-country skiing )",
+            "Not listed"
+          ],
+          [
+            "Jahorina",
+            "Alpine skiing ( women )",
+            "Not listed"
+          ],
+          [
+            "Ko\u0161evo Stadium",
+            "Opening ceremonies",
+            "50,000"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Bjela\u0161nica",
+          "summary": "Bjela\u0161nica ( pronounced [ bj\u011bla\u02d0\u0283nit\u0361sa ] ) is a mountain in central Bosnia and Herzegovina . It is found directly to the southwest of Sarajevo , bordering Mt . Igman . Bjela\u0161nica 's tallest peak , by which the whole mountain group got its name , rises to an elevation of 2067 meters ( 6782 feet ) . Other notable peaks are Krvavac ( 2061 m ) , Mali Vlahinja ( 2055 m ) , and Hranisava ( 1964 m ) . The Bjela\u0161nica range is bordered by the Rakitnica in the south , the Neretva in the west , Mt Igman in the north-east and Mt Ivan in the north-west . Only at 20 minutes distance of Sarajevo , it is a popular tourist attraction for hiking and skiing . Bjela\u0161nica has been , in certain areas , the site of extensive combat during the 1992-'95 Siege of Sarajevo and particular areas pose a high mine risk . There are numerous trails set up and maintained by local mountain clubs that lead to the bald peaks higher up . The mountain is also popular with mountain bikers and has become recently a frequent base for paragliders ."
+        },
+        {
+          "url": "/wiki/Alpine_skiing_at_the_1984_Winter_Olympics",
+          "summary": "Alpine Skiing at the 1984 Winter Olympics consisted of six alpine skiing events , held 13-19 February in Sarajevo , Yugoslavia . The men 's races were at Bjela\u0161nica and the women 's at Jahorina . Due to weather delays ( a blizzard ) , both downhill races were postponed several days and run after the giant slalom races . This was the first Winter Olympics since 1936 which did not also serve as the world championships for alpine skiing . It was the last Olympic program with just six events for alpine skiing ; ten events were held in 1988 with the return of the combined event and the addition of Super G. Banned from competition at these Olympics by the International Ski Federation ( FIS ) were top World Cup racers Ingemar Stenmark of Sweden and Hanni Wenzel of Liechtenstein , both double gold medalists at the 1980 Winter Olympics and leading the World Cup in 1984 . They had accepted promotional payments directly , rather than through their national ski federations . Also absent was Marc Girardelli , who had not yet gained his citizenship from Luxembourg and was not allowed to compete for his native Austria ."
+        },
+        {
+          "url": "/wiki/Igman",
+          "summary": "Igman ( pronounced [ \u00ee\u0261man ] ) is a mountain plateau in central Bosnia and Herzegovina . Geologically , Igman is part of the Dinaric Alps and formed largely of secondary and tertiary sedimentary rock , mostly Limestone . It is located southwest of Sarajevo , bordering the Bjela\u0161nica range in the south and west , Had\u017ei\u0107i and Ilid\u017ea in the north , and the river \u017deljeznica in the east . Igman 's highest point , Crni vrh , west of the Malo Polje road , at an altitude of 1,510 metres ( 4,954 feet ) , the homonym highest elevation on the east side of this road reaches an elevation of 1,502 metres ( 4,928 feet ) . Most of Igman is covered with mixed forest with local pastures ( f.i . : Veliko Polje : Large Field , Malo Polje : Small Field ) . Igman was the location of the lowest recorded temperature in the region , \u221243 \u00b0C ( \u221245 \u00b0F ) . Igman has been the site of extensive combat during the 1992-95 Siege of Sarajevo and certain areas , in particular the surroundings of former front lines , feature a high mine risk ."
+        },
+        {
+          "url": "/wiki/Nordic_combined_at_the_1984_Winter_Olympics",
+          "summary": "Nordic combined at the 1984 Winter Olympics , consisted of one event , held from 11 February to 12 February . The ski jumping portion took place at Igman Olympic Jumps , while the cross-country portion took place at Igman ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "15,000",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00046dbd53dd3200",
+      "table_id": "Venues_of_the_1984_Winter_Olympics_0",
+      "answer_text": "15,000"
+    }
+  },
+  {
+    "case_id": "hybridqa_0005a713626c28a0",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "Which teams has the player drafted by the Seattle Mariners in 2008 out of University of Georgia played for in the MLB ?",
+    "sources": {
+      "user_prompt": "Which teams has the player drafted by the Seattle Mariners in 2008 out of University of Georgia played for in the MLB ?",
+      "table_evidence": {
+        "title": "2008 Seattle Mariners season",
+        "url": "https://en.wikipedia.org/wiki/2008_Seattle_Mariners_season",
+        "header": [
+          "Round ( Pick )",
+          "Name",
+          "Position",
+          "School"
+        ],
+        "rows": [
+          [
+            "1 ( 20 )",
+            "Joshua Fields",
+            "Right-handed pitcher",
+            "University of Georgia"
+          ],
+          [
+            "2 ( 20 )",
+            "Dennis Raben",
+            "Outfielder",
+            "University of Miami"
+          ],
+          [
+            "3 ( 98 )",
+            "Aaron Pribanic",
+            "Right-handed pitcher",
+            "University of Nebraska"
+          ],
+          [
+            "4 ( 132 )",
+            "Steven Hensley",
+            "Right-handed pitcher",
+            "Elon University"
+          ],
+          [
+            "5 ( 162 )",
+            "Brett Lorin",
+            "Right-handed pitcher",
+            "Long Beach State University"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Josh_Fields_(pitcher)",
+          "summary": "Joshua David Fields ( born August 19 , 1985 ) is an American professional baseball pitcher who is a free agent . He has played in Major League Baseball ( MLB ) for the Houston Astros and Los Angeles Dodgers ."
+        },
+        {
+          "url": "/wiki/Right-handed",
+          "summary": "In human biology , handedness is a better , faster , or more precise performance or individual preference for use of a hand , known as the dominant hand ; the incapable , less capable or less preferred hand is called the non-dominant hand . Right-handedness is the most common form , and it is estimated that around 90% of the worlds population is right-handed . Handedness is often defined by which hand one writes with , as it is fairly common for people to prefer to do some tasks with each hand . However , true mixed-handedness is rare , as most people clearly prefer one hand for most purposes . Most of the current research would suggest that left handedness has an epigenetic marker , a combination of genetics , biology and the environment . Because the vast majority of the population is right-handed , many devices are designed for use by a right-handed person , which makes their use by left-handed people more difficult . In many countries across the world , left-handed people are or were required to write with their right hand . However , left-handed people have an advantage in sports that involve aiming at a target , because their opponents will be more accustomed to the right-handed majority . As a result , they are over-represented in baseball , tennis , fencing , cricket , and boxing ."
+        },
+        {
+          "url": "/wiki/Pitcher",
+          "summary": "In baseball , the pitcher is the player who throws the baseball from the pitcher 's mound toward the catcher to begin each play , with the goal of retiring a batter , who attempts to either make contact with the pitched ball or draw a walk . In the numbering system used to record defensive plays , the pitcher is assigned the number 1 . The pitcher is often considered the most important player on the defensive side of the game , and as such is situated at the right end of the defensive spectrum . There are many different types of pitchers , such as the starting pitcher , relief pitcher , middle reliever , lefty specialist , setup man , and the closer . Traditionally , the pitcher also bats . Starting in 1973 with the American League and spreading to further leagues throughout the 1980s and 1990s , the hitting duties of the pitcher have generally been given over to the position of designated hitter , a cause of some controversy . The National League in Major League Baseball and the Japanese Central League are among the remaining leagues that have not adopted the designated hitter position ."
+        },
+        {
+          "url": "/wiki/University_of_Georgia",
+          "summary": "The University of Georgia ( UGA or Georgia ) is a public research university with its main campus in Athens , Georgia . Founded in 1785 , it is one of the oldest public universities in the United States . The university is classified among R1 : Doctoral Universities - Very high research activity , and as having more selective undergraduate admissions , its most selective admissions category , while the ACT Assessment Student Report places UGA admissions in the Highly Selective category , the highest classification . In keeping with the teaching portion of its motto , the university has a student-to-faculty ratio of 17 students per faculty member , and 46 percent of its classes have fewer than 20 students . In its 2020 rankings , U.S. News & World Report ranked the university tied for 50th among all U.S. public and private national universities and 16th among all public ones . In addition to the main campuses in Athens with their approximately 470 buildings , the university has two smaller campuses located in Tifton and Griffin . The university has two satellite campuses located in Atlanta and Lawrenceville . The university operates several service and outreach stations spread across the state . The total acreage of the university in 30 Georgia counties is 41,539 acres ( 168.10 km2 ) . The university also owns a residential education and research center in Washington , DC , as well as three international residential and research centers located at Oxford University in Oxford , England , at Cortona , Italy , and at Monteverde , Costa Rica . Student life includes more than 700 student organizations . The University of Georgia 's intercollegiate sports teams , commonly known by their Georgia Bulldogs nickname , compete in National Collegiate Athletic Association ( NCAA ) Division I and the Southeastern Conference ( SEC ) ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Houston Astros and Los Angeles Dodgers",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "0005a713626c28a0",
+      "table_id": "2008_Seattle_Mariners_season_3",
+      "answer_text": "Houston Astros and Los Angeles Dodgers"
+    }
+  },
+  {
+    "case_id": "hybridqa_000978f6ac4a6a39",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What is the status of the camp in the town that split from Stonington in 1724 ?",
+    "sources": {
+      "user_prompt": "What is the status of the camp in the town that split from Stonington in 1724 ?",
+      "table_evidence": {
+        "title": "List of council camps (Boy Scouts of America)",
+        "url": "https://en.wikipedia.org/wiki/List_of_council_camps_(Boy_Scouts_of_America)",
+        "header": [
+          "Camp name",
+          "Council",
+          "Location",
+          "Status",
+          "Notes"
+        ],
+        "rows": [
+          [
+            "Camp Aquila ( formerly Camp Mauwehu )",
+            "Connecticut Yankee Council",
+            "Candlewood Lake , Sherman , CT",
+            "Closed",
+            "Located on Candlewood Lake in Sherman , CT. , the camp was sold in 1982 along with Camp Toquam in Goshen"
+          ],
+          [
+            "Camp Cochipianee",
+            "Bristol Area Council",
+            "Goshen , CT",
+            "Closed",
+            "The camp was founded in 1928 by the Bristol Area Council and was sold after the New Britain Area Council and the Bristol Area Council were merged in 1972"
+          ],
+          [
+            "Camp Irving",
+            "Housatonic Council",
+            "Shelton , CT",
+            "Closed",
+            "The camp was located in Shelton in the Birchbank area along the Housatonic River . It was closed in 1945 and the buildings were razed in 1948"
+          ],
+          [
+            "Camp Mattatuck",
+            "Connecticut Rivers Council",
+            "Plymouth , CT",
+            "Active",
+            "Mattatuck Council purchased 170 acres in 1938 and the camp opened the following year"
+          ],
+          [
+            "Camp Nahaco",
+            "Connecticut Rivers Council",
+            "Woodstock , CT",
+            "Sold",
+            "Previously called Camp Keemosabee , the camp was purchased by the towns of Woodstock and Eastford on March 3 , 2003 . The 120 acre site is now permanently protected from development and the Boy Scouts still have use of the property"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Candlewood_Lake",
+          "summary": "Candlewood Lake is a manmade lake located in Fairfield and Litchfield counties of western Connecticut , in the northeastern United States . At 8.4 square miles ( 22 km2 ) , it is the largest lake in Connecticut . The lake is bordered by five towns : Brookfield , Danbury , New Fairfield , New Milford , and Sherman . Some of the most expensive real estate in Connecticut is located on the shores of the lake , in the towns of Brookfield , New Fairfield , New Milford , and Sherman ."
+        },
+        {
+          "url": "/wiki/Sherman,_Connecticut",
+          "summary": "Sherman is the northernmost and least populous town of Fairfield County , Connecticut , United States . The population was 3,581 at the 2010 census . The town was formed in 1802 from the northern part of New Fairfield . It is named for Roger Sherman , the only person who signed all four founding documents of the United States of America . He also had a cobblers shop in the north end of town which has been reconstructed behind the Northrup House in the center of town . Sherman has been named Best Small Town in Connecticut three times by Connecticut Magazine . The Appalachian Trail goes through the northern end of Sherman . Part of Squantz Pond is in the town . Sherman has one area on the National Register of Historic Places : the Sherman Historic District , bounded roughly by the intersection of Old Greenswood Road and Route 37 , northeast past the intersection of Route 37 East and Route 39 North and Sawmill Road . The district was added to the National Register on August 31 , 1991 . Sherman is the only town in Fairfield County in the 860 area code ; the remainder of the county is served by the area code 203/area code 475 overlay ."
+        },
+        {
+          "url": "/wiki/Camp_Cochipianee",
+          "summary": "The headquarters of the Connecticut Rivers Council of the Boy Scouts of America is located in East Hartford , Connecticut . The present council was formed as the result of the merger between the Indian Trails Council of Norwich , Connecticut and Long Rivers Council of Hartford , Connecticut . Now it is the largest council in the state with a youth membership of over 17,000 and a volunteer base of nearly 10,000 adults , serving for over half of the state . The council 's camps include the June Norcross Webster Scout Reservation in Ashford , Camp Mattatuck in Plymouth and Camp Workcoeman in New Hartford . See Boy Scout Camps in Connecticut , past and present below for more information on the individual camps . The council 's Order of the Arrow Lodge is the Tschitani Lodge # 10 ."
+        },
+        {
+          "url": "/wiki/Goshen,_Connecticut",
+          "summary": "Goshen is a town in Litchfield County , Connecticut , United States . The population was 2,976 at the 2010 census ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Closed",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000978f6ac4a6a39",
+      "table_id": "Local_council_camps_of_the_Boy_Scouts_of_America_6",
+      "answer_text": "Closed"
+    }
+  },
+  {
+    "case_id": "hybridqa_000b2e547fa81918",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What year was the building built with date listed # 94000865 ?",
+    "sources": {
+      "user_prompt": "What year was the building built with date listed # 94000865 ?",
+      "table_evidence": {
+        "title": "National Register of Historic Places listings in Montana",
+        "url": "https://en.wikipedia.org/wiki/National_Register_of_Historic_Places_listings_in_Montana",
+        "header": [
+          "",
+          "Name on the Register",
+          "Date listed",
+          "Location",
+          "City or town"
+        ],
+        "rows": [
+          [
+            "1",
+            "Carnegie Public Library",
+            "July 24 , 1986 ( # 86001934 )",
+            "447 4th Ave. 48\u00b032\u203257\u2033N 109\u00b040\u203235\u2033W / 48.549167\u00b0N 109.676389\u00b0W / 48.549167 ; -109.676389 ( Carnegie Public Library )",
+            "Havre"
+          ],
+          [
+            "2",
+            "H. Earl Clack House",
+            "October 24 , 1985 ( # 85003385 )",
+            "532 2nd Ave. 48\u00b032\u203254\u2033N 109\u00b040\u203248\u2033W / 48.548333\u00b0N 109.680000\u00b0W / 48.548333 ; -109.680000 ( H. Earl Clack House )",
+            "Havre"
+          ],
+          [
+            "3",
+            "Fort Assinniboine",
+            "May 31 , 1989 ( # 89000040 )",
+            "County Route 82nd Ave. West , 0.5 miles southeast of U.S. Route 87 48\u00b029\u203259\u2033N 109\u00b047\u203239\u2033W / 48.499722\u00b0N 109.794167\u00b0W / 48.499722 ; -109.794167 ( Fort Assinniboine )",
+            "Havre"
+          ],
+          [
+            "4",
+            "Havre Residential Historic District",
+            "October 5 , 1989 ( # 89001630 )",
+            "Roughly bounded by 3rd St. , 7th Ave. , 11th St. , 5th Ave. , 10th St. , 3rd Ave. , 7th St. , and 1st Ave. 48\u00b032\u203248\u2033N 109\u00b040\u203238\u2033W / 48.546667\u00b0N 109.677222\u00b0W / 48.546667 ; -109.677222 ( Havre Residential Historic District )",
+            "Havre"
+          ],
+          [
+            "5",
+            "Heltne Oil Company",
+            "August 16 , 1994 ( # 94000865 )",
+            "140 1st St. 48\u00b033\u203214\u2033N 109\u00b040\u203244\u2033W / 48.553889\u00b0N 109.678889\u00b0W / 48.553889 ; -109.678889 ( Heltne Oil Company )",
+            "Havre"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Carnegie_Public_Library_(Havre,_Montana)",
+          "summary": "The Carnegie Public Library in Havre , Montana is a historic Carnegie library built in 1914 which was listed on the National Register of Historic Places in 1986 . It is in the Classical revival style . It was also known as the Havre Public Library and later as the Old Carnegie Library . In 2017 it is a former library building and is occupied by the Old Library Gallery . Hopes for obtaining Carnegie funds for a library were expressed in the Milk River Eagle newspaper by 1901 . A first library in Havre was started by 50 women who formed a Women 's Club and subscribed for twenty-five cents per month . A room in the Havre Security State Bank was used to lend out its initial 200 donated books . The library moved to the Havre City Hall by 1906 . The Havre Plaindealer newspaper noted that Glasgow , Montana , fifty miles away , successfully built a Carnegie library in 1908 . By 1911 the women 's club and others had lobbied for local tax funding to support a librarian , and the Havre Library Board lobbied the City Council to purchase land at 4th Avenue and 5th Street to build a library . ( Having land and demonstrating community support/ability to maintain a library were requirement for Carnegie funding . ) In 1913 , $ 12,000 funding for construction was approved by Carnegie , and the building was built within a year ."
+        },
+        {
+          "url": "/wiki/Havre,_Montana",
+          "summary": "Havre ( /\u02c8h\u00e6v\u0259r/ HAV-\u0259r ) is the county seat and largest city in Hill County , Montana , in the United States . Havre is nicknamed the crown jewel of the Hi-Line . It is said to be named after the city of Le Havre in France . As of the 2010 census the population was 9,310 , and in 2018 the estimated population was 9,715 ."
+        },
+        {
+          "url": "/wiki/H._Earl_Clack_House",
+          "summary": "The H. Earl Clack House is a historic house located at 532 Second Avenue in Havre , Montana . It is locally significant as a very good example of a classically-inspired Georgian Revival dwelling . It was added to the National Register of Historic Places on October 24 , 1985 ."
+        },
+        {
+          "url": "/wiki/Fort_Assinniboine",
+          "summary": "Fort Assinniboine was a United States Army fort located in present-day north central Montana ( historically within the military Department of Dakota ) . It was built in 1879 and operated by the Army through 1911 . The 10th Cavalry Buffalo Soldiers , made up of African-American soldiers , were among the units making up the garrison at the fort . Determining that this fort was no longer needed after the end of the Indian Wars , the US Army closed and abandoned it . In 1916 Congress authorized a reservation for the Rocky Boy 's Band of Chippewa , who were landless . It became known as Rocky Boy 's Indian Reservation , named after the chief who had sought the reservation . A portion of the fort was ceded in 1916 for use as a reservation ; the land extended in both Hill and Chouteau counties . This was intended for landless Chippewa who had been pushed west out of their traditional territory . In the event , landless Cree and Metis , refugees from Canada , also settled at the reservation ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "1939",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000b2e547fa81918",
+      "table_id": "National_Register_of_Historic_Places_listings_in_Montana_8",
+      "answer_text": "1939"
+    }
+  },
+  {
+    "case_id": "hybridqa_000bc36c03f433dc",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "How many social media sites are used to gather votes for the 2016 award ?",
+    "sources": {
+      "user_prompt": "How many social media sites are used to gather votes for the 2016 award ?",
+      "table_evidence": {
+        "title": "Sebastian Stan",
+        "url": "https://en.wikipedia.org/wiki/Sebastian_Stan",
+        "header": [
+          "Year",
+          "Award",
+          "Category",
+          "Nominated work",
+          "Result"
+        ],
+        "rows": [
+          [
+            "2013",
+            "Critics ' Choice Television Award",
+            "Best Supporting Actor in a Movie/Miniseries",
+            "Political Animals",
+            "Nominated"
+          ],
+          [
+            "2013",
+            "Gold Derby Award",
+            "TV Movie/Mini Supporting Actor",
+            "Political Animals",
+            "Nominated"
+          ],
+          [
+            "2013",
+            "Online Film & Television Association Award",
+            "Best Supporting Actor in a Motion Picture or Miniseries",
+            "Political Animals",
+            "Nominated"
+          ],
+          [
+            "2015",
+            "MTV Movie Award",
+            "Best Fight ( shared with Chris Evans )",
+            "Captain America : The Winter Soldier",
+            "Nominated"
+          ],
+          [
+            "2016",
+            "Teen Choice Award",
+            "Choice Movie Chemistry",
+            "Captain America : Civil War",
+            "Nominated"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Critics'_Choice_Television_Award",
+          "summary": "The Critics ' Choice Television Awards are accolades that are presented annually by the Broadcast Television Journalists Association ( BTJA ) ( US ) . They were established in 2011 , and the first ceremony was held on June 20 , 2011 , and streamed live on VH1.com . The fourth ceremony was televised live , for the first time in award history , on 19 June 2014 on The CW . In October 2014 , the A & E Network was granted exclusive rights to broadcast the television and film awards in 2015 and 2016 ."
+        },
+        {
+          "url": "/wiki/Political_Animals_(miniseries)",
+          "summary": "Political Animals is a six-episode American comedy-drama miniseries created by Greg Berlanti . The series aired in the United States on USA Network from July 15 through August 19 , 2012 . Sigourney Weaver portrays Elaine Barrish , a divorced former First Lady and Governor of Illinois , as well as the current Secretary of State . Weaver and the show 's production team acknowledge that the lead character has some similarities to Hillary Clinton . They say that the premise of the show is very much about all families who have been in the White House , the price they 've paid for being there and the fact that those same families will often try or continue to try to get back into the White House again . While it was speculated that the miniseries would lead into a full season , on November 2 , 2012 , USA Network announced their decision to stick with their initial plan of producing it as a miniseries ."
+        },
+        {
+          "url": "/wiki/Gold_Derby_Award",
+          "summary": "The Gold Derby Awards ( or Gold Derby TV and Film Awards ) are awards given by the website Goldderby.com ( Gold Derby ) for television and film . The awards began in 2003 . Owned by Jay Penske since 2015 , it is a brand of the Penske Media Corporation . For the television awards , the competition is open to programs released or aired during the calendar year , usually before the Primetime Emmy Awards . Winners are selected entirely by a written balloting of active members ."
+        },
+        {
+          "url": "/wiki/MTV_Movie_Award",
+          "summary": "The MTV Movie & TV Awards ( formerly known as the MTV Movie Awards ) is a film and television awards show presented annually on MTV . The nominees are decided by producers and executives at MTV . Winners are decided online by the general public . Presently , voting is done through MTV 's official website through a Movie & TV Awards voting website . The 2017 MTV Movie & TV Awards took place on May 7 , 2017 , and featured the first time men and women competing jointly in the acting categories . Winners are presented with the golden popcorn statue , made by New York firm , Society Awards ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "4",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000bc36c03f433dc",
+      "table_id": "Sebastian_Stan_2",
+      "answer_text": "4"
+    }
+  },
+  {
+    "case_id": "hybridqa_000dd4e9c4d1b1f3",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What mountain range of the Himalayas is the constituency of Pritam Singh Panwar located at the foothills of ?",
+    "sources": {
+      "user_prompt": "What mountain range of the Himalayas is the constituency of Pritam Singh Panwar located at the foothills of ?",
+      "table_evidence": {
+        "title": "Uttarakhand Legislative Assembly",
+        "url": "https://en.wikipedia.org/wiki/Uttarakhand_Legislative_Assembly",
+        "header": [
+          "S. No",
+          "Constituency",
+          "Elected Member",
+          "Party affiliation"
+        ],
+        "rows": [
+          [
+            "1",
+            "Purola ( SC )",
+            "Raj Kumar",
+            "INC"
+          ],
+          [
+            "2",
+            "Yamunotri",
+            "Kedar Singh Rawat",
+            "BJP"
+          ],
+          [
+            "3",
+            "Gangotri",
+            "Gopal Singh Rawat",
+            "BJP"
+          ],
+          [
+            "4",
+            "Badrinath",
+            "Mahendra Bhatt",
+            "BJP"
+          ],
+          [
+            "5",
+            "Tharali ( SC )",
+            "Munni Devi Shah",
+            "BJP"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Purola_(Uttarakhand_Assembly_constituency)",
+          "summary": "Purola ( Vidhan Sabha constituency ) is one of the 70 assembly constituencies of Uttarakhand a northern state of India . Purola is part of Tehri Garhwal Lok Sabha constituency ."
+        },
+        {
+          "url": "/wiki/Raj_Kumar_(politician)",
+          "summary": "Raj Kumar is an Indian politician from Uttarakhand . He represents the Indian National Congress ."
+        },
+        {
+          "url": "/wiki/Yamunotri",
+          "summary": "Yamunotri is the source of the Yamuna River and the seat of the Goddess Yamuna in Hinduism . It is situated at an altitude of 3,293 metres ( 10,804 ft ) in the Garhwal Himalayas and located approximately 30 kilometers ( 19 mi ) North of Uttarkashi , the headquarters of the Uttarkashi district in the Garhwal Division of Uttarakhand , India . It is one of the four sites in India 's Chhota Char Dham pilgrimage . The sacred shrine of Yamunotri , source of the river Yamuna , is the westernmost shrine in the Garhwal Himalayas , perched atop a flank of Bandar Poonch Parvat . The chief attraction at Yamunotri is the temple devoted to the Goddess Yamuna and the holy thermal springs at Janki Chatti ( 7 km . Away ) . The actual source , a frozen lake of ice and glacier ( Champasar Glacier ) located on the Kalind Mountain at a height of 4,421 m above sea level , about 1 km further up , is not frequented generally as it is not accessible ; hence the shrine has been located on the foot of the hill . The approach is extremely difficult and pilgrims therefore offer puja at the temple itself . The temple of Yamuna , on the left bank of the Yamuna , was constructed by Maharaja Pratap Shah of Tehri Garhwal . The deity is made of black marble . The Yamuna , like the Ganges , has been elevated to the status of a divine mother for the Hindus and has been held responsible for nurturing and developing the Indian civilization . Close to the temple are hot water springs gushing out from the mountain cavities ."
+        },
+        {
+          "url": "/wiki/Kedar_Singh_Rawat",
+          "summary": "Kedar Singh Rawat is an Indian politician and member of the Bharatiya Janata Party . Rawat is a member of the Uttarakhand Legislative Assembly from the Yamunotri constituency in Uttarkashi district . He has been an MLA from 2007-2012 and has presently won second time in 2017 from Yamunotri . Has been active in political life since college days when he was elected the general secretary from DAV college dehradun . Has been a successful lawyer before quitting practise and contesting elections since 2002 when Uttarakhand first went into elections ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Garhwal",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000dd4e9c4d1b1f3",
+      "table_id": "Uttarakhand_Legislative_Assembly_3",
+      "answer_text": "Garhwal"
+    }
+  },
+  {
+    "case_id": "hybridqa_0017ed9b0d641d8a",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "Who was the writer of the 2009 film in which Jamie Chung played Chi Chi ?",
+    "sources": {
+      "user_prompt": "Who was the writer of the 2009 film in which Jamie Chung played Chi Chi ?",
+      "table_evidence": {
+        "title": "Jamie Chung",
+        "url": "https://en.wikipedia.org/wiki/Jamie_Chung",
+        "header": [
+          "Year",
+          "Title",
+          "Role"
+        ],
+        "rows": [
+          [
+            "2007",
+            "I Now Pronounce You Chuck and Larry",
+            "Hooters Girl"
+          ],
+          [
+            "2009",
+            "Dragonball Evolution",
+            "Chi Chi"
+          ],
+          [
+            "2009",
+            "Sorority Row",
+            "Clarie"
+          ],
+          [
+            "2009",
+            "Burning Palms",
+            "Ginny Bai"
+          ],
+          [
+            "2010",
+            "Grown Ups",
+            "Amber Hilliard"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/I_Now_Pronounce_You_Chuck_and_Larry",
+          "summary": "I Now Pronounce You Chuck & Larry ( also simply known as Chuck & Larry ) is a 2007 American comedy film directed by Dennis Dugan . It stars Adam Sandler and Kevin James as the title characters Chuck and Larry , respectively , two New York City firefighters who pretend to be a gay couple in order to ensure one of their children can receive healthcare . The film was released in the United States on July 20 , 2007 , and was Sandler 's first role in a Universal Pictures film since Bulletproof in 1996 ."
+        },
+        {
+          "url": "/wiki/Dragonball_Evolution",
+          "summary": "Dragonball Evolution is a 2009 American science fantasy action adventure film directed by James Wong , produced by Stephen Chow , and written by Ben Ramsey . The film is based on the Japanese Dragon Ball manga created by Akira Toriyama , and stars Justin Chatwin , Emmy Rossum , James Marsters , Jamie Chung , Chow Yun-fat , Joon Park , and Eriko Tamura . In Dragonball : Evolution , the young Goku reveals his past and sets out to fight the evil alien warlord Lord Piccolo who wishes to gain the powerful Dragon Balls and use them to take over Earth . The film began development in 2002 and was distributed by 20th Century Fox . It is the first official live-action adaptation of the Dragon Ball manga . Dragonball : Evolution was released in Japan and several other Asian countries on March 13 , 2009 , and in the United States on April 10 , 2009 . The film received negative reviews by both critics and Dragon Ball fans , particularly for its script , cast , and unfaithfulness to the source material . The film was a box office disappointment , grossing $ 58.2 million with a production budget of $ 30 million . The film was meant to be the first of a series , though all subsequent films were canceled ."
+        },
+        {
+          "url": "/wiki/ChiChi_(Dragon_Ball)",
+          "summary": "The Dragon Ball manga series features an ensemble cast of characters created by Akira Toriyama . The series takes place in a fictional universe , the same world as Toriyama 's previous series Dr. Slump , and follows the adventures of Son Goku during his boyhood years as he trains in martial arts and explores a fantastical version of Earth ( \u5730\u7403 Chiky\u016b ) in search of the seven orbs known as the Dragon Balls that are used to summon a wish-granting dragon . The tone of the series becomes more action oriented and less comedic when Goku reaches adulthood , as he and his allies would find themselves defending Earth against various threats , overcoming seemingly insurmountable opponents and eventually emerging victorious against progressively more powerful foes . During the course of the story , Goku encounters allies such as Bulma , Master Roshi , and Trunks , rivals such as Tien Shinhan , Piccolo , and Vegeta , and villains such as Frieza , Cell and Majin Buu . Goku 's group of associates , known as the Dragon Team ( \u30c9\u30e9\u30b4\u30f3\u30c1\u30fc\u30e0 , Doragon Ch\u012bmu ) [ ch . 165 ] , bolster its ranks throughout the series with the addition of former enemies and new heroes . The group is also known in Japanese as the Z Fighters ( Z\u6226\u58eb , Zetto Senshi ) or TEAM Z in other media , and in the English dub of Dragon Ball Z as the Earth 's Special Forces . While many of the characters are humans with superhuman strength and/or supernatural abilities , the cast also includes anthropomorphic animals , extraterrestrial lifeforms , and even deities who govern the world and the universe . The series also includes depictions of the afterlife and time travel as a means of creating historical divergences . Dragon Ball Super in particular expanded the setting of the series to include parallel universes ; Universe 7 , or the Seventh Universe in the English dub , is designated as the universe where the vast majority of the Dragon Ball series takes place ."
+        },
+        {
+          "url": "/wiki/Sorority_Row",
+          "summary": "Sorority Row is a 2009 American slasher film directed by Stewart Hendler and starring Briana Evigan , Leah Pipes , Rumer Willis , and Carrie Fisher . Based on the script for the 1983 horror film The House on Sorority Row by Mark Rosman , the film is a re-imagining that focuses on a group of sorority sisters who are stalked and murdered on the night of their graduation after covering up the accidental death of a fellow sorority sister . The film was released theatrically in the United States on September 11 , 2009 , by Summit Entertainment and grossed $ 27.2 million worldwide against a budget of $ 12.5 million ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Ben Ramsey",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "0017ed9b0d641d8a",
+      "table_id": "Jamie_Chung_0",
+      "answer_text": "Ben Ramsey"
+    }
+  }
+]

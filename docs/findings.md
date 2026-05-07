@@ -1153,3 +1153,31 @@ The next extension tasks are now:
 3. test a small number of extension cases before scaling up
 
 This is the right way to start the final-project multimodal phase without losing the stronger security-first core.
+
+### HybridQA subset refinement
+
+The first `HybridQA` pilot also clarified a selection issue:
+
+- a small strong subset is better than trying to preserve weaker pilot cases just to keep the count at `12`
+
+Because of that, the current `HybridQA` plan is now:
+
+1. keep the `4` strongest cases found in the first pilot pass
+2. add `8` more cases of similar quality
+3. convert only those explicitly selected question ids
+
+The extension subset is now selected by a balanced rule-based converter by default:
+
+- `6` table-only cases
+- `6` table-plus-text cases
+
+The hand-selected id list is still kept as a reference seed set in:
+
+- `data/processed/hybridqa/hybridqa_selected_ids.txt`
+
+This is a better basis for the extension because it gives:
+
+- cleaner case studies
+- cleaner policy framing
+- easier evaluation
+- a stronger base for a later image extension

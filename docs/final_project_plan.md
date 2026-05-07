@@ -174,6 +174,15 @@ Reason:
 - it is better for strengthening the security model before taking on image attribution
 - `MMMU` remains valuable, but is better treated as a second extension once the table path is stable
 
+The current `HybridQA` working plan is to start from a balanced `12`-case
+subset selected automatically with simple quality rules:
+
+- `6` table-only cases
+- `6` table-plus-text cases
+
+A hand-selected seed list is still kept as a reference, but it is no longer the
+default conversion path.
+
 ## Recommended Final Strategy
 
 The recommended final strategy is:
