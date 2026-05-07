@@ -1181,3 +1181,39 @@ This is a better basis for the extension because it gives:
 - cleaner policy framing
 - easier evaluation
 - a stronger base for a later image extension
+
+### HybridQA pipeline smoke test
+
+The `HybridQA` extension is now connected to the shared pipeline at the schema level:
+
+- raw `HybridQA` files
+- conversion into the shared local case schema
+- `main.py` loading the converted case file
+- shared trace and summary outputs
+
+A first real-model smoke test was run on `3` converted `HybridQA` cases with:
+
+- `meta-llama/Llama-3.2-1B-Instruct`
+
+Observed result:
+
+- `3` compliant
+- `0` violating
+
+This is not a final success result. It exposed an important limitation in the current detector:
+
+- the current `HybridQA` cases have no forbidden sources
+- the detector is therefore mostly checking required-source presence
+- two of the three model answers were still wrong relative to the benchmark answer, but the cases were marked compliant
+
+This means the next core change should be:
+
+- strengthen `consistency_violation` so it can also fire when a benchmark-backed case has a known expected answer and the model answer does not match it
+
+This is a good architectural fit because it does not require a new detector subsystem. It only requires broadening the meaning of consistency from:
+
+- attacker-following inconsistency
+
+to:
+
+- answer not supported by the governing evidence for the case
