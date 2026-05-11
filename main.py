@@ -244,6 +244,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Quick MVP: audit information flow in an LLM pipeline")
     parser.add_argument("--cases", default="data/cases/cases.json", help="Path to case JSON file")
     parser.add_argument("--model", default="Qwen/Qwen2.5-3B-Instruct", help="Hugging Face model id")
+    parser.add_argument(
+        "--quantization",
+        choices=["none", "8bit", "4bit"],
+        default="none",
+        help="Optional bitsandbytes quantization mode for local models",
+    )
     parser.add_argument("--mock", action="store_true", help="Use mock mode instead of loading model")
     parser.add_argument("--limit", type=int, default=0, help="Only run first N cases (0 means all)")
     parser.add_argument("--skip-ablations", action="store_true", help="Skip source ablation checks for faster runs")
@@ -257,7 +263,7 @@ def main() -> None:
     if args.limit and args.limit > 0:
         cases = cases[: args.limit]
 
-    runner = LLMRunner(model_id=args.model, mock_mode=args.mock)
+    runner = LLMRunner(model_id=args.model, mock_mode=args.mock, quantization=args.quantization)
     runner.load()
 
     traces = []
