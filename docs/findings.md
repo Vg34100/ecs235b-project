@@ -1217,3 +1217,74 @@ This is a good architectural fit because it does not require a new detector subs
 to:
 
 - answer not supported by the governing evidence for the case
+
+### HybridQA conversion flaw discovered
+
+The first `HybridQA` runs also exposed a real conversion problem:
+
+- the converter was still feeding the first table rows and first linked summaries in raw table order
+
+That means some converted cases were not actually giving the model the
+question-relevant evidence. In other words, some failures may have been caused
+by our evidence-selection logic rather than by the model alone.
+
+This is especially important for the multimodal extension because the project is
+trying to say something about whether a model uses the right sources. If the
+conversion step itself fails to provide the right rows or linked summaries, then
+the resulting policy judgment is less trustworthy.
+
+The immediate fix is:
+
+- make table-row selection question-aware
+- make linked-summary selection follow the selected relevant rows instead of raw table order
+
+This is now the correct next refinement before treating larger `HybridQA`
+results as trustworthy extension evidence.
+
+### HybridQA result after fixing question-relevant evidence selection
+
+After fixing row and linked-summary selection so that the prompt surfaces
+question-relevant evidence first, the `HybridQA` extension was rerun on the full
+`12`-case pilot subset.
+
+Observed result:
+
+- `3` compliant
+- `9` violating
+
+Violation breakdown:
+
+- `9` `consistency_violation`
+- `1` `missing_required_source`
+
+This result is much more trustworthy than the earlier `HybridQA` runs because
+the model is now seeing the relevant rows and linked summaries first instead of
+an arbitrary table-order slice.
+
+The main remaining pattern is:
+
+- the model often appears to see the right evidence class
+- but still produces an answer that does not match the benchmark-backed target
+
+This means the current `HybridQA` extension is now surfacing a real and useful
+failure mode:
+
+- evidence-answer inconsistency in a table-plus-text setting
+
+### Remaining HybridQA prompt concern
+
+There is still a likely prompt-design weakness in the current extension path:
+
+- the model is asked to jump directly to a final answer
+- it is not asked to first extract the relevant row or quote the relevant text
+- it is not given a clean abstention path when the evidence is unclear
+
+This matters for the security framing because trustworthy source use is not only
+about using the right source, but also about refusing to overclaim when the
+available evidence is weak or incomplete.
+
+So the next likely `HybridQA` refinement should be prompt-level, not only
+dataset-level:
+
+- add a grounded evidence-extraction step
+- add an explicit abstention option

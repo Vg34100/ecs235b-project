@@ -1,5 +1,6 @@
 import argparse
 import json
+import re
 import zipfile
 from pathlib import Path
 from typing import Any
@@ -37,21 +38,88 @@ def load_table_bundle(archive: zipfile.ZipFile, table_id: str) -> tuple[dict[str
     return table, request
 
 
-def compact_rows(table: dict[str, Any], row_limit: int = 5) -> list[list[str]]:
-    # We only keep a small table slice for the first extension pass so the
-    # cases are readable and easy to inspect by hand.
+def normalize_words(text: str) -> set[str]:
+    stopwords = {
+        "the",
+        "a",
+        "an",
+        "of",
+        "to",
+        "and",
+        "or",
+        "in",
+        "on",
+        "for",
+        "what",
+        "which",
+        "who",
+        "when",
+        "where",
+        "was",
+        "were",
+        "did",
+        "is",
+        "are",
+        "after",
+    }
+    words = re.findall(r"[a-z0-9]+", text.lower())
+    return {word for word in words if len(word) > 2 and word not in stopwords}
+
+
+def cell_url_tokens(urls: list[str]) -> set[str]:
+    tokens = set()
+    for url in urls:
+        tail = url.split("/")[-1].replace("_", " ")
+        tokens |= normalize_words(tail)
+    return tokens
+
+
+def select_relevant_row_indices(table: dict[str, Any], question: str, row_limit: int = 4) -> list[int]:
+    # The first rows in the raw table are often irrelevant. We rank rows by how
+    # much they look like the question, then keep a small relevant slice.
+    question_words = normalize_words(question)
+    ranked = []
+    for idx, row in enumerate(table.get("data", [])):
+        cell_text = " ".join(cell[0] for cell in row)
+        row_words = normalize_words(cell_text)
+        row_words |= cell_url_tokens([url for cell in row for url in cell[1]])
+        overlap = len(question_words & row_words)
+        score = overlap
+        if overlap == 0:
+            continue
+        ranked.append((score, idx))
+
+    if not ranked:
+        return list(range(min(row_limit, len(table.get("data", [])))))
+
+    ranked.sort(key=lambda item: (-item[0], item[1]))
+    return [idx for _, idx in ranked[:row_limit]]
+
+
+def compact_rows(table: dict[str, Any], row_indices: list[int]) -> list[list[str]]:
+    # Keep only the rows we think matter to the question, in relevance order.
     rows = []
-    for row in table.get("data", [])[:row_limit]:
-        rows.append([cell[0] for cell in row])
+    data = table.get("data", [])
+    for idx in row_indices:
+        if 0 <= idx < len(data):
+            rows.append([cell[0] for cell in data[idx]])
     return rows
 
 
-def collect_linked_text(table: dict[str, Any], request: dict[str, str], summary_limit: int = 4) -> list[dict[str, str]]:
-    # Linked summaries are the text modality in HybridQA, so we keep a small
-    # number of distinct summaries instead of dragging in everything.
+def collect_linked_text(
+    table: dict[str, Any],
+    request: dict[str, str],
+    row_indices: list[int],
+    summary_limit: int = 4,
+) -> list[dict[str, str]]:
+    # Pull linked summaries from the rows we selected first, then fall back if
+    # those rows do not give us enough text evidence.
     linked = []
     seen = set()
-    for row in table.get("data", []):
+    data = table.get("data", [])
+
+    def maybe_add_from_row(row: list[Any]) -> bool:
+        nonlocal linked
         for cell in row:
             for url in cell[1]:
                 if url in seen:
@@ -62,7 +130,19 @@ def collect_linked_text(table: dict[str, Any], request: dict[str, str], summary_
                 seen.add(url)
                 linked.append({"url": url, "summary": summary})
                 if len(linked) >= summary_limit:
-                    return linked
+                    return True
+        return False
+
+    for idx in row_indices:
+        if 0 <= idx < len(data) and maybe_add_from_row(data[idx]):
+            return linked
+
+    for idx, row in enumerate(data):
+        if idx in row_indices:
+            continue
+        if maybe_add_from_row(row):
+            return linked
+
     return linked
 
 
@@ -143,7 +223,8 @@ def case_bucket(required_sources: list[str]) -> str:
 
 
 def convert_example(example: dict[str, Any], table: dict[str, Any], request: dict[str, str]) -> dict[str, Any]:
-    linked_text = collect_linked_text(table, request)
+    row_indices = select_relevant_row_indices(table, example["question"])
+    linked_text = collect_linked_text(table, request, row_indices)
     required_sources = infer_required_sources(example["question"], example.get("answer-text", ""), linked_text)
     return {
         "case_id": f"hybridqa_{example['question_id']}",
@@ -157,7 +238,7 @@ def convert_example(example: dict[str, Any], table: dict[str, Any], request: dic
                 "title": table.get("title", ""),
                 "url": table.get("url", ""),
                 "header": [header[0] for header in table.get("header", [])],
-                "rows": compact_rows(table),
+                "rows": compact_rows(table, row_indices),
             },
             "linked_text": linked_text,
             "system_policy": (
@@ -233,7 +314,8 @@ def main() -> None:
                 except KeyError:
                     continue
 
-                linked_text = collect_linked_text(table, request)
+                row_indices = select_relevant_row_indices(table, example["question"])
+                linked_text = collect_linked_text(table, request, row_indices)
                 if not is_good_pilot_case(example, table, linked_text):
                     continue
 
@@ -246,7 +328,8 @@ def main() -> None:
                 except KeyError:
                     continue
 
-                linked_text = collect_linked_text(table, request)
+                row_indices = select_relevant_row_indices(table, example["question"])
+                linked_text = collect_linked_text(table, request, row_indices)
                 if not is_good_pilot_case(example, table, linked_text):
                     continue
 
