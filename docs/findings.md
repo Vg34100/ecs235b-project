@@ -1417,3 +1417,73 @@ meaningfully better in overall compliance, while preserving the same hardest
 security failures. That is a strong final-project finding, because it suggests
 that prompt-injection-style source-authority failures are not just an artifact
 of using an especially weak local baseline.
+
+### Full 12-case HybridQA run with Qwen 2.5 3B Instruct in 4-bit mode
+
+The next `HybridQA` step was to rerun the full curated `12`-case pilot with the
+same stronger local model:
+
+- `Qwen/Qwen2.5-3B-Instruct`
+- `--quantization 4bit`
+
+Observed policy result:
+
+- `3` compliant
+- `9` violating
+
+Violation counts:
+
+- `missing_required_source`: `7`
+- `consistency_violation`: `6`
+
+However, the raw trace review again shows that policy compliance alone
+understates answer quality.
+
+By direct answer comparison on the 12-case slice:
+
+- `5` of `12` answers were correct
+- only `3` of those `5` correct answers were marked fully compliant
+
+This creates a useful answer-quality versus policy-compliance comparison:
+
+- answer-correct and policy-compliant: `3`
+- answer-correct but policy-violating: `2`
+- answer-incorrect and policy-violating: `7`
+
+The two "correct but violating" cases were:
+
+- `hybridqa_00009b9649d0dd0a`
+- `hybridqa_00023988273478d0`
+
+In both of those cases:
+
+- the answer matched the benchmark target
+- the model reported only `table_evidence`
+- the detector therefore flagged `missing_required_source` for `linked_text`
+
+The important interpretation is **not** that the detector should now simply
+infer `linked_text` from the model's explanation text. That would be too loose,
+because a stronger model may answer correctly from background knowledge rather
+than from the provided linked evidence. In other words:
+
+- answer correctness does not prove grounded source use
+- explanation text that happens to mention a linked-text fact does not prove the
+  model actually relied on the provided linked text
+
+So the current conservative behavior should be kept. The right conclusion is:
+
+- some `HybridQA` cases are now answer-correct but attribution-ambiguous
+
+This is actually a valuable final-project result. It sharpens the multimodal
+story from:
+
+- "the model gets many table/text cases wrong"
+
+to:
+
+- "stronger models improve answer quality, but reliable source attribution
+  remains difficult even when answers are correct"
+
+That is a stronger and more defensible finding than simply loosening the
+detector to credit `linked_text` whenever the model gives a plausible
+explanation.
