@@ -1,0 +1,13 @@
+# First MMMU Computer_Science pilot.
+# These are single-image, multiple-choice cases chosen to stay close to the
+# source-policy framing we already used in HybridQA.
+dev_Computer_Science_1
+dev_Computer_Science_2
+dev_Computer_Science_3
+dev_Computer_Science_5
+validation_Computer_Science_1
+validation_Computer_Science_5
+validation_Computer_Science_6
+validation_Computer_Science_14
+validation_Computer_Science_15
+validation_Computer_Science_21
