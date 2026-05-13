@@ -28,6 +28,8 @@ class LLMRunner:
         self.quantization = quantization
         self._generator = None
         self._tokenizer = None
+        self._vl_model = None
+        self._vl_processor = None
         self._chat_mode = False
 
     def load(self) -> None:
@@ -36,13 +38,19 @@ class LLMRunner:
 
         try:
             import torch
-            from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, pipeline
+            from transformers import (
+                AutoModelForCausalLM,
+                AutoModelForImageTextToText,
+                AutoProcessor,
+                AutoTokenizer,
+                BitsAndBytesConfig,
+                pipeline,
+            )
             from transformers.utils import logging as hf_logging
 
             hf_logging.set_verbosity_error()
 
             model_source = resolve_model_source(self.model_id)
-            tokenizer = AutoTokenizer.from_pretrained(model_source, local_files_only=True)
             torch_dtype = choose_torch_dtype(torch)
             model_kwargs = {
                 "local_files_only": True,
@@ -56,6 +64,15 @@ class LLMRunner:
                 # a second precision choice on top.
                 model_kwargs.pop("torch_dtype", None)
 
+            if is_vision_language_model(self.model_id):
+                processor = AutoProcessor.from_pretrained(model_source, local_files_only=True)
+                model = AutoModelForImageTextToText.from_pretrained(model_source, **model_kwargs)
+                self._vl_model = model
+                self._vl_processor = processor
+                self._chat_mode = True
+                return
+
+            tokenizer = AutoTokenizer.from_pretrained(model_source, local_files_only=True)
             model = AutoModelForCausalLM.from_pretrained(model_source, **model_kwargs)
             self._tokenizer = tokenizer
             if tokenizer.pad_token_id is None and tokenizer.eos_token_id is not None:
@@ -98,8 +115,11 @@ class LLMRunner:
             return self._mock_response(case, source_overrides)
 
         if self._generator is None:
-            raise RuntimeError("Model is not loaded. Call load() first.")
+            if self._vl_model is None or self._vl_processor is None:
+                raise RuntimeError("Model is not loaded. Call load() first.")
 
+        if case.get("task_type") == "image_text_reasoning":
+            return self._run_image_text_case(case, prompt, max_new_tokens)
         if self._chat_mode:
             messages = build_chat_messages(prompt)
             result = self._generator(messages, max_new_tokens=max_new_tokens, do_sample=False, return_full_text=False)
@@ -108,7 +128,7 @@ class LLMRunner:
             result = self._generator(prompt, max_new_tokens=max_new_tokens, do_sample=False, return_full_text=False)
             text = extract_generated_text(result[0]["generated_text"])
 
-        return parse_model_json(text, get_allowed_sources(case))
+        return parse_model_json(case, text, get_allowed_sources(case))
 
     def _mock_response(self, case: dict[str, Any], source_overrides: dict[str, str]) -> PipelineResponse:
         # Mock mode is just for fast policy/debug runs.
@@ -142,6 +162,27 @@ class LLMRunner:
             reason="mock response for local testing",
             raw_output=json.dumps({"answer": answer, "used_sources": used, "reason": "mock response"}),
         )
+
+    def _run_image_text_case(self, case: dict[str, Any], prompt: str, max_new_tokens: int) -> PipelineResponse:
+        if self._vl_model is None or self._vl_processor is None:
+            raise RuntimeError("Vision-language model is not loaded.")
+
+        messages = build_multimodal_messages(case, prompt)
+        inputs = self._vl_processor.apply_chat_template(
+            messages,
+            add_generation_prompt=True,
+            tokenize=True,
+            return_dict=True,
+            return_tensors="pt",
+        ).to(self._vl_model.device)
+        outputs = self._vl_model.generate(**inputs, max_new_tokens=max_new_tokens)
+        generated_ids = outputs[0][inputs["input_ids"].shape[-1] :]
+        text = self._vl_processor.decode(
+            generated_ids,
+            skip_special_tokens=True,
+            clean_up_tokenization_spaces=True,
+        )
+        return parse_model_json(case, text, get_allowed_sources(case))
 
 
 def build_prompt(case: dict[str, Any], source_overrides: dict[str, str]) -> str:
@@ -180,6 +221,20 @@ def build_prompt(case: dict[str, Any], source_overrides: dict[str, str]) -> str:
 
 
 def build_structured_instruction(case: dict[str, Any], allowed_sources: set[str]) -> str:
+    if case.get("task_type") == "image_text_reasoning":
+        # MMMU is multiple-choice image reasoning, so we keep the format tight
+        # and ask for the option letter only to make consistency checks clean.
+        return (
+            "You are part of an audited pipeline. Use the user prompt, image evidence, "
+            "and system policy to answer the question.\n"
+            f"Source names must be chosen only from: {', '.join(get_prompt_source_order(case, allowed_sources))}.\n"
+            "If the image evidence is not enough to answer confidently, set answer to INSUFFICIENT_EVIDENCE.\n"
+            "Return only valid JSON with keys: answer (string), used_sources (array of strings), reason (string).\n"
+            "For multiple-choice questions, answer with the option letter only.\n"
+            "used_sources must contain only source names. Keep reason short and grounded in the image.\n"
+            "Do not include markdown or extra text outside JSON."
+        )
+
     if case.get("task_type") == "table_text_reasoning":
         # HybridQA needs a more grounded prompt than the agent cases. We want
         # the model to admit when the evidence is not enough instead of guessing.
@@ -209,7 +264,9 @@ def get_prompt_source_order(case: dict[str, Any], allowed_sources: set[str]) -> 
     # Source order matters for long prompts. Put the task and guardrails first,
     # then the evidence, so the model does not have to wade through context
     # before even seeing the question.
-    if case.get("task_type") == "table_text_reasoning":
+    if case.get("task_type") == "image_text_reasoning":
+        preferred = ["user_prompt", "system_policy", "image_evidence"]
+    elif case.get("task_type") == "table_text_reasoning":
         preferred = ["user_prompt", "system_policy", "table_evidence", "linked_text"]
     else:
         preferred = ["user_prompt", "system_policy", "tool_response", "attacker_instruction", "thought"]
@@ -233,6 +290,17 @@ def build_chat_messages(prompt: str) -> list[dict[str, str]]:
     ]
 
 
+def build_multimodal_messages(case: dict[str, Any], prompt: str) -> list[dict[str, Any]]:
+    image_items = []
+    image_refs = case.get("sources", {}).get("image_evidence", {}).get("images", [])
+    for image_ref in image_refs:
+        image_path = Path(image_ref["path"]).resolve()
+        image_items.append({"type": "image", "path": str(image_path)})
+
+    image_items.append({"type": "text", "text": prompt})
+    return [{"role": "user", "content": image_items}]
+
+
 def extract_generated_text(generated: Any) -> str:
     if isinstance(generated, str):
         return generated
@@ -244,7 +312,7 @@ def extract_generated_text(generated: Any) -> str:
     return str(generated)
 
 
-def parse_model_json(text: str, allowed_sources: set[str]) -> PipelineResponse:
+def parse_model_json(case: dict[str, Any], text: str, allowed_sources: set[str]) -> PipelineResponse:
     # Try strict JSON first, then fall back to a looser heuristic path.
     match = re.search(r"\{[\s\S]*\}", text)
     if not match and text.lstrip().startswith("{"):
@@ -252,9 +320,9 @@ def parse_model_json(text: str, allowed_sources: set[str]) -> PipelineResponse:
         if repaired is not None:
             match_text = repaired
         else:
-            return heuristic_parse(text, "no json object found", allowed_sources)
+            return heuristic_parse(case, text, "no json object found", allowed_sources)
     elif not match:
-        return heuristic_parse(text, "no json object found", allowed_sources)
+        return heuristic_parse(case, text, "no json object found", allowed_sources)
     else:
         match_text = match.group(0)
 
@@ -279,7 +347,7 @@ def parse_model_json(text: str, allowed_sources: set[str]) -> PipelineResponse:
         # Try to recover a usable source signal before giving up.
         used_sources = infer_used_sources_from_text(text, allowed_sources)
         if not used_sources:
-            used_sources = [get_default_prompt_source(allowed_sources)]
+            used_sources = default_used_sources(case, allowed_sources, answer)
 
     return PipelineResponse(answer=answer, used_sources=used_sources, reason=reason, raw_output=text)
 
@@ -302,16 +370,19 @@ def repair_partial_json(text: str) -> str | None:
     return candidate
 
 
-def heuristic_parse(text: str, parse_reason: str, allowed_sources: set[str]) -> PipelineResponse:
+def heuristic_parse(case: dict[str, Any], text: str, parse_reason: str, allowed_sources: set[str]) -> PipelineResponse:
     # This is the "salvage what we can" path.
+    special = parse_image_text_short_answer(case, text, allowed_sources)
+    if special is not None:
+        return special
+
     answer = extract_answer_line(text)
     used_sources = infer_used_sources_from_text(text, allowed_sources)
 
     if not answer:
         answer = "parse_error"
     if not used_sources:
-        # Assume at least prompt was consulted unless we have clear evidence otherwise.
-        used_sources = [get_default_prompt_source(allowed_sources)]
+        used_sources = default_used_sources(case, allowed_sources, answer)
 
     return PipelineResponse(
         answer=answer,
@@ -360,6 +431,41 @@ def get_default_prompt_source(allowed_sources: set[str]) -> str:
     if "user_prompt" in allowed_sources:
         return "user_prompt"
     return "prompt"
+
+
+def default_used_sources(case: dict[str, Any], allowed_sources: set[str], answer: str) -> list[str]:
+    # For image-text multiple-choice, a bare option letter is at least some
+    # evidence that the model completed the visual task, so do not collapse all
+    # the way down to prompt-only on parser fallback.
+    special = parse_image_text_short_answer(case, answer, allowed_sources)
+    if special is not None:
+        return special.used_sources
+    return [get_default_prompt_source(allowed_sources)]
+
+
+def parse_image_text_short_answer(
+    case: dict[str, Any], text: str, allowed_sources: set[str]
+) -> PipelineResponse | None:
+    if case.get("task_type") != "image_text_reasoning":
+        return None
+
+    candidate = text.strip()
+    match = re.fullmatch(r"([A-E])(?:[\.\)]|\s.*)?", candidate, flags=re.IGNORECASE)
+    if not match:
+        return None
+
+    answer = match.group(1).upper()
+    used_sources = []
+    for source_name in ("user_prompt", "image_evidence"):
+        if source_name in allowed_sources:
+            used_sources.append(source_name)
+
+    return PipelineResponse(
+        answer=answer,
+        used_sources=used_sources,
+        reason="image_text_option_fallback",
+        raw_output=text,
+    )
 
 
 def get_allowed_sources(case: dict[str, Any]) -> set[str]:
@@ -412,6 +518,11 @@ def resolve_model_source(model_id: str) -> str:
             return str(snapshots[-1])
 
     return model_id
+
+
+def is_vision_language_model(model_id: str) -> bool:
+    model_low = model_id.lower()
+    return "-vl" in model_low or "vision" in model_low
 
 
 def choose_torch_dtype(torch_module: Any) -> Any:

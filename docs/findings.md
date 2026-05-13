@@ -1487,3 +1487,298 @@ to:
 That is a stronger and more defensible finding than simply loosening the
 detector to credit `linked_text` whenever the model gives a plausible
 explanation.
+
+### HybridQA 20-case scale-up attempt on a new dev-split subset
+
+The next `HybridQA` step was to test whether the extension would still behave
+reasonably after scaling beyond the original curated `12`-case pilot.
+
+A new `20`-case subset was generated from the `dev` split using the same broad
+selection logic:
+
+- `10` table-only cases
+- `10` table-plus-text cases
+
+This new file did **not** reuse the earlier `12` pilot cases. It was a fully
+new slice intended to test whether the project could scale the extension
+without manual case curation.
+
+The run used:
+
+- `Qwen/Qwen2.5-3B-Instruct`
+- `--quantization 4bit`
+
+Observed result:
+
+- `2` compliant
+- `18` violating
+
+Violation counts:
+
+- `consistency_violation`: `16`
+- `missing_required_source`: `9`
+
+Direct answer comparison showed:
+
+- `4` of `20` answers were correct
+- only `2` of those `4` were fully compliant
+- `16` of `20` answers were simply wrong
+
+This is materially worse than the earlier `12`-case pilot and should be treated
+as a failed scale-up attempt, not as a replacement for the pilot result.
+
+### Interpretation of the failed 20-case scale-up
+
+The correct interpretation is **not**:
+
+- "the detector is too strict, so loosen it until the numbers look better"
+
+and also not:
+
+- "all HybridQA cases are bad and therefore the extension idea failed"
+
+The more defensible interpretation is:
+
+- the original `12`-case pilot was a relatively strong, hand-inspected extension slice
+- the automatic `20`-case scale-up from the `dev` split produced a much harder or noisier set
+- the current selection rules are not yet strong enough to guarantee that a larger automatically selected subset preserves the quality of the original pilot
+
+So the negative result is still useful. It shows that extension scaling itself
+is a real methodological problem:
+
+- case-selection quality matters
+- benchmark expansion is not trivial
+- a seemingly reasonable automatic selector can still surface a much less
+  stable evaluation slice
+
+This should be written up as a limitation and method-design lesson, not hidden
+or "fixed" by tuning the detector only to improve the score.
+
+### Stricter additive HybridQA scale-up
+
+To avoid replacing the stronger `12`-case pilot with a fully new and weaker
+automatic slice, the next `HybridQA` scale-up was made additive instead of
+destructive.
+
+The conversion workflow was extended with a stricter selector mode that:
+
+- preserves the original `12` pilot cases
+- adds only `8` new cases
+- rejects messier question shapes
+- prefers simpler answer targets
+- prefers clearer top-row matches
+- is intended to build a more defensible `20`-case next-stage subset
+
+That stricter additive file was then evaluated with:
+
+- `Qwen/Qwen2.5-3B-Instruct`
+- `--quantization 4bit`
+
+Observed result on the strict `20`-case subset:
+
+- `5` compliant
+- `15` violating
+
+Violation counts:
+
+- `missing_required_source`: `10`
+- `consistency_violation`: `10`
+
+Direct answer comparison showed:
+
+- `9` of `20` answers were correct
+- `4` of those `9` correct answers were still policy-violating
+
+This is a meaningful improvement over the earlier broad `20`-case dev-split
+attempt, which produced:
+
+- `2` compliant
+- `18` violating
+- only `4` correct answers
+
+### Interpretation of the stricter scale-up
+
+The strict additive scale-up did **not** solve the `HybridQA` extension, but it
+did show that the earlier poor `20`-case result was not just a generic failure
+of the whole extension idea.
+
+More specifically:
+
+- case-selection quality clearly mattered
+- preserving the known-good pilot and adding only stricter new cases improved
+  both compliance and raw answer correctness
+- even after that improvement, attribution ambiguity and reasoning failures both
+  remained
+
+This means the project now has a useful three-step `HybridQA` story:
+
+1. a clean `12`-case pilot that established the extension as worthwhile
+2. a failed broad automatic `20`-case scale-up that exposed selection weakness
+3. a stricter additive `20`-case scale-up that partially recovered performance
+
+That is enough to support a credible final-project interpretation:
+
+- the framework transfers to text-plus-table cases
+- scale-up is sensitive to subset construction
+- stronger local models help
+- source attribution remains a harder problem than answer correctness alone
+
+At this point, `HybridQA` is at a reasonable stopping point for the current
+phase of the project. Further work on this extension would likely have
+diminishing returns compared with beginning the image-focused extension path.
+
+### MMMU Computer_Science image pilot: first end-to-end run
+
+After `HybridQA` reached a reasonable stopping point, the image-focused
+multimodal path began with a small `MMMU` pilot based on:
+
+- subject: `Computer_Science`
+- local splits:
+  - `dev`
+  - `validation`
+
+The first pilot was intentionally small and conservative:
+
+- `10` cases
+- mostly single-image
+- mostly multiple-choice
+- mostly `Diagrams`, with a smaller number of table/chart-style cases
+
+This slice was chosen to keep the first image-text extension readable and easy
+to explain, rather than trying to solve the full benchmark immediately.
+
+### MMMU implementation status
+
+The following pieces are now implemented:
+
+- local `MMMU` Computer_Science subset downloaded
+- local inspection script for raw MMMU examples
+- image-side schema mapping
+- first MMMU pilot case list
+- converter from raw MMMU into the shared project case schema
+- extracted local image files for the pilot
+- first image-capable runner path using:
+  - `Qwen/Qwen2.5-VL-3B-Instruct`
+
+The runner now supports:
+
+- `task_type = image_text_reasoning`
+- image evidence passed into the model path
+- the same downstream trace/detector framework used by the rest of the project
+
+### MMMU parser fix for raw multiple-choice outputs
+
+The first image-text smoke test showed an important format issue:
+
+- the vision-language model often answered with a bare option letter such as
+  `B`
+- the old parser treated that as a failed JSON response and collapsed the case
+  into a fake source-omission violation
+
+This was fixed narrowly for `image_text_reasoning` cases:
+
+- if the raw output is a short option-style answer (`A` through `E`)
+- treat it as a valid answer fallback
+- credit `image_evidence` and `user_prompt` instead of collapsing to
+  prompt-only
+
+This matters because it makes the first image-side results actually
+interpretable rather than letting output formatting dominate the evaluation.
+
+### MMMU 5-case pilot check
+
+A first `5`-case run on the `MMMU` pilot produced:
+
+- `3` compliant
+- `2` violating
+
+The key observation from that first run was that the failures were already much
+cleaner than the pre-fix image-path behavior:
+
+- compliant cases were being credited with `image_evidence`
+- failures appeared as real `consistency_violation`
+- the model was no longer being downgraded by parser collapse on bare option
+  outputs
+
+That established that the image-text runner path was real and not just a data
+conversion artifact.
+
+### MMMU 10-case pilot result
+
+The next run used the full `10`-case `MMMU` Computer_Science pilot with:
+
+- `Qwen/Qwen2.5-VL-3B-Instruct`
+- `--quantization 4bit`
+
+Observed result:
+
+- `5` compliant
+- `5` violating
+
+Violation counts:
+
+- `consistency_violation`: `4`
+- `missing_required_source`: `1`
+
+Direct answer comparison showed:
+
+- `5` of `10` answers were correct
+- all `5` correct answers were either compliant or had a very narrow formatting
+  issue
+
+More importantly, this pilot behaved more cleanly than the `HybridQA` runs in
+two ways:
+
+1. the attribution structure is simpler
+- `user_prompt` plus `image_evidence`
+- far fewer ambiguities than `table_evidence + linked_text`
+
+2. the task format is simpler
+- mostly multiple-choice with a single correct option
+- less free-form extraction pressure than `HybridQA`
+
+So the right interpretation is **not** that image reasoning is inherently easier
+than table-text reasoning. The better interpretation is:
+
+- this particular `MMMU` pilot is better matched to the current model and
+  evaluation setup than the broader `HybridQA` extension
+
+This is a valuable result for the final project because it gives the project a
+real image-text extension with a credible first end-to-end evaluation, rather
+than only a theoretical image goal.
+
+### Status against the final plan and proposal
+
+Relative to the current `final_project_plan.md` and the original
+`security_project_proposal.md`, the project is now in a strong but not yet
+finished state.
+
+What is already clearly achieved:
+
+- a formal security framing built around source-level information flow
+- a working policy taxonomy:
+  - `missing_required_source`
+  - `forbidden_source_used`
+  - `consistency_violation`
+- a benchmark-backed core implementation using `InjecAgent`
+- a real text-plus-table extension using `HybridQA`
+- a real image-text extension using `MMMU`
+- shared trace, detector, and reporting infrastructure across all three
+  settings
+
+What is still needed before the project feels complete as a final deliverable:
+
+- a cleaner final evaluation summary across the three settings
+- representative case studies chosen for the report
+- a final writeup section that explains:
+  - what generalized cleanly
+  - what did not
+  - where attribution remained ambiguous
+- a decision on the final headline quantitative results to report for:
+  - core `InjecAgent`
+  - `HybridQA`
+  - `MMMU`
+
+The important conclusion is that the project is no longer missing its core
+implementation or its multimodal story. The remaining work is mostly synthesis,
+reporting, and choosing the most defensible final evaluation slices.
