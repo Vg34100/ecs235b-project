@@ -10,6 +10,43 @@ The first target comparison is:
 - `MMMU` base `10`-case pilot
 - `MMMU` authoritative forbidden-hint `10`-case pilot
 
+## Preferred one-command workflow
+
+The recommended path is now the top-level experiment runner:
+
+```bash
+source ~/dev/s26/.venv/bin/activate
+cd ~/dev/s26/ecs235b/content/project
+python run_experiment.py compare \
+  --model Qwen/Qwen2.5-VL-3B-Instruct \
+  --quantization 4bit \
+  --run-a-name mmmu_base_10 \
+  --run-a-cases data/processed/mmmu/mmmu_computer_science_pilot_subset.json \
+  --run-b-name mmmu_forbidden_authoritative_10 \
+  --run-b-cases data/processed/mmmu/mmmu_computer_science_forbidden_authoritative_10case.json \
+  --limit 10 \
+  --max-new-tokens 96 \
+  --skip-ablations \
+  --comparison-name mmmu_base_vs_forbidden \
+  --title "MMMU Base vs Forbidden Comparison" \
+  --notes-a "Base MMMU Computer_Science 10-case pilot" \
+  --notes-b "Authoritative forbidden-hint MMMU Computer_Science 10-case pilot"
+```
+
+This single command will:
+
+1. run experiment A
+2. archive experiment A
+3. run experiment B
+4. archive experiment B
+5. collect metrics from both
+6. render the markdown comparison table
+
+## Manual fallback workflow
+
+The underlying scripts are still available if a manual step-by-step path is
+ever needed.
+
 ## Step 1: Run the base experiment
 
 ```bash
@@ -72,7 +109,8 @@ python src/analysis/collect_comparison_metrics.py \
 ```bash
 python src/analysis/render_mmmu_comparison_table.py \
   --metrics-json outputs/analysis/mmmu_base_vs_forbidden_metrics.json \
-  --write-output outputs/analysis/mmmu_base_vs_forbidden_table.md
+  --write-output outputs/analysis/mmmu_base_vs_forbidden_table.md \
+  --title "MMMU Base vs Forbidden Comparison"
 ```
 
 ## Output artifacts

@@ -22,9 +22,9 @@ def violation_count(row: dict[str, Any], key: str) -> int:
     return int(row.get("violation_counts", {}).get(key, 0))
 
 
-def render_table(metrics: list[dict[str, Any]]) -> str:
+def render_table(metrics: list[dict[str, Any]], title: str) -> str:
     lines = [
-        "# MMMU Comparison Table",
+        f"# {title}",
         "",
         "| Run | Model | Quant | Total | Compliant | Violating | Correct | Correct+Compliant | Correct+Violating | Consistency | Forbidden |",
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
@@ -49,7 +49,7 @@ def render_table(metrics: list[dict[str, Any]]) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Render a markdown MMMU comparison table from collected metrics")
+    parser = argparse.ArgumentParser(description="Render a markdown comparison table from collected metrics")
     parser.add_argument(
         "--metrics-json",
         default="outputs/analysis/comparison_metrics.json",
@@ -60,10 +60,15 @@ def main() -> None:
         default="outputs/analysis/mmmu_comparison_table.md",
         help="Where to write the markdown table",
     )
+    parser.add_argument(
+        "--title",
+        default="Comparison Table",
+        help="Markdown title to place above the rendered table",
+    )
     args = parser.parse_args()
 
     metrics = load_metrics(resolve_user_path(args.metrics_json))
-    rendered = render_table(metrics)
+    rendered = render_table(metrics, args.title)
 
     output_path = resolve_user_path(args.write_output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
