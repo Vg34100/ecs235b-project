@@ -1,0 +1,13 @@
+# First MMMU Accounting pilot.
+# This slice stays fully single-image, multiple-choice, and table-heavy to
+# match the current image-text security framing as cleanly as possible.
+dev_Accounting_1
+dev_Accounting_2
+dev_Accounting_3
+dev_Accounting_4
+dev_Accounting_5
+validation_Accounting_1
+validation_Accounting_2
+validation_Accounting_6
+validation_Accounting_7
+validation_Accounting_17

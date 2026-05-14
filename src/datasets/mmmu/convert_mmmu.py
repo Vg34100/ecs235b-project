@@ -28,6 +28,10 @@ def load_split_map(base_dir: Path, splits: list[str]) -> dict[str, dict[str, Any
     return examples
 
 
+def slugify_subject(subject: str) -> str:
+    return subject.strip().lower().replace(" ", "_")
+
+
 def image_slots(example: dict[str, Any]) -> list[str]:
     slots = []
     for idx in range(1, 8):
@@ -61,12 +65,12 @@ def normalize_options(raw_options: Any) -> list[str]:
     return []
 
 
-def save_images(case_id: str, example: dict[str, Any], image_dir: Path) -> list[dict[str, str]]:
+def save_images(case_id: str, example: dict[str, Any], image_dir: Path, image_rel_dir: Path) -> list[dict[str, str]]:
     saved = []
     image_dir.mkdir(parents=True, exist_ok=True)
     for slot in image_slots(example):
         image = example[slot]
-        rel_path = Path("data/processed/mmmu/computer_science_images") / f"{case_id}_{slot}.png"
+        rel_path = image_rel_dir / f"{case_id}_{slot}.png"
         abs_path = image_dir.parent.parent.parent.parent / rel_path
         abs_path.parent.mkdir(parents=True, exist_ok=True)
         image.save(abs_path)
@@ -74,7 +78,7 @@ def save_images(case_id: str, example: dict[str, Any], image_dir: Path) -> list[
     return saved
 
 
-def convert_example(example: dict[str, Any], image_refs: list[dict[str, str]]) -> dict[str, Any]:
+def convert_example(example: dict[str, Any], image_refs: list[dict[str, str]], subject_slug: str) -> dict[str, Any]:
     case_id = f"mmmu_{example['id']}"
     options = normalize_options(example.get("options", []))
     option_lines = build_option_lines(options)
@@ -85,7 +89,7 @@ def convert_example(example: dict[str, Any], image_refs: list[dict[str, str]]) -
     return {
         "case_id": case_id,
         "dataset_source": "MMMU",
-        "domain": "computer_science_vision",
+        "domain": f"{subject_slug}_vision",
         "task_type": "image_text_reasoning",
         "prompt": prompt,
         "sources": {
@@ -124,9 +128,14 @@ def convert_example(example: dict[str, Any], image_refs: list[dict[str, str]]) -
 def main() -> None:
     parser = argparse.ArgumentParser(description="Convert a small MMMU subset into the shared case schema")
     parser.add_argument(
+        "--subject",
+        default="Computer_Science",
+        help="MMMU subject name, used for domain labeling and default paths",
+    )
+    parser.add_argument(
         "--base-dir",
-        default="data/raw/mmmu/computer_science",
-        help="Path containing MMMU Computer_Science split folders",
+        default="",
+        help="Path containing MMMU subject split folders; defaults to data/raw/mmmu/<subject-slug>",
     )
     parser.add_argument(
         "--splits",
@@ -136,27 +145,34 @@ def main() -> None:
     )
     parser.add_argument(
         "--selected-ids",
-        default="data/processed/mmmu/mmmu_computer_science_selected_ids.txt",
-        help="Plain-text file with one MMMU example id per line",
+        default="",
+        help="Plain-text file with one MMMU example id per line; defaults to data/processed/mmmu/mmmu_<subject-slug>_selected_ids.txt",
     )
     parser.add_argument(
         "--write-output",
-        default="data/processed/mmmu/mmmu_computer_science_pilot_subset.json",
-        help="Where to write the converted MMMU pilot subset",
+        default="",
+        help="Where to write the converted MMMU pilot subset; defaults to data/processed/mmmu/mmmu_<subject-slug>_pilot_subset.json",
     )
     parser.add_argument(
         "--image-dir",
-        default="data/processed/mmmu/computer_science_images",
-        help="Where to save extracted image files",
+        default="",
+        help="Where to save extracted image files; defaults to data/processed/mmmu/<subject-slug>_images",
     )
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parent.parent.parent.parent
-    base_dir = project_root / args.base_dir
-    selected_ids = load_selected_ids(project_root / args.selected_ids)
+    subject_slug = slugify_subject(args.subject)
+    base_dir_arg = args.base_dir or f"data/raw/mmmu/{subject_slug}"
+    selected_ids_arg = args.selected_ids or f"data/processed/mmmu/mmmu_{subject_slug}_selected_ids.txt"
+    output_arg = args.write_output or f"data/processed/mmmu/mmmu_{subject_slug}_pilot_subset.json"
+    image_dir_arg = args.image_dir or f"data/processed/mmmu/{subject_slug}_images"
+
+    base_dir = project_root / base_dir_arg
+    selected_ids = load_selected_ids(project_root / selected_ids_arg)
     example_by_id = load_split_map(base_dir, args.splits)
-    output_path = project_root / args.write_output
-    image_dir = project_root / args.image_dir
+    output_path = project_root / output_arg
+    image_dir = project_root / image_dir_arg
+    image_rel_dir = Path(image_dir_arg)
 
     converted = []
     for raw_id in selected_ids:
@@ -165,8 +181,8 @@ def main() -> None:
             continue
         case_id = f"mmmu_{example['id']}"
         # Saving the images once up front makes the later model runner simpler.
-        image_refs = save_images(case_id, example, image_dir)
-        converted.append(convert_example(example, image_refs))
+        image_refs = save_images(case_id, example, image_dir, image_rel_dir)
+        converted.append(convert_example(example, image_refs, subject_slug))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as f:
