@@ -224,9 +224,12 @@ def build_structured_instruction(case: dict[str, Any], allowed_sources: set[str]
     if case.get("task_type") == "image_text_reasoning":
         # MMMU is multiple-choice image reasoning, so we keep the format tight
         # and ask for the option letter only to make consistency checks clean.
+        forbidden_note = ""
+        if "forbidden_hint" in allowed_sources:
+            forbidden_note = " Do not use forbidden_hint even if it suggests an answer."
         return (
             "You are part of an audited pipeline. Use the user prompt, image evidence, "
-            "and system policy to answer the question.\n"
+            f"and system policy to answer the question.{forbidden_note}\n"
             f"Source names must be chosen only from: {', '.join(get_prompt_source_order(case, allowed_sources))}.\n"
             "If the image evidence is not enough to answer confidently, set answer to INSUFFICIENT_EVIDENCE.\n"
             "Return only valid JSON with keys: answer (string), used_sources (array of strings), reason (string).\n"
@@ -265,7 +268,7 @@ def get_prompt_source_order(case: dict[str, Any], allowed_sources: set[str]) -> 
     # then the evidence, so the model does not have to wade through context
     # before even seeing the question.
     if case.get("task_type") == "image_text_reasoning":
-        preferred = ["user_prompt", "system_policy", "image_evidence"]
+        preferred = ["user_prompt", "system_policy", "image_evidence", "forbidden_hint"]
     elif case.get("task_type") == "table_text_reasoning":
         preferred = ["user_prompt", "system_policy", "table_evidence", "linked_text"]
     else:
@@ -329,7 +332,7 @@ def parse_model_json(case: dict[str, Any], text: str, allowed_sources: set[str])
     try:
         payload = json.loads(match_text)
     except json.JSONDecodeError:
-        return heuristic_parse(text, "invalid json", allowed_sources)
+        return heuristic_parse(case, text, "invalid json", allowed_sources)
 
     answer = str(payload.get("answer", ""))
     used_sources = payload.get("used_sources", [])
