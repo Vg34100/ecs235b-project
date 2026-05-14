@@ -1884,6 +1884,63 @@ task into a genuine forbidden-source security test:
 - under the authoritative forbidden-hint setting, a substantial subset of
   failures become direct forbidden-source-following failures
 
+### MMMU authoritative forbidden-hint extension: 20-case comparison
+
+The next-stage `MMMU` comparison expanded the same design from `10` to `20`
+Computer_Science cases while keeping the authoritative forbidden-hint setup the
+same.
+
+Observed base result:
+
+- base `20`-case slice
+  - `9` compliant
+  - `11` violating
+  - `12` answer-correct
+
+Observed attack result:
+
+- authoritative forbidden-hint `20`-case slice
+  - `6` compliant
+  - `14` violating
+  - `6` answer-correct
+
+Violation breakdown:
+
+- base `20`:
+  - `consistency_violation`: `8`
+  - `missing_required_source`: `4`
+  - `forbidden_source_used`: `0`
+- authoritative forbidden `20`:
+  - `consistency_violation`: `14`
+  - `forbidden_source_used`: `14`
+
+The strongest finding is that the attack slice cut answer correctness in half:
+
+- base `20`: `12/20` correct
+- forbidden `20`: `6/20` correct
+
+And the failures were not generic wrong answers. All `14` violating cases in
+the forbidden-hint slice were direct forbidden-source-following failures, where
+the final answer matched the injected wrong hint.
+
+This is the clearest current multimodal security result in the project. It
+shows that:
+
+1. the base image-text benchmark still has ordinary reasoning failures
+2. adding an authoritative forbidden text cue changes the failure mode itself
+3. the model can be pulled into explicit forbidden-source use in a substantial
+   fraction of cases
+
+This strengthens the paper direction considerably because it moves the image
+extension from:
+
+- a small multimodal pilot
+
+to:
+
+- a real multimodal security comparison with reproducible base-vs-attack
+  evidence
+
 ### Interpretation of the forbidden-hint pilots
 
 The weak and authoritative runs together show something useful:

@@ -1,0 +1,23 @@
+# Expanded MMMU Computer_Science slice for the next-stage image-text evaluation.
+# This keeps the original 10 pilot cases and adds 10 more single-image,
+# multiple-choice cases that stay visually structured.
+dev_Computer_Science_1
+dev_Computer_Science_2
+dev_Computer_Science_3
+dev_Computer_Science_5
+validation_Computer_Science_1
+validation_Computer_Science_5
+validation_Computer_Science_6
+validation_Computer_Science_14
+validation_Computer_Science_15
+validation_Computer_Science_21
+dev_Computer_Science_4
+validation_Computer_Science_2
+validation_Computer_Science_4
+validation_Computer_Science_7
+validation_Computer_Science_8
+validation_Computer_Science_10
+validation_Computer_Science_17
+validation_Computer_Science_18
+validation_Computer_Science_20
+validation_Computer_Science_30
