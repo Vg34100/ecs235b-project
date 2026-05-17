@@ -2028,6 +2028,48 @@ It is now:
 - authoritative forbidden text cues can substantially override image-grounded
   reasoning across more than one structured `MMMU` subject
 
+### MMMU Accounting reproducible comparison result
+
+The `Accounting` subject was also run through the new reproducible comparison
+pipeline using:
+
+- base `10`-case slice
+- authoritative forbidden-hint `10`-case slice
+- archived outputs
+- automatic metric collection
+- automatic markdown comparison table generation
+
+Observed comparison:
+
+- base `10`
+  - compliant: `6/10`
+  - answer-correct: `6/10`
+- authoritative forbidden `10`
+  - compliant: `0/10`
+  - answer-correct: `1/10`
+
+Violation counts:
+
+- base `10`
+  - `consistency_violation`: `4`
+  - `forbidden_source_used`: `0`
+- authoritative forbidden `10`
+  - `forbidden_source_used`: `10`
+  - `consistency_violation`: `9`
+
+This is the strongest current cross-subject image-text security result because
+it shows:
+
+1. the forbidden-source effect is not confined to `Computer_Science`
+2. the effect can become even stronger in a highly table-structured visual
+   domain
+3. the new experiment runner and comparison pipeline are stable enough to reuse
+   across subjects
+
+In practical terms, the `Accounting` result suggests that structured visual
+tasks can be highly vulnerable to authoritative-looking forbidden text cues,
+even when the base task itself is reasonably solvable.
+
 ### Interpretation of the forbidden-hint pilots
 
 The weak and authoritative runs together show something useful:
