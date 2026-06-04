@@ -25,3 +25,11 @@ data/raw/mmmu/
 
 # Accidental duplicate local data tree
 data/data/
+
+# Intermediate dataset-selection artifacts
+data/processed/hybridqa/hybridqa_pilot_subset_scored.json
+data/processed/hybridqa/hybridqa_pilot_subset_selected.json
+data/processed/hybridqa/hybridqa_stage2_dev20_strict_v1.json
+data/processed/hybridqa/hybridqa_stage2_dev20_v1.json
+data/processed/hybridqa/hybridqa_stage2_subset.json
+data/processed/mmmu/mmmu_computer_science_forbidden_authoritative_pilot.json
