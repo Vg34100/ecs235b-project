@@ -9,6 +9,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 
 
 def run_command(cmd: list[str], dry_run: bool) -> None:
+    # Print the exact command first so the workflow is easy to rerun by hand.
     print("$ " + " ".join(shlex.quote(part) for part in cmd))
     if dry_run:
         return
@@ -18,6 +19,8 @@ def run_command(cmd: list[str], dry_run: bool) -> None:
 def compare_mode(args: argparse.Namespace) -> None:
     python = sys.executable
 
+    # Keep the two runs symmetric here. This file is only orchestration; the
+    # actual benchmark logic still lives in main.py and the analysis scripts.
     base_main = [
         python,
         "main.py",
@@ -89,6 +92,7 @@ def compare_mode(args: argparse.Namespace) -> None:
     metrics_json = f"outputs/analysis/{args.comparison_name}_metrics.json"
     table_md = f"outputs/analysis/{args.comparison_name}_table.md"
 
+    # The comparison step only reads archived runs, so it is safe to regenerate.
     collect = [
         python,
         "src/analysis/collect_comparison_metrics.py",

@@ -46,6 +46,8 @@ def load_case_map(run_dir: Path) -> dict[str, dict[str, Any]]:
 
 
 def infer_benchmark_family(run_name: str, case_map: dict[str, dict[str, Any]]) -> str:
+    # Prefer archived case metadata when it exists. The run-name fallback is
+    # just there so older archives still summarize correctly.
     if case_map:
         sample_case = next(iter(case_map.values()))
         dataset_source = str(sample_case.get("dataset_source", "")).lower()
@@ -68,6 +70,7 @@ def infer_benchmark_family(run_name: str, case_map: dict[str, dict[str, Any]]) -
 
 
 def infer_setting_label(run_name: str) -> str:
+    # These labels are for the dashboard and paper exports, not for re-running.
     lowered = run_name.lower()
     if "hidden" in lowered:
         return "hidden"
@@ -98,6 +101,7 @@ def infer_subject_label(run_name: str, case_map: dict[str, dict[str, Any]]) -> s
 
 
 def compute_metrics(run_dir: Path) -> dict[str, Any]:
+    # Keep the per-run logic here small and push presentation work downstream.
     traces = load_json(run_dir / "policy_traces.json")
     manifest = load_manifest(run_dir)
     case_map = load_case_map(run_dir)
@@ -127,6 +131,7 @@ def compute_metrics(run_dir: Path) -> dict[str, Any]:
 
         if expected_answer:
             answer_scored_cases += 1
+        # Some runs, especially InjecAgent, are not ordinary answer-scoring benchmarks.
         is_correct = bool(expected_answer and answer_matches_expected(str(trace.get("model_answer", "")), expected_answer))
         if is_correct:
             correct += 1
@@ -162,6 +167,8 @@ def compute_metrics(run_dir: Path) -> dict[str, Any]:
 
 
 def build_output(run_dirs: list[Path]) -> dict[str, Any]:
+    # Keep the payload flat enough that both the dashboard and paper exporters
+    # can reuse it without extra reshaping.
     runs = [compute_metrics(run_dir) for run_dir in run_dirs]
     return {
         "generated_from_runs": [str(run_dir) for run_dir in run_dirs],

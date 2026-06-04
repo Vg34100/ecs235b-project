@@ -23,6 +23,7 @@ def violation_count(row: dict[str, Any], key: str) -> int:
 
 
 def run_label(row: dict[str, Any]) -> str:
+    # Keep labels short enough to survive a paper-sized figure.
     benchmark = str(row.get("benchmark", ""))
     subject = str(row.get("subject", ""))
     setting = str(row.get("setting", ""))
@@ -36,6 +37,8 @@ def run_label(row: dict[str, Any]) -> str:
 
 
 def metric_triplet(row: dict[str, Any]) -> list[tuple[str, float, str]]:
+    # This first figure only needs the three rates that best explain the project:
+    # compliance, answer correctness, and forbidden-source pressure.
     total = max(int(row.get("total_cases", 0)), 1)
     compliant_rate = int(row.get("compliant_cases", 0)) / total
     correct_rate = int(row.get("answer_correct", 0)) / total
@@ -110,6 +113,8 @@ def render_svg(payload: dict[str, Any], title: str) -> str:
     for idx, row in enumerate(rows):
         group_x = chart_x0 + idx * group_width + group_width / 2
         metrics = metric_triplet(row)
+        # Use the same ordering everywhere so the figure is readable without
+        # re-learning the color mapping row by row.
         start_x = group_x - ((len(metrics) - 1) * bar_width * 1.4) / 2
 
         for bar_idx, (_, value, color) in enumerate(metrics):

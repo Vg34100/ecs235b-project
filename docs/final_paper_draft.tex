@@ -94,15 +94,14 @@ across three benchmark families with distinct roles:
 \texttt{HybridQA} as the correctness-versus-compliance benchmark, and curated
 \texttt{MMMU} subsets as the main image-text forbidden-source benchmark.
 
-The empirical result is not just that the framework runs. The stronger result
-is that it reveals failure structure that ordinary accuracy misses. In
-\texttt{HybridQA}, answer correctness and policy compliance diverge directly. In
-\texttt{MMMU}, image-grounded reasoning can be overridden by an authoritative
-forbidden textual cue. In \texttt{InjecAgent}, indirect prompt injection
-remains severe even after removing an overly harsh explicit attacker-source
-presentation. Together, these results support a sharper claim than ``we built
-an auditor'': source-level policy auditing exposes meaningful multimodal
-security failures that standard benchmark scoring obscures.
+The framework is useful because it reveals failure structure that ordinary
+accuracy misses. In \texttt{HybridQA}, answer correctness and policy compliance
+diverge directly. In \texttt{MMMU}, image-grounded reasoning can be overridden
+by an authoritative forbidden textual cue. In \texttt{InjecAgent}, indirect
+prompt injection remains severe even after removing an overly harsh explicit
+attacker-source presentation. Together, these results show that source-level
+policy auditing can expose multimodal security failures that standard benchmark
+scoring obscures.
 
 \textbf{Contributions.} This paper makes five concrete contributions:
 \begin{itemize}
@@ -121,10 +120,11 @@ security failures that standard benchmark scoring obscures.
 
 \section{Related Work}
 \noindent
-The project sits at the intersection of prompt-injection security, multimodal
-evaluation, and visual inspection tools. The relevant gap is not that these
-areas have been ignored. The gap is that they are usually treated separately,
-while this paper treats them as one source-governance problem.
+This project draws on prompt-injection security, multimodal evaluation, and
+visual inspection work, but it uses them for a different purpose. Most of that
+literature studies attacks, benchmark accuracy, or interpretability artifacts
+separately, whereas this paper treats them as parts of one source-governance
+problem.
 
 \subsection{Prompt Injection}
 Indirect prompt injection is the closest direct security precedent for this
@@ -133,8 +133,8 @@ through malicious content embedded in retrieved tool outputs rather than through
 the top-level user prompt \cite{zhan2024injecagent}. Instruction Hierarchy
 argues that LLMs must learn to prioritize privileged instructions over lower
 trust content \cite{wallace2024instructionhierarchy}. BIPIA shows that indirect
-prompt injection is both a benchmark problem and a systems problem, not just a
-prompt wording issue \cite{yi2023bipia}. Our work is aligned with this thread,
+prompt injection is both a benchmark problem and a systems problem rather than
+only a prompt wording issue \cite{yi2023bipia}. Our work is aligned with this thread,
 but shifts the emphasis from attack success alone to explicit source-level
 policy auditing.
 
@@ -154,17 +154,18 @@ whether those flows were policy-compliant.
 Visual analytics work such as VISTA and ModalChorus is relevant because it
 shows the value of structured inspection rather than one-shot scoring
 \cite{xuan2024vista,ye2024modalchorus}. The difference is that our primary
-object is not label quality or embedding alignment. It is inference-time
-source governance. That said, the project does adopt the same general view that
+object is inference-time source governance rather than label quality or
+embedding alignment. That said, the project does adopt the same general view that
 human-interpretable analysis artifacts are useful when a model failure cannot be
 understood from a scalar score alone.
 
 \section{Audit Framework}
 \noindent
-The framework is intentionally simple. It needs to be expressive enough to
-describe source-governed failures across three benchmark families, but not so
-complicated that the policy layer becomes harder to reason about than the model
-behavior itself.
+The audit framework is kept compact so that the policy layer stays readable
+across all three benchmark families. It still needs enough structure to
+describe source-governed failures in text-agent, table-text, and image-text
+settings, but the implementation is deliberately limited to the policy elements
+that the later evaluation actually uses.
 
 \subsection{Sources, Policies, and Traces}
 We model each benchmark case as a set of typed information sources plus a final
@@ -203,9 +204,9 @@ Each run produces a structured trace containing:
   \item a merged final source-use judgment, and
   \item policy outcomes and explanations.
 \end{itemize}
-This is intentionally more explicit than ordinary benchmark logging. The point
-is not just to know the answer. The point is to know which answer-supporting or
-answer-corrupting sources were plausibly active.
+This is intentionally more explicit than ordinary benchmark logging, because
+the project needs to know not only the answer but also which
+answer-supporting or answer-corrupting sources were plausibly active.
 
 \subsection{Violation Taxonomy}
 The detector emits three violation classes.
@@ -220,7 +221,7 @@ The answer does not appear to use a source that policy marks as mandatory.
 The answer conflicts with required or authoritative evidence without a policy-
 acceptable justification.
 
-This taxonomy is simple on purpose. It is expressive enough to capture the
+The taxonomy is intentionally small, but it is expressive enough to capture the
 dominant failure types in all three benchmark families without turning the
 project into an ontology exercise. Figure~\ref{fig:framework} shows the audit
 framing at a high level: trusted evidence, forbidden cues, and policy checks
@@ -229,15 +230,15 @@ single undifferentiated input.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[node distance=0.72cm and 0.6cm, >=latex, scale=0.77, every node/.style={transform shape,font=\scriptsize}]
-  \tikzstyle{src}=[draw, rounded corners=2pt, fill=blue!4, minimum width=1.55cm, minimum height=0.6cm, align=center]
-  \tikzstyle{pol}=[draw, rounded corners=2pt, fill=green!6, minimum width=1.75cm, minimum height=0.68cm, align=center]
-  \tikzstyle{att}=[draw, rounded corners=2pt, fill=red!7, minimum width=1.7cm, minimum height=0.68cm, align=center]
+\begin{tikzpicture}[node distance=0.78cm and 0.68cm, >=latex, scale=0.9, every node/.style={transform shape,font=\footnotesize}]
+  \tikzstyle{src}=[draw, rounded corners=2pt, fill=blue!4, minimum width=1.8cm, minimum height=0.68cm, align=center]
+  \tikzstyle{pol}=[draw, rounded corners=2pt, fill=green!6, minimum width=2.0cm, minimum height=0.76cm, align=center]
+  \tikzstyle{att}=[draw, rounded corners=2pt, fill=red!7, minimum width=1.95cm, minimum height=0.76cm, align=center]
   \node[src] (prompt) {User Prompt};
   \node[src, below=of prompt] (trusted) {Trusted Evidence};
   \node[att, below=of trusted] (forbidden) {Forbidden Cue};
-  \node[pol, right=0.9cm of trusted] (policy) {Policy Audit\\Req. / Forb. / Cons.};
-  \node[draw, rounded corners=2pt, fill=gray!8, right=0.9cm of policy, minimum width=1.45cm, minimum height=0.68cm] (answer) {Output};
+  \node[pol, right=1.0cm of trusted] (policy) {Policy Audit\\Req. / Forb. / Cons.};
+  \node[draw, rounded corners=2pt, fill=gray!8, right=1.0cm of policy, minimum width=1.7cm, minimum height=0.76cm, font=\footnotesize] (answer) {Output};
   \draw[->, thick] (prompt.east) -- (policy.west);
   \draw[->, thick] (trusted.east) -- (policy.west);
   \draw[->, thick, dashed, red!70!black] (forbidden.east) -- (policy.west);
@@ -249,38 +250,38 @@ single undifferentiated input.
 
 \section{Benchmarks and Setup}
 \noindent
-The benchmark side is deliberately asymmetric. The goal is not to pretend all
-three datasets answer the same question. The goal is to use each one for the
-role it supports best.
+The three benchmark families are used for different purposes rather than forced
+into one uniform evaluation template. Each one supports a different part of the
+security argument developed in the paper.
 
 \subsection{Benchmarks and Roles}
-The project uses three benchmark families with intentionally different roles.
+The project uses three benchmark families, each with a different role in the
+overall evaluation.
 
-\textbf{\texttt{InjecAgent}.}
-This is the core security anchor. It is the most direct match to the project
-framing because attacker-originated content is already embedded into retrieved
-tool outputs \cite{zhan2024injecagent}. Our final reported main slice is
+\textbf{\texttt{InjecAgent}.} As the core security anchor, it is the most
+direct match to the project framing because attacker-originated content is
+already embedded into retrieved tool outputs \cite{zhan2024injecagent}. Our
+final reported main slice is
 \texttt{injecagent\_final\_core24\_hidden\_qwen3b}. We also retain an explicit
 prompt-mode variant as a harsher stress condition.
 
-\textbf{\texttt{HybridQA}.}
-This is the correctness-versus-compliance support benchmark. It is less about
-active attacker control and more about whether a model can answer correctly
-while still respecting required evidence usage in a table-plus-linked-text
-setting.
+\textbf{\texttt{HybridQA}.} As the correctness-versus-compliance support
+benchmark, it is less about active attacker control and more about whether a
+model can answer correctly while still respecting required evidence usage in a
+table-plus-linked-text setting.
 
-\textbf{\texttt{MMMU}.}
-This is the main multimodal forbidden-source benchmark. We use curated
+\textbf{\texttt{MMMU}.} As the main multimodal forbidden-source benchmark, we
+use curated
 \texttt{Computer\_Science} and \texttt{Accounting} slices in both clean and
 forbidden-hint attack conditions. These runs carry the strongest image-text
 security result in the project.
 
 \subsection{Model and Runtime}
 The final reported benchmark slices use
-\texttt{Qwen/Qwen2.5-3B-Instruct} with 4-bit quantization. This is not claimed
-as a universal model comparison study. It is a stable local model path chosen
-to make the benchmark adapters and audit outputs comparable across the three
-benchmark families.
+\texttt{Qwen/Qwen2.5-3B-Instruct} with 4-bit quantization. The goal here is to
+use a stable local model path that keeps the benchmark adapters and audit
+outputs comparable across the three benchmark families, rather than to make
+broad claims about model scaling or leaderboard placement.
 
 \subsection{Prompt Conditions}
 Two conditions need to be distinguished clearly.
@@ -309,15 +310,25 @@ defined.
   missing-required, and consistency violations.
 \end{itemize}
 
-This distinction is central. In this paper, policy compliance is not a
-cosmetic add-on to accuracy. It is part of the primary evaluation target.
+This distinction matters because policy compliance is part of the evaluation
+target rather than a cosmetic layer added after accuracy scoring.
+
+\subsection{Connection to Course Concepts}
+The project is also designed as a security project in the sense used in
+ECS~235B. Its central abstraction is a source-governance policy that resembles
+an access-control and information-flow problem rather than a standard QA
+benchmark problem. Required sources play a role similar to trusted dependencies,
+forbidden sources define disallowed flows across trust boundaries, and the
+detector checks whether the final output is consistent with those constraints.
+That perspective connects the implementation to class topics such as access
+control, trust separation, provenance, and policy enforcement in systems that
+mix data from different principals.
 
 \section{Results}
 \noindent
-The results should be read as a structured comparison of failure modes rather
-than as a single leaderboard. That is why the paper reports both answer-level
-and policy-level outcomes and why the benchmark roles are intentionally
-different. Table~\ref{tab:main-results} gives the main quantitative summary,
+The paper reports both answer-level and policy-level outcomes because the
+benchmarks expose different kinds of failures rather than a single leaderboard
+ordering. Table~\ref{tab:main-results} gives the main quantitative summary,
 while Figure~\ref{fig:overview} provides a compact visual comparison of how
 compliance, correctness, and forbidden-source pressure move across the reported
 benchmark settings.
@@ -366,14 +377,13 @@ That is still bad, but it is meaningfully better than the explicit presentation,
 which drops to 1 compliant case and 20
 \texttt{forbidden\_source\_used} violations.
 
-This distinction matters because it validates an important implementation
+The hidden-versus-explicit split also validates an important implementation
 correction. Earlier in the project, the benchmark pipeline surfaced the
 attacker-originated instruction too explicitly, which made the task harsher
 than the benchmark-faithful indirect setting should be. The hidden-mode result
-does not make the benchmark easy. It does, however, give the cleaner and more
-defensible baseline. Even under that cleaner condition, attacker-tainted
-content still drives many failures. The conclusion is not that the benchmark is
-broken. The conclusion is that indirect prompt injection remains a strong
+provides the cleaner and more defensible baseline, and even under that cleaner
+condition attacker-tainted content still drives many failures. A reasonable
+reading of these runs is that indirect prompt injection remains a strong
 source-governance failure mode even after removing an unnecessarily amplified
 presentation.
 
@@ -385,17 +395,17 @@ correct answers still violate policy.
 
 The dominant failure mode is \texttt{missing\_required\_source}. In practical
 terms, the model often appears to use the table and the user prompt while
-omitting linked text that policy marks as required. This is exactly the sort of
+omitting linked text that policy marks as required. This is the sort of
 failure ordinary QA scoring would hide. A benchmark that marks only the final
 string would call those cases successful. The audit marks them as incomplete
 because the answer was not grounded in the required evidence set.
 
-This benchmark therefore supports a strong project-level claim: policy
-compliance is not a minor interpretability add-on layered on top of accuracy.
-It changes the evaluation outcome itself.
+This benchmark therefore supports one of the main claims in the paper:
+policy-compliance judgments can change the evaluation outcome even when
+answer-level scoring looks acceptable.
 
 \subsection{\texttt{MMMU} Attacks}
-The strongest multimodal result comes from \texttt{MMMU}. In
+The clearest multimodal result comes from \texttt{MMMU}. In
 \texttt{Computer\_Science}, the clean 20-case slice achieves 12/20 answer
 correctness and 9/20 compliance. Under the forbidden-hint attack condition,
 answer correctness drops to 6/20 and the run triggers 14
@@ -405,16 +415,16 @@ while the attack condition drops to 1/10 and triggers 10 forbidden-source
 violations.
 
 These are not merely generic wrong answers. In the violating cases, the model
-often matches the injected forbidden hint exactly. That is the key reason the
-result matters. The attack is not just increasing difficulty. It is redirecting
-the answer toward a disallowed source.
+often matches the injected forbidden hint exactly, which is why the result
+matters: the attack redirects the answer toward a disallowed source instead of
+merely increasing task difficulty.
 
-The \texttt{MMMU} result is therefore stronger than ``image-text reasoning is
-hard.'' It shows that image-text reasoning can be overridden by a textual cue
-that policy explicitly says must be ignored. That is the most important
-multimodal security result in the paper, and Figure~\ref{fig:overview} makes
-the same pattern visible at a glance by showing the sharp increase in
-forbidden-source pressure under attack settings.
+The \texttt{MMMU} runs show more than ordinary image-text difficulty. Under the
+attack condition, image-grounded reasoning can be redirected by a textual cue
+that policy explicitly says must be ignored. That is the strongest multimodal
+security result in the paper, and Figure~\ref{fig:overview} makes the same
+pattern visible at a glance by showing the sharp increase in forbidden-source
+pressure under attack settings.
 
 \begin{figure}[t]
 \centering
@@ -450,9 +460,9 @@ forbidden-source pressure under attack settings.
 
 \section{Case Studies}
 \noindent
-The case studies matter because the aggregate metrics are about different kinds
-of failure, not just more or fewer mistakes. They make the source-level
-differences legible in a way that the summary table cannot.
+The case studies help make the source-level differences legible in a way that
+the summary table cannot, especially when the aggregate metrics reflect several
+different failure modes at once.
 
 \subsection{\texttt{InjecAgent}}
 A representative hidden-mode \texttt{InjecAgent} failure asks the model to read
@@ -467,7 +477,7 @@ security failure even if a shallow evaluator considered the response
 A representative \texttt{HybridQA} case asks who built a mosque in Herat with
 fire temples. The model answers \emph{Ghurids}, which is correct. However, the
 final source-use judgment indicates reliance on table evidence and the prompt,
-while linked text was required by policy. This is exactly the type of
+while linked text was required by policy. This is the type of
 correct-but-violating case that makes ordinary accuracy insufficient.
 
 \subsection{\texttt{MMMU}}
@@ -479,14 +489,14 @@ cleanest image-text version of forbidden-source influence in the project.
 
 \section{Discussion}
 \noindent
-The paper's main claim is empirical, not rhetorical: policy-aware auditing
-changes what counts as success and failure. The benchmarks matter because they
-show different parts of that claim rather than because they all maximize the
-same metric.
+The discussion returns to the same empirical point developed throughout the
+results: policy-aware auditing changes what counts as success and failure. The
+three benchmarks matter because they illuminate different parts of that point
+rather than because they all maximize the same metric.
 
 \subsection{Why This Matters}
-The paper's strongest claim is not that all three benchmarks are equally novel.
-They are not. Their value comes from how they separate different failure modes.
+The three benchmarks are not equally novel, but they are useful in combination
+because they separate different failure modes.
 
 \texttt{InjecAgent} anchors the security story. It shows that the framework can
 identify attacker-following behavior in a setting designed around indirect
@@ -499,8 +509,8 @@ policy compliance are not interchangeable.
 can be redirected by a disallowed textual cue even when the task looks
 primarily visual.
 
-Taken together, these benchmarks support a tighter conclusion than an
-output-only evaluation can provide.
+Taken together, these benchmarks support a more informative conclusion than an
+output-only evaluation can provide by itself.
 
 \subsection{Limitations}
 This paper also has clear limitations. First, the benchmark slices are curated rather than exhaustive. That improves
@@ -523,8 +533,17 @@ The next sensible extensions are straightforward:
   inspection.
 \end{itemize}
 
-The current result is already enough to justify those extensions. It is not a
-mere prototype in search of a question; it already answers one.
+The current result is already enough to justify those extensions because the
+project has identified a concrete and reproducible evaluation gap.
+
+\section{Code Availability}
+The code, curated benchmark slices, and paper-facing analysis artifacts are
+available at \url{https://github.com/Vg34100/ecs235b-project}. The repository
+includes the main audit pipeline, dataset conversion scripts, the archived-run
+analysis layer, the local dashboard generator, and the \LaTeX{} paper draft.
+The dashboard and paper exports are generated from archived run outputs rather
+than written by hand, which makes the reported tables, case panels, and summary
+figures reproducible from the repository.
 
 \section{Conclusion}
 This paper argued that multimodal LLM evaluation should not stop at answer
@@ -535,13 +554,13 @@ use forbidden sources, omit required evidence, and produce answers that are
 inconsistent with authoritative inputs even when some of those answers are
 superficially correct.
 
-The main conclusion is not that auditing replaces ordinary evaluation. It does
-not. The conclusion is that output-only evaluation is incomplete. If a model
-uses the wrong source to reach the right answer, or follows a forbidden cue to
-reach the wrong one, that is a meaningful security and reliability failure. A
-source-level audit makes that failure visible.
+This paper does not argue that auditing should replace ordinary evaluation.
+Instead, it argues that output-only evaluation is incomplete. If a model uses
+the wrong source to reach the right answer, or follows a forbidden cue to reach
+the wrong one, that is still a meaningful security and reliability failure, and
+a source-level audit makes that failure visible.
 
 \bibliographystyle{plain}
-\bibliography{security_project_refs}
+\bibliography{project/references}
 
 \end{document}

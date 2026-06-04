@@ -67,6 +67,7 @@ def infer_benchmark(run_name: str, case_map: dict[str, dict[str, Any]]) -> str:
 
 
 def preview_value(value: Any, limit: int = 220) -> str:
+    # The dashboard needs readable snippets, not raw full payload dumps.
     if isinstance(value, str):
         text = value
     else:
@@ -85,6 +86,7 @@ def source_previews(case: dict[str, Any]) -> dict[str, str]:
 
 
 def image_info(case: dict[str, Any]) -> dict[str, Any]:
+    # Keep the image metadata separate so the HTML layer can decide how to render it.
     image_evidence = case.get("sources", {}).get("image_evidence", {})
     images = image_evidence.get("images", []) if isinstance(image_evidence, dict) else []
     return {
@@ -122,6 +124,8 @@ def make_case_entry(
     trace: dict[str, Any],
     case: dict[str, Any],
 ) -> dict[str, Any]:
+    # These entries get reused across the dashboard, markdown summary, and
+    # paper-panel exports.
     return {
         "benchmark": benchmark,
         "category": category,
@@ -185,6 +189,8 @@ def select_hybridqa_correct_but_violating(run_dir: Path, limit: int) -> list[dic
         case = case_map.get(trace["case_id"])
         if case is None:
             continue
+        # HybridQA is most useful here when the answer looks right but the
+        # source-governance judgment still fails.
         if not trace_correctness(trace, case):
             continue
         selected.append(make_case_entry(benchmark, "hybridqa_correct_but_violating", run_name, manifest, trace, case))
@@ -204,6 +210,8 @@ def select_mmmu_forbidden_cases(run_dirs: list[Path], limit_per_run: int) -> lis
 
         count = 0
         for trace in traces:
+            # These are the strongest multimodal security examples, so filter
+            # directly for forbidden-source-following cases.
             if "forbidden_source_used" not in trace.get("violation_types", []):
                 continue
             case = case_map.get(trace["case_id"])
@@ -224,6 +232,8 @@ def build_payload(
     hybridqa_limit: int,
     mmmu_limit_per_run: int,
 ) -> dict[str, Any]:
+    # This export is intentionally small and curated. It is for representative
+    # panels, not a second full benchmark dump.
     case_studies = []
     case_studies.extend(select_injecagent_hidden_failures(injecagent_run_dir, injecagent_limit))
     case_studies.extend(select_hybridqa_correct_but_violating(hybridqa_run_dir, hybridqa_limit))

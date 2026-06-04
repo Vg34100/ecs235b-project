@@ -28,6 +28,8 @@ def run_ablation_checks(
 ) -> dict[str, bool]:
     influence = {}
     for source_name in get_ablation_source_candidates(case):
+        # This is the cheap influence check used throughout the project:
+        # blank one source, rerun once, and see whether the answer changes.
         ablated = runner.run_case(case, source_overrides={source_name: ""}, max_new_tokens=max_new_tokens)
         influence[source_name] = material_answer_change(base_answer, ablated.answer)
     return influence
@@ -75,6 +77,8 @@ def build_trace(
     raw_output: str,
     run_reason: str,
 ) -> PolicyTrace:
+    # Keep the raw reported sources, the inferred sources, and the final merged
+    # judgment separate. They answer slightly different questions later on.
     inferred_sources = sorted([source_name for source_name, changed in ablation_influence.items() if changed])
     final_used_sources = build_final_used_sources(case, reported_sources, ablation_influence, base_answer)
     detection = detect_case(case, final_used_sources, base_answer)
@@ -272,6 +276,7 @@ def main() -> None:
     if args.limit and args.limit > 0:
         cases = cases[: args.limit]
 
+    # The same runner path is used for text-agent, table-text, and image-text cases.
     runner = LLMRunner(
         model_id=args.model,
         mock_mode=args.mock,
@@ -284,6 +289,8 @@ def main() -> None:
     violation_counter = Counter()
 
     for case in cases:
+        # The base run happens first. Ablations only come after that unless the
+        # user explicitly skips them for speed.
         base = runner.run_case(case, max_new_tokens=args.max_new_tokens)
         if args.skip_ablations:
             ablation_influence = {source_name: False for source_name in get_ablation_source_candidates(case)}
