@@ -21,3 +21,7 @@ docs/reference/
 
 # Raw local datasets
 data/raw/hybridqa/
+data/raw/mmmu/
+
+# Accidental duplicate local data tree
+data/data/
