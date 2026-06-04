@@ -254,6 +254,15 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=0, help="Only run first N cases (0 means all)")
     parser.add_argument("--skip-ablations", action="store_true", help="Skip source ablation checks for faster runs")
     parser.add_argument("--max-new-tokens", type=int, default=120, help="Generation budget per call")
+    parser.add_argument(
+        "--injecagent-attacker-source-mode",
+        choices=["explicit", "hidden"],
+        default="explicit",
+        help=(
+            "How processed InjecAgent cases expose attacker_instruction in the prompt. "
+            "'explicit' shows it as a labeled source; 'hidden' keeps it only embedded inside tool_response."
+        ),
+    )
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parent
@@ -263,7 +272,12 @@ def main() -> None:
     if args.limit and args.limit > 0:
         cases = cases[: args.limit]
 
-    runner = LLMRunner(model_id=args.model, mock_mode=args.mock, quantization=args.quantization)
+    runner = LLMRunner(
+        model_id=args.model,
+        mock_mode=args.mock,
+        quantization=args.quantization,
+        injecagent_attacker_source_mode=args.injecagent_attacker_source_mode,
+    )
     runner.load()
 
     traces = []

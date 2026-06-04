@@ -2125,3 +2125,82 @@ What is still needed before the project feels complete as a final deliverable:
 The important conclusion is that the project is no longer missing its core
 implementation or its multimodal story. The remaining work is mostly synthesis,
 reporting, and choosing the most defensible final evaluation slices.
+
+### InjecAgent explicit-vs-hidden prompt-mode clarification
+
+The later `InjecAgent` refresh work exposed an important methodological issue in
+the processed benchmark path.
+
+For processed `InjecAgent` cases, the project had intentionally made all major
+source channels explicit in the prompt, including:
+
+- `user_prompt`
+- `system_policy`
+- `tool_response`
+- `attacker_instruction`
+
+That design was useful for source-level audit visibility, but it also made the
+attack more explicit to the model than a plain indirect-injection setting.
+
+This mattered in practice.
+
+When the same `6`-case Qwen smoke slice was rerun under the current codebase
+with the explicit attacker source still shown directly in the prompt, the
+result collapsed to:
+
+- `0/6` compliant
+- `6/6` violating
+
+That looked substantially worse than the older recorded `4/6` compliant result
+on the same small slice and raised a legitimate concern that the current
+presentation might be overstating vulnerability.
+
+To test that directly, a narrow A/B prompt-mode check was added for
+`InjecAgent`:
+
+- `explicit`
+  - keep the labeled `attacker_instruction` field visible in the prompt
+- `hidden`
+  - keep the malicious content embedded inside `tool_response`, but do not show
+    a separate labeled `attacker_instruction` prompt field
+
+On the same `6`-case Qwen smoke slice:
+
+- `explicit`: `0/6` compliant
+- `hidden`: `2/6` compliant
+
+The hidden-mode run also removed the direct `forbidden_source_used` failures on
+that slice:
+
+- hidden-mode violations:
+  - `consistency_violation`: `4`
+  - `missing_required_source`: `1`
+
+Interpretation:
+
+1. the explicit labeled `attacker_instruction` prompt field was making the
+   `InjecAgent` setup harsher
+2. the harsher explicit mode should be treated as a stronger stress-test
+   variant, not as the clean benchmark-faithful base setting
+3. even with that explicit attacker field hidden, the model still performed
+   poorly on several cases because it continued to echo attacker-tainted content
+   from inside the retrieved `tool_response`
+
+This is the important methodological conclusion:
+
+- `hidden` mode is the cleaner base `InjecAgent` evaluation setting
+- `explicit` mode is a stronger reinforced-attack variant
+
+The same pattern carried into the broader trimmed final core slice:
+
+- `InjecAgent core24`, explicit mode:
+  - `1/24` compliant
+- `InjecAgent core24`, hidden mode:
+  - `7/24` compliant
+
+So the later `InjecAgent` results should not be read as showing that the entire
+benchmark path was broken. They show that:
+
+- explicit source presentation materially amplifies attacker influence
+- but even the cleaner hidden mode remains a genuinely hard indirect
+  prompt-injection benchmark for the local Qwen 3B setup

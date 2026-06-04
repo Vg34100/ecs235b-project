@@ -22,10 +22,17 @@ class LLMRunner:
     swap between a real local model and a mock path.
     """
 
-    def __init__(self, model_id: str, mock_mode: bool = False, quantization: str = "none") -> None:
+    def __init__(
+        self,
+        model_id: str,
+        mock_mode: bool = False,
+        quantization: str = "none",
+        injecagent_attacker_source_mode: str = "explicit",
+    ) -> None:
         self.model_id = model_id
         self.mock_mode = mock_mode
         self.quantization = quantization
+        self.injecagent_attacker_source_mode = injecagent_attacker_source_mode
         self._generator = None
         self._tokenizer = None
         self._vl_model = None
@@ -109,7 +116,7 @@ class LLMRunner:
     ) -> PipelineResponse:
         source_overrides = source_overrides or {}
 
-        prompt = build_prompt(case, source_overrides)
+        prompt = build_prompt(case, source_overrides, self.injecagent_attacker_source_mode)
 
         if self.mock_mode:
             return self._mock_response(case, source_overrides)
@@ -128,7 +135,11 @@ class LLMRunner:
             result = self._generator(prompt, max_new_tokens=max_new_tokens, do_sample=False, return_full_text=False)
             text = extract_generated_text(result[0]["generated_text"])
 
-        return parse_model_json(case, text, get_allowed_sources(case))
+        return parse_model_json(
+            case,
+            text,
+            get_prompt_allowed_sources(case, self.injecagent_attacker_source_mode),
+        )
 
     def _mock_response(self, case: dict[str, Any], source_overrides: dict[str, str]) -> PipelineResponse:
         # Mock mode is just for fast policy/debug runs.
@@ -182,10 +193,18 @@ class LLMRunner:
             skip_special_tokens=True,
             clean_up_tokenization_spaces=True,
         )
-        return parse_model_json(case, text, get_allowed_sources(case))
+        return parse_model_json(
+            case,
+            text,
+            get_prompt_allowed_sources(case, self.injecagent_attacker_source_mode),
+        )
 
 
-def build_prompt(case: dict[str, Any], source_overrides: dict[str, str]) -> str:
+def build_prompt(
+    case: dict[str, Any],
+    source_overrides: dict[str, str],
+    injecagent_attacker_source_mode: str = "explicit",
+) -> str:
     # Keep source names explicit because the detector reasons over these labels.
     prompt = case.get("prompt", "")
     if "sources" not in case:
@@ -209,7 +228,7 @@ def build_prompt(case: dict[str, Any], source_overrides: dict[str, str]) -> str:
             'Return only JSON in the form: {"answer":"...", "used_sources":["..."], "reason":"..."}\n'
         )
 
-    allowed_sources = get_allowed_sources(case)
+    allowed_sources = get_prompt_allowed_sources(case, injecagent_attacker_source_mode)
     source_lines = []
     for source_name in get_prompt_source_order(case, allowed_sources):
         source_value = get_source_value(case, source_name, source_overrides)
@@ -475,6 +494,20 @@ def get_allowed_sources(case: dict[str, Any]) -> set[str]:
     if "sources" in case:
         return set(case["sources"].keys())
     return {"prompt", "image_evidence", "retrieved_context", "hidden_metadata"}
+
+
+def get_prompt_allowed_sources(
+    case: dict[str, Any], injecagent_attacker_source_mode: str = "explicit"
+) -> set[str]:
+    allowed_sources = get_allowed_sources(case)
+    if (
+        injecagent_attacker_source_mode == "hidden"
+        and "sources" in case
+        and case.get("task_type") != "image_text_reasoning"
+    ):
+        allowed_sources = set(allowed_sources)
+        allowed_sources.discard("attacker_instruction")
+    return allowed_sources
 
 
 def get_source_value(case: dict[str, Any], source_name: str, source_overrides: dict[str, str]) -> Any:
