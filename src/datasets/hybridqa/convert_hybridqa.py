@@ -74,9 +74,9 @@ def cell_url_tokens(urls: list[str]) -> set[str]:
     return tokens
 
 
-def select_relevant_row_indices(table: dict[str, Any], question: str, row_limit: int = 4) -> list[int]:
-    # The first rows in the raw table are often irrelevant. We rank rows by how
-    # much they look like the question, then keep a small relevant slice.
+def rank_rows_by_question_overlap(table: dict[str, Any], question: str) -> list[tuple[int, int]]:
+    # We keep the raw row scores around so stricter selection rules can reject
+    # cases where several rows look equally plausible.
     question_words = normalize_words(question)
     ranked = []
     for idx, row in enumerate(table.get("data", [])):
@@ -84,15 +84,22 @@ def select_relevant_row_indices(table: dict[str, Any], question: str, row_limit:
         row_words = normalize_words(cell_text)
         row_words |= cell_url_tokens([url for cell in row for url in cell[1]])
         overlap = len(question_words & row_words)
-        score = overlap
         if overlap == 0:
             continue
-        ranked.append((score, idx))
+        ranked.append((overlap, idx))
+
+    ranked.sort(key=lambda item: (-item[0], item[1]))
+    return ranked
+
+
+def select_relevant_row_indices(table: dict[str, Any], question: str, row_limit: int = 4) -> list[int]:
+    # The first rows in the raw table are often irrelevant. We rank rows by how
+    # much they look like the question, then keep a small relevant slice.
+    ranked = rank_rows_by_question_overlap(table, question)
 
     if not ranked:
         return list(range(min(row_limit, len(table.get("data", [])))))
 
-    ranked.sort(key=lambda item: (-item[0], item[1]))
     return [idx for _, idx in ranked[:row_limit]]
 
 
@@ -159,6 +166,76 @@ def infer_required_sources(question: str, answer: str, linked_text: list[dict[st
     return required
 
 
+def answer_appears_in_table(table: dict[str, Any], answer: str) -> bool:
+    answer_low = answer.lower().strip()
+    if not answer_low:
+        return False
+    for row in table.get("data", []):
+        for cell_text, _ in row:
+            if answer_low in cell_text.lower():
+                return True
+    return False
+
+
+def question_is_strict_friendly(question: str) -> bool:
+    question_low = question.lower().strip()
+    blocked_phrases = [
+        "difference",
+        "how many",
+        "later played for",
+        "what kind of",
+        "what type of",
+        "how long",
+        "what is the time",
+        "how much more",
+        "how much less",
+    ]
+    if any(phrase in question_low for phrase in blocked_phrases):
+        return False
+    return True
+
+
+def answer_is_strict_friendly(answer: str) -> bool:
+    answer = answer.strip()
+    if not answer or len(answer) > 40:
+        return False
+    if "," in answer or ";" in answer:
+        return False
+    if " and " in answer.lower():
+        return False
+    if re.fullmatch(r"\d{1,4}", answer):
+        return True
+    if re.fullmatch(r"\$?\s?\d[\d,]*(\.\d+)?", answer):
+        return True
+    word_count = len(answer.split())
+    return 1 <= word_count <= 4
+
+
+def linked_text_is_strict_friendly(linked_text: list[dict[str, str]], answer: str) -> bool:
+    answer_low = answer.lower().strip()
+    if not answer_low:
+        return False
+    for item in linked_text:
+        summary = item["summary"]
+        if len(summary) > 900:
+            continue
+        if answer_low in summary.lower():
+            return True
+    return False
+
+
+def top_row_is_clear_match(ranked_rows: list[tuple[int, int]]) -> bool:
+    if not ranked_rows:
+        return False
+    top_score = ranked_rows[0][0]
+    if top_score < 2:
+        return False
+    if len(ranked_rows) == 1:
+        return True
+    second_score = ranked_rows[1][0]
+    return top_score > second_score
+
+
 def is_good_pilot_case(example: dict[str, Any], table: dict[str, Any], linked_text: list[dict[str, str]]) -> bool:
     # This filter is meant to keep the first pilot subset easy to inspect, not
     # to discover the perfect benchmark slice on the first try.
@@ -173,6 +250,36 @@ def is_good_pilot_case(example: dict[str, Any], table: dict[str, Any], linked_te
         return False
     if len(example.get("question", "").strip()) < 10:
         return False
+    return True
+
+
+def is_good_strict_case(
+    example: dict[str, Any],
+    table: dict[str, Any],
+    linked_text: list[dict[str, str]],
+    ranked_rows: list[tuple[int, int]],
+    required_sources: list[str],
+) -> bool:
+    # The stricter selector is for scale-up, so it rejects ambiguous or messy
+    # cases instead of trying to rescue them with detector tweaks later.
+    if not is_good_pilot_case(example, table, linked_text):
+        return False
+
+    question = example.get("question", "").strip()
+    answer = example.get("answer-text", "").strip()
+    if not question_is_strict_friendly(question):
+        return False
+    if not answer_is_strict_friendly(answer):
+        return False
+    if not top_row_is_clear_match(ranked_rows):
+        return False
+
+    if "linked_text" in required_sources:
+        if answer_appears_in_table(table, answer):
+            return False
+        if not linked_text_is_strict_friendly(linked_text, answer):
+            return False
+
     return True
 
 
@@ -214,12 +321,38 @@ def score_case(example: dict[str, Any], table: dict[str, Any], linked_text: list
     return score
 
 
+def strict_score_case(
+    example: dict[str, Any],
+    table: dict[str, Any],
+    linked_text: list[dict[str, str]],
+    ranked_rows: list[tuple[int, int]],
+    required_sources: list[str],
+) -> int:
+    # This score prefers cases that keep the answer target compact and the row
+    # selection story obvious.
+    score = score_case(example, table, linked_text)
+    answer = example.get("answer-text", "").strip()
+    if answer_is_strict_friendly(answer):
+        score += 3
+    if top_row_is_clear_match(ranked_rows):
+        score += 3
+    if "linked_text" in required_sources and linked_text_is_strict_friendly(linked_text, answer):
+        score += 3
+    if "linked_text" in required_sources and answer_appears_in_table(table, answer):
+        score -= 5
+    return score
+
+
 def case_bucket(required_sources: list[str]) -> str:
     # HybridQA is table-anchored, so the useful split here is whether linked
     # text is also required, not whether the case is somehow text-only.
     if "linked_text" in required_sources:
         return "table_plus_text"
     return "table_only"
+
+
+def load_existing_cases(path: Path) -> list[dict[str, Any]]:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def convert_example(example: dict[str, Any], table: dict[str, Any], request: dict[str, str]) -> dict[str, Any]:
@@ -272,6 +405,17 @@ def main() -> None:
         default="",
         help="Plain-text file with one HybridQA question id per line",
     )
+    parser.add_argument(
+        "--selector",
+        choices=["broad", "strict"],
+        default="broad",
+        help="Selection rule set for automatic subset generation",
+    )
+    parser.add_argument(
+        "--extend-from",
+        default="",
+        help="Existing converted case file to preserve and extend",
+    )
     parser.add_argument("--limit", type=int, default=12, help="Target number of converted cases")
     parser.add_argument(
         "--table-only-limit",
@@ -298,6 +442,16 @@ def main() -> None:
 
     examples = load_split(raw_dir, args.split)
     converted = []
+    preserved_by_id = {}
+    preserved_bucket_counts = {"table_only": 0, "table_plus_text": 0}
+
+    if args.extend_from:
+        extend_path = project_root / args.extend_from
+        for case in load_existing_cases(extend_path):
+            preserved_by_id[case["case_id"]] = case
+            bucket = case_bucket(case["required_sources"])
+            preserved_bucket_counts[bucket] += 1
+        converted.extend(preserved_by_id.values())
 
     with open_archive(raw_dir) as archive:
         if args.selected_ids:
@@ -323,11 +477,15 @@ def main() -> None:
         else:
             ranked_by_bucket = {"table_only": [], "table_plus_text": []}
             for example in examples:
+                case_id = f"hybridqa_{example['question_id']}"
+                if case_id in preserved_by_id:
+                    continue
                 try:
                     table, request = load_table_bundle(archive, example["table_id"])
                 except KeyError:
                     continue
 
+                ranked_rows = rank_rows_by_question_overlap(table, example["question"])
                 row_indices = select_relevant_row_indices(table, example["question"])
                 linked_text = collect_linked_text(table, request, row_indices)
                 if not is_good_pilot_case(example, table, linked_text):
@@ -336,8 +494,15 @@ def main() -> None:
                 required_sources = infer_required_sources(
                     example["question"], example.get("answer-text", ""), linked_text
                 )
+                if args.selector == "strict" and not is_good_strict_case(
+                    example, table, linked_text, ranked_rows, required_sources
+                ):
+                    continue
                 bucket = case_bucket(required_sources)
-                score = score_case(example, table, linked_text)
+                if args.selector == "strict":
+                    score = strict_score_case(example, table, linked_text, ranked_rows, required_sources)
+                else:
+                    score = score_case(example, table, linked_text)
 
                 ranked_by_bucket[bucket].append(
                     (score, example["question_id"], example, table, request)
@@ -347,13 +512,19 @@ def main() -> None:
                 bucket_items.sort(key=lambda item: (-item[0], item[1]))
 
             chosen = []
-            chosen.extend(ranked_by_bucket["table_only"][: args.table_only_limit])
-            chosen.extend(ranked_by_bucket["table_plus_text"][: args.table_plus_text_limit])
+            table_only_needed = max(0, args.table_only_limit - preserved_bucket_counts["table_only"])
+            table_plus_text_needed = max(
+                0, args.table_plus_text_limit - preserved_bucket_counts["table_plus_text"]
+            )
+            chosen.extend(ranked_by_bucket["table_only"][:table_only_needed])
+            chosen.extend(ranked_by_bucket["table_plus_text"][:table_plus_text_needed])
 
             # If one bucket comes up short, backfill from the other bucket so
             # the converter still returns a usable subset.
-            if len(chosen) < args.limit:
-                used_ids = {item[1] for item in chosen}
+            if len(converted) + len(chosen) < args.limit:
+                used_ids = {item[1] for item in chosen} | {
+                    case_id.removeprefix("hybridqa_") for case_id in preserved_by_id
+                }
                 leftovers = []
                 for bucket_name in ("table_only", "table_plus_text"):
                     for item in ranked_by_bucket[bucket_name]:
@@ -361,10 +532,10 @@ def main() -> None:
                             continue
                         leftovers.append(item)
                 leftovers.sort(key=lambda item: (-item[0], item[1]))
-                chosen.extend(leftovers[: max(0, args.limit - len(chosen))])
+                chosen.extend(leftovers[: max(0, args.limit - (len(converted) + len(chosen)))])
 
             chosen.sort(key=lambda item: item[1])
-            for _, _, example, table, request in chosen[: args.limit]:
+            for _, _, example, table, request in chosen[: max(0, args.limit - len(converted))]:
                 converted.append(convert_example(example, table, request))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -376,10 +547,12 @@ def main() -> None:
         print(f"selection mode: selected_ids")
         print(f"selected ids requested: {len(selected_ids)}")
     else:
-        print(f"selection mode: scored")
+        print(f"selection mode: {args.selector}")
         print(f"target limit: {args.limit}")
         print(f"table_only target: {args.table_only_limit}")
         print(f"table_plus_text target: {args.table_plus_text_limit}")
+        if args.extend_from:
+            print(f"extended from: {args.extend_from}")
     print(f"pilot cases: {len(converted)}")
     if converted:
         first = converted[0]

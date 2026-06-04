@@ -151,3 +151,23 @@ If the 12-case pilot looks good, the next extension phase should be:
 - expand to around `20` converted cases
 - define a small set of explicit policy-labeled cases
 - run the same trace and detector pipeline on that subset
+
+## Current next-stage target
+
+The next-stage `HybridQA` subset should now be treated as:
+
+- `20` curated converted cases
+
+Recommended balance:
+
+- `10` table-only cases
+- `10` table-plus-text cases
+
+This is large enough to say more than the pilot, but still small enough to
+review without turning the extension into a full benchmark sweep.
+
+The intent of the 20-case subset is:
+
+- keep the same selection rules as the pilot
+- preserve a balanced split across the two policy styles
+- test whether the answer-quality versus attribution-quality pattern still holds
