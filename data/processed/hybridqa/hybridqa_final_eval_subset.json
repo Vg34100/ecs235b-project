@@ -1,0 +1,1651 @@
+[
+  {
+    "case_id": "hybridqa_00009b9649d0dd0a",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "Who were the builders of the mosque in Herat with fire temples ?",
+    "sources": {
+      "user_prompt": "Who were the builders of the mosque in Herat with fire temples ?",
+      "table_evidence": {
+        "title": "List of mosques in Afghanistan",
+        "url": "https://en.wikipedia.org/wiki/List_of_mosques_in_Afghanistan",
+        "header": [
+          "Name",
+          "Province",
+          "City",
+          "Year",
+          "Remarks"
+        ],
+        "rows": [
+          [
+            "Great Mosque of Herat",
+            "Herat Province",
+            "Herat",
+            "1446",
+            "The mosque was the city 's first congregational mosque , built on the former site of two smaller Zoroastrian Fire temples destroyed by earthquake and fire"
+          ],
+          [
+            "Abdul Rahman Mosque",
+            "Kabul Province",
+            "Kabul",
+            "2009",
+            "Largest mosque in Afghanistan"
+          ],
+          [
+            "Friday Mosque of Kandahar",
+            "Kandahar Province",
+            "Kandahar",
+            "1750",
+            "Houses the cloak of the Islamic prophet Muhammad"
+          ],
+          [
+            "Omar Al-Farooq Mosque",
+            "Kandahar Province",
+            "Kandahar",
+            "2014",
+            "Built on the site that was a popular cinema of Kandahar . [ 1 ]"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Great_Mosque_of_Herat",
+          "summary": "The Great Mosque of Herat ( Persian : \u0645\u0633\u062c\u062f \u062c\u0627\u0645\u0639 \u0647\u0631\u0627\u062a , Masjid-i J\u0101mi-i Her\u0101t ) or Jami Masjid of Herat , is a mosque in the city of Herat , in the Herat Province of north-western Afghanistan . It was built by the Ghurids , under the rule of the Sultan Ghiyath al-Din Muhammad Ghori , who laid its foundation in 1200 CE , and later extended by several rulers as Herat changed rulers down the centuries from the Timurids to the Safavids , Mughals and then the Uzbeks , all of whom supported the mosque . Though many of the glazed tiles have been replaced during subsequent periods , the Friday Mosque in Herat was given its present form during the closing years of the fifteenth century . Apart from numerous small neighborhood mosques for daily prayer , most communities in the Islamic world have a larger mosque , a congregational mosque for Friday services with a sermon . The Jama Masjid was not always the largest mosque in Herat ; a much larger complex the Mosque and Madressa of Gawhar Shad , also built by the Timurids , was located in the northern part of the city . However , those architectural monuments were dynamited by officers of the British Indian Army in 1885 , to prevent its use as a fortress if a Russian army tried to invade India ."
+        },
+        {
+          "url": "/wiki/Herat_Province",
+          "summary": "Herat ( Pashto/Dari : \u0647\u0631\u0627\u062a ) is one of the thirty-four provinces of Afghanistan , located in the western part of the country . Together with Badghis , Farah , and Ghor provinces , it makes up the north-western region of Afghanistan . Its primary city and administrative capital is Herat City . The province of Herat is divided into about 17 districts and contains over 1,000 villages . It has a population of about 1,780,000 , making it the second most populated province in Afghanistan behind Kabul Province . The population is multi-ethnic but largely Persian-speaking . The province of Herat shares a border with Iran in the west and Turkmenistan in the north , making it an important trading region . The Trans-Afghanistan Pipeline ( TAPI ) is expected to pass through Herat from Turkmenistan to Pakistan and India in the south . The province has two airports , one is the Herat International Airport in the capital of Herat and the other is at the Shindand Air Base , which is one of the largest military bases in Afghanistan . The Salma Dam which is fed by the Hari River is also located in this province ."
+        },
+        {
+          "url": "/wiki/Herat",
+          "summary": "Her\u0101t ( /h\u025b\u02c8r\u0251\u02d0t/ ; Persian/Pashto : \u0647\u0631\u0627\u062a ) is the third-largest city of Afghanistan . It has a population of about 436,300 , and serves as the capital of Herat Province , situated in the fertile valley of the Hari River in the western part of the country . It is linked with Kandahar , Kabul , and Mazar-i-Sharif via Highway 1 or the ring road . It is further linked to the city of Mashhad in neighboring Iran through the border town of Islam Qala , and to Mary in Turkmenistan to the north through the border town of Torghundi . Herat dates back to Avestan times and was traditionally known for its wine . The city has a number of historic sites , including the Herat Citadel and the Musalla Complex . During the Middle Ages Herat became one of the important cities of Khorasan , as it was known as the Pearl of Khorasan . It has been governed by various Afghan rulers since the early 18th century . In 1717 , the city was invaded by the Hotaki forces until they were expelled by the Afsharids in 1729 . After Nader Shah 's death and Ahmad Shah Durrani 's rise to power in 1747 , Herat became part of Afghanistan . It witnessed some political disturbances and military invasions during the early half of the 19th century but the 1857 Treaty of Paris ended hostilities of the Anglo-Persian War . Herat lies on the ancient trade routes of the Middle East , Central and South Asia , and today is a regional hub in western Afghanistan ."
+        },
+        {
+          "url": "/wiki/Fire_temple",
+          "summary": "A fire temple in Zoroastrianism is the place of worship for Zoroastrians , often called dar-e mehr ( Persian ) or agiyari ( Gujarati ) . In the Zoroastrian religion , fire ( see atar ) , together with clean water ( see aban ) , are agents of ritual purity . Clean , white ash for the purification ceremonies [ is ] regarded as the basis of ritual life , which are essentially the rites proper to the tending of a domestic fire , for the temple [ fire ] is that of the hearth fire raised to a new solemnity . For , one who sacrifices unto fire with fuel in his hand . , is given happiness . As of 2019 [ update ] , there were 167 fire temples in the world , of which 45 were in Mumbai , 105 in the rest of India , and 17 in other countries . There is a religious custom in India of not allowing Zoroastrian women to enter the Fire Temple and the Tower of Silence if they marry a non-Zoroastrian person . This custom has been challenged before the Supreme Court of India after a Zoroastrian woman was denied entry into Zoroastrian institutions ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Ghurids",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00009b9649d0dd0a",
+      "table_id": "List_of_mosques_in_Afghanistan_0",
+      "answer_text": "Ghurids"
+    }
+  },
+  {
+    "case_id": "hybridqa_00013190d4370f73",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "After what season did the number 7 competitor retire ?",
+    "sources": {
+      "user_prompt": "After what season did the number 7 competitor retire ?",
+      "table_evidence": {
+        "title": "1999 Kyalami Superbike World Championship round",
+        "url": "https://en.wikipedia.org/wiki/1999_Kyalami_Superbike_World_Championship_round",
+        "header": [
+          "No",
+          "Rider",
+          "Team",
+          "Motorcycle"
+        ],
+        "rows": [
+          [
+            "1",
+            "Carl Fogarty",
+            "Ducati Performance",
+            "Ducati 996"
+          ],
+          [
+            "4",
+            "Akira Yanagawa",
+            "Kawasaki Racing Team",
+            "Kawasaki ZX-7RR"
+          ],
+          [
+            "5",
+            "Colin Edwards",
+            "Castrol Honda",
+            "Honda RC45"
+          ],
+          [
+            "6",
+            "Gregorio Lavilla",
+            "Kawasaki Racing Team",
+            "Kawasaki ZX-7RR"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Carl_Fogarty",
+          "summary": "Carl George Fogarty , MBE ( born 1 July 1965 ) , often known as Foggy , is one of the most successful World Superbike racers of all time . He also holds the second highest number of race wins at 59 . He is the son of former motorcycle racer George Fogarty . Retired from racing since 2000 , Fogarty is renowned for his high corner speed riding style , combined with an aggressive competitiveness , which brought him 59 victories and four World Superbike Championships ( 1994 , 1995 , 1998 and 1999 ) . His greatest success came with the factory Ducati team . He was appointed Member of the Order of the British Empire ( MBE ) in the 1998 New Year Honours , and helped to develop the Petronas FP1 racing motorcycle campaigned in the early 2000s . He won the 14th series of I 'm a Celebrity.Get Me Out of Here ! in 2014 and was crowned 'King of the Jungle ' ."
+        },
+        {
+          "url": "/wiki/Ducati_996",
+          "summary": "The Ducati 996 is a Ducati sport bike motorcycle made from 1999 to 2002 , based upon the earlier 916 ."
+        },
+        {
+          "url": "/wiki/Akira_Yanagawa",
+          "summary": "Akira Yanagawa ( \u67f3\u5ddd \u660e , Yanagawa Akira , born 15 July 1971 ) is a motorcycle road racer from Japan . He won three World Superbike Championship races and finished on the podium on 20 further occasions ."
+        },
+        {
+          "url": "/wiki/Kawasaki_ZX-7R_and_7RR",
+          "summary": "The Kawasaki Ninja ZX-7R was a motorcycle in the Ninja sport bike series from the Japanese manufacturer Kawasaki produced from 1989 until 2003 . It remained largely unchanged through its production . Kawasaki used inverted forks starting in 1991 , added ram air using a single tube , and in 1996 , twin tube ram air and Tokico six piston brakes and fully adjustable suspension . From 1989 through 1995 in the US market , Kawasaki called the ZXR-750 and ZXR-750R the ZX-7 and ZX-7R respectively . Starting from 1996 Kawasaki dropped the ZXR name worldwide and the former ZXR-750 was now ZX-7R and the limited edition homologation special ZXR-750R/ZX-7R started in 1991 was now ZX-7RR ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "2006",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00013190d4370f73",
+      "table_id": "1999_Kyalami_Superbike_World_Championship_round_0",
+      "answer_text": "2006"
+    }
+  },
+  {
+    "case_id": "hybridqa_00023988273478d0",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What year was the 1971-72 ECAC Hockey Player of the Year born ?",
+    "sources": {
+      "user_prompt": "What year was the 1971-72 ECAC Hockey Player of the Year born ?",
+      "table_evidence": {
+        "title": "List of ECAC Hockey Player of the Year",
+        "url": "https://en.wikipedia.org/wiki/List_of_ECAC_Hockey_Player_of_the_Year",
+        "header": [
+          "Year",
+          "Winner",
+          "Position",
+          "School"
+        ],
+        "rows": [
+          [
+            "1971-72",
+            "Bob Brown",
+            "Defenceman",
+            "Boston University"
+          ],
+          [
+            "1974-75",
+            "Ron Wilson",
+            "Defenceman",
+            "Providence"
+          ],
+          [
+            "1961-62",
+            "Ron Ryan",
+            "Right wing",
+            "Colby"
+          ],
+          [
+            "1962-63",
+            "Bob Brinkworth",
+            "Center",
+            "Rensselaer"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/1971\u201372_NCAA_Division_I_men's_ice_hockey_season",
+          "summary": "The 1971-72 NCAA University Division men 's ice hockey season began in November 1971 and concluded with the 1972 NCAA University Division Men 's Ice Hockey Tournament 's championship game on March 18 , 1972 at the Boston Garden in Boston , Massachusetts . This was the 25th season in which an NCAA ice hockey championship was held and is the 77th year overall where an NCAA school fielded a team . This was the first year of play for the CCHA with former independents Ohio State and Saint Louis being joined by new programs from Bowling Green and Ohio . Notre Dame joined the WCHA . For the final time the ICAC awarded a trophy to the league champion ."
+        },
+        {
+          "url": "/wiki/Bob_Brown_(ice_hockey)",
+          "summary": "Robert Bob Brown ( born December 18 , 1950 ) is a Canadian former professional ice hockey player who played in the World Hockey Association ( WHA ) . He played parts of two WHA seasons for the Philadelphia Blazers , New York Raiders , New York Golden Blades and Jersey Knights . Brown was drafted in the sixth round of the 1970 NHL Amateur Draft by the Montreal Canadiens . As a youth , Brown played in the 1963 Quebec International Pee-Wee Hockey Tournament with the Scarboro Lions minor ice hockey team ."
+        },
+        {
+          "url": "/wiki/Defenceman",
+          "summary": "Defence ( defense in the United States ) in ice hockey is a player position whose primary responsibility is to prevent the opposing team from scoring . They are often referred to as defencemen , D , D-men or blueliners ( the latter a reference to the blue line in ice hockey which represents the boundary of the offensive zone ; defencemen generally position themselves along the line to keep the puck in the zone ) . They were once called cover-point . A good defenceman is both strong in defensive and offensive play and for defenceman pairing also need to be good at defending and attacking . In regular play , two defencemen complement three forwards and a goaltender on the ice . Exceptions include overtime during the regular season and when a team is shorthanded ( i.e . has been assessed a penalty ) , in which two defencemen are typically joined by only two forwards and a goaltender ; in National Hockey League play in overtime effective with the 2015-16 season the teams have only three position players and a goaltender on the ice and may use either two forwards and one defenceman ( typically ) , or conversely , two defencemen and one forward ."
+        },
+        {
+          "url": "/wiki/Boston_University_Terriers_men's_ice_hockey",
+          "summary": "The Boston University Terriers mens ice hockey program is one of the most storied teams in NCAA Division I hockey , playing its first ever game in 1918 and winning five national championships , while making twenty-two appearances in the Frozen Four . BU has won twelve major conference tournament championships as well as 30 titles in the historic Beanpot tournament featuring the four major Boston collegiate hockey teams . BU played in the Eastern College Athletic Conference ( ECAC ) from 1961 to 1984 , winning five tournament championships ; and has since competed in the Hockey East Association , winning seven tournament titles . Mens ice hockey is the most popular sport at Boston University and has a large fan base on campus and among BU alumni nationwide ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "1950",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00023988273478d0",
+      "table_id": "List_of_ECAC_Hockey_Player_of_the_Year_0",
+      "answer_text": "1950"
+    }
+  },
+  {
+    "case_id": "hybridqa_000356071ebf888a",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What battle did the man born on 7 December 1839 fight in ?",
+    "sources": {
+      "user_prompt": "What battle did the man born on 7 December 1839 fight in ?",
+      "table_evidence": {
+        "title": "List of Zulu War Victoria Cross recipients",
+        "url": "https://en.wikipedia.org/wiki/List_of_Zulu_War_Victoria_Cross_recipients",
+        "header": [
+          "Name",
+          "Unit",
+          "Date of action",
+          "Place of action"
+        ],
+        "rows": [
+          [
+            "William Allan",
+            "024 24th Regiment of Foot",
+            "1879-02-22 22-23 January 1879",
+            "Battle of Rorke 's Drift , Natal Colony"
+          ],
+          [
+            "Anthony Booth",
+            "080 80th Regiment of Foot",
+            "1879-03-12 12 March 1879",
+            "Battle of Intombe , Transvaal"
+          ],
+          [
+            "Gonville Bromhead",
+            "024 24th Regiment of Foot",
+            "1879-02-22 22-23 January 1879",
+            "Battle of Rorke 's Drift , Natal Colony"
+          ],
+          [
+            "Edward Browne",
+            "024 24th Regiment of Foot",
+            "1879-03-28 28 March 1879",
+            "Battle of Kambula , Zululand"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/William_Wilson_Allen",
+          "summary": "William Wilson Allen , VC ( circa 1843 - 12 March 1890 ) was an English recipient of the Victoria Cross ( VC ) for his actions at the Battle of Rorke 's Drift in January 1879 , the highest and most prestigious award for valour in the face of the enemy that can be awarded to British and Commonwealth forces ."
+        },
+        {
+          "url": "/wiki/South_Wales_Borderers",
+          "summary": "The South Wales Borderers was a line infantry regiment of the British Army in existence for 280 years . It first came into existence , as the 24th Regiment of Foot in 1689 . Based at Brecon , the regiment recruited from the border counties of Monmouthshire , Herefordshire and Brecknockshire , but was not called the South Wales Borderers until the Childers Reforms of 1881 . The regiment served in a great many conflicts , including the American Revolutionary War , various conflicts in India , the Zulu War , Second Boer War , and World War I and World War II . In 1969 the regiment was amalgamated with the Welch Regiment to form the Royal Regiment of Wales ."
+        },
+        {
+          "url": "/wiki/Battle_of_Rorke's_Drift",
+          "summary": "The Battle of Rorke 's Drift , also known as the Defence of Rorke 's Drift , was an engagement in the Anglo-Zulu War . The successful defence of the mission station of Rorke 's Drift , under the command of Lieutenants John Chard of the Royal Engineers and Gonville Bromhead , followed Britain 's defeat at the Battle of Isandlwana on 22 January 1879 and continued into the following day . Just over 150 British and colonial troops defended the station against attacks by 3,000 to 4,000 Zulu warriors . The massive but piecemeal attacks by the Zulu on Rorke 's Drift came very close to defeating the much smaller garrison , but were repelled . Eleven Victoria Crosses were awarded to the defenders , along with a number of other decorations and honours ."
+        },
+        {
+          "url": "/wiki/Natal_Colony",
+          "summary": "The Colony of Natal was a British colony in south-eastern Africa . It was proclaimed a British colony on 4 May 1843 after the British government had annexed the Boer Republic of Natalia , and on 31 May 1910 combined with three other colonies to form the Union of South Africa , as one of its provinces . It is now the KwaZulu-Natal province of South Africa . It was originally only about half the size of the present province , with the north-eastern boundaries being formed by the Tugela and Buffalo rivers beyond which lay the independent Kingdom of Zululand ( kwaZulu in the Zulu language ) . Fierce conflict with the Zulu population led to the evacuation of Durban , and eventually , the Boers accepted British annexation in 1844 under military pressure . A British governor was appointed to the region and many settlers emigrated from Europe and the Cape Colony . The British established a sugar cane industry in the 1860s . Farm owners had a difficult time attracting Zulu labourers to work on their plantations , so the British brought thousands of indentured labourers from India . As a result of the importation of Indian labourers , Durban became the home to the largest concentration of Indians outside India ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Battle of Hlobane",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000356071ebf888a",
+      "table_id": "List_of_Zulu_War_Victoria_Cross_recipients_0",
+      "answer_text": "Battle of Hlobane"
+    }
+  },
+  {
+    "case_id": "hybridqa_0003d159df86ed53",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What is the borough in which Kia Oval is located ?",
+    "sources": {
+      "user_prompt": "What is the borough in which Kia Oval is located ?",
+      "table_evidence": {
+        "title": "List of sponsored sports venues",
+        "url": "https://en.wikipedia.org/wiki/List_of_sponsored_sports_venues",
+        "header": [
+          "Name",
+          "Location",
+          "Type"
+        ],
+        "rows": [
+          [
+            "Kia Oval",
+            "Kennington",
+            "Cricket stadium"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/The_Oval",
+          "summary": "The Oval , known for sponsorship reasons as the Kia Oval , is an international cricket ground in Kennington , in the London Borough of Lambeth , in south London . The Oval has been the home ground of Surrey County Cricket Club since it was opened in 1845 . It was the first ground in England to host international Test cricket in September 1880 . The final Test match of the English season is traditionally played there . In addition to cricket , The Oval has hosted a number of other historically significant sporting events . In 1870 , it staged England 's first international football match , versus Scotland . It hosted the first FA Cup final in 1872 , as well as those between 1874 and 1892 . In 1876 , it held both the England v. Wales and England v. Scotland rugby international matches and , in 1877 , rugby 's first varsity match . It also hosted the final of the 2017 ICC Champions Trophy ."
+        },
+        {
+          "url": "/wiki/Kennington",
+          "summary": "Kennington is a district in south London , England . It is mainly within the London Borough of Lambeth , running along the boundary with the London Borough of Southwark , a boundary which can be discerned from the early medieval period between the Lambeth and St George 's parishes of those boroughs respectively . It is located 1.4 miles ( 2.3 km ) south of Charing Cross in Inner London and is identified as a local centre in the London Plan . It was a royal manor in the parish of St Mary , Lambeth in the county of Surrey and was the administrative centre of the parish from 1853 . Proximity to central London was key to the development of the area as a residential suburb and it was incorporated into the metropolitan area of London in 1855 . Kennington is the location of three significant London landmarks : the Oval cricket ground , the Imperial War Museum , and Kennington Park . Its population at the United Kingdom Census 2011 was 15,106 . Kennington is served by Kennington Police Station ."
+        },
+        {
+          "url": "/wiki/Barnet_Copthall",
+          "summary": "Barnet Copthall is a leisure complex on the Hendon-Mill Hill borders in London NW4 . The complex houses a local authority-owned swimming pool and gymnasium facilities , a golf-driving range with 9 hole pitch and putt run by Metro Golf , and a stadium , Allianz Park , used primarily for rugby and athletics . The stadium is the home of rugby union Premiership side Saracens ."
+        },
+        {
+          "url": "/wiki/Hendon",
+          "summary": "Hendon is a London urban area in the Borough of Barnet , 7 miles ( 11 km ) northwest of Charing Cross , between the A41 , A406 and the M1 motorway . Hendon was an ancient parish in the county of Middlesex and has been part of Greater London since 1965 . It used to be the home for the London Aerodrome which later became RAF Hendon . From 1972 the site of the RAF station was gradually handed over to the RAF Museum London . Hendon had a population of 52,972 in 2011 which includes the West Hendon and Colindale wards ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Lambeth",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "0003d159df86ed53",
+      "table_id": "List_of_sports_venues_with_sole_naming_rights_36",
+      "answer_text": "Lambeth"
+    }
+  },
+  {
+    "case_id": "hybridqa_00046dbd53dd3200",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What is the capacity of the venue that was named in honor of Juan Antonio Samaranch in 2010 after his death ?",
+    "sources": {
+      "user_prompt": "What is the capacity of the venue that was named in honor of Juan Antonio Samaranch in 2010 after his death ?",
+      "table_evidence": {
+        "title": "Venues of the 1984 Winter Olympics",
+        "url": "https://en.wikipedia.org/wiki/Venues_of_the_1984_Winter_Olympics",
+        "header": [
+          "Venue",
+          "Sports",
+          "Capacity"
+        ],
+        "rows": [
+          [
+            "Zetra Ice Hall",
+            "Closing ceremonies , Figure skating , Ice hockey ( final )",
+            "15,000"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Olympic_Hall_Juan_Antonio_Samaranch",
+          "summary": "The Juan Antonio Samaranch Olympic Hall ( Bosnian , Croatian and Serbian : Olimpijska dvorana Juan Antonio Samaranch / \u041e\u043b\u0438\u043c\u043f\u0438\u0458\u0441\u043a\u0430 \u0434\u0432\u043e\u0440\u0430\u043d\u0430 \u0425\u0443\u0430\u043d \u0410\u043d\u0442\u043e\u043d\u0438\u043e \u0421\u0430\u043c\u0430\u0440\u0430\u043d ; formerly Zetra Olympic Hall ) is an indoor multi-purpose arena in Sarajevo , Bosnia and Herzegovina . Named in honor of Juan Antonio Samaranch in 2010 after his death , it was used for various sporting events at the 1984 Winter Olympics , and as the main venue of the 2019 European Youth Olympic Winter Festival ."
+        },
+        {
+          "url": "/wiki/Figure_skating_at_the_1984_Winter_Olympics",
+          "summary": "Figure skating at the 1984 Winter Olympics took place at the Zetra Olympic Hall in Sarajevo , Yugoslavia . Jayne Torvill and Christopher Dean won gold for Great Britain , receiving twelve perfect scores ( 6.0 ) for artistic impression in the free dance segment of the ice dance competition , a feat that was never matched ."
+        },
+        {
+          "url": "/wiki/Bjela\u0161nica",
+          "summary": "Bjela\u0161nica ( pronounced [ bj\u011bla\u02d0\u0283nit\u0361sa ] ) is a mountain in central Bosnia and Herzegovina . It is found directly to the southwest of Sarajevo , bordering Mt . Igman . Bjela\u0161nica 's tallest peak , by which the whole mountain group got its name , rises to an elevation of 2067 meters ( 6782 feet ) . Other notable peaks are Krvavac ( 2061 m ) , Mali Vlahinja ( 2055 m ) , and Hranisava ( 1964 m ) . The Bjela\u0161nica range is bordered by the Rakitnica in the south , the Neretva in the west , Mt Igman in the north-east and Mt Ivan in the north-west . Only at 20 minutes distance of Sarajevo , it is a popular tourist attraction for hiking and skiing . Bjela\u0161nica has been , in certain areas , the site of extensive combat during the 1992-'95 Siege of Sarajevo and particular areas pose a high mine risk . There are numerous trails set up and maintained by local mountain clubs that lead to the bald peaks higher up . The mountain is also popular with mountain bikers and has become recently a frequent base for paragliders ."
+        },
+        {
+          "url": "/wiki/Alpine_skiing_at_the_1984_Winter_Olympics",
+          "summary": "Alpine Skiing at the 1984 Winter Olympics consisted of six alpine skiing events , held 13-19 February in Sarajevo , Yugoslavia . The men 's races were at Bjela\u0161nica and the women 's at Jahorina . Due to weather delays ( a blizzard ) , both downhill races were postponed several days and run after the giant slalom races . This was the first Winter Olympics since 1936 which did not also serve as the world championships for alpine skiing . It was the last Olympic program with just six events for alpine skiing ; ten events were held in 1988 with the return of the combined event and the addition of Super G. Banned from competition at these Olympics by the International Ski Federation ( FIS ) were top World Cup racers Ingemar Stenmark of Sweden and Hanni Wenzel of Liechtenstein , both double gold medalists at the 1980 Winter Olympics and leading the World Cup in 1984 . They had accepted promotional payments directly , rather than through their national ski federations . Also absent was Marc Girardelli , who had not yet gained his citizenship from Luxembourg and was not allowed to compete for his native Austria ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "15,000",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00046dbd53dd3200",
+      "table_id": "Venues_of_the_1984_Winter_Olympics_0",
+      "answer_text": "15,000"
+    }
+  },
+  {
+    "case_id": "hybridqa_0005a713626c28a0",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "Which teams has the player drafted by the Seattle Mariners in 2008 out of University of Georgia played for in the MLB ?",
+    "sources": {
+      "user_prompt": "Which teams has the player drafted by the Seattle Mariners in 2008 out of University of Georgia played for in the MLB ?",
+      "table_evidence": {
+        "title": "2008 Seattle Mariners season",
+        "url": "https://en.wikipedia.org/wiki/2008_Seattle_Mariners_season",
+        "header": [
+          "Round ( Pick )",
+          "Name",
+          "Position",
+          "School"
+        ],
+        "rows": [
+          [
+            "1 ( 20 )",
+            "Joshua Fields",
+            "Right-handed pitcher",
+            "University of Georgia"
+          ],
+          [
+            "2 ( 20 )",
+            "Dennis Raben",
+            "Outfielder",
+            "University of Miami"
+          ],
+          [
+            "3 ( 98 )",
+            "Aaron Pribanic",
+            "Right-handed pitcher",
+            "University of Nebraska"
+          ],
+          [
+            "4 ( 132 )",
+            "Steven Hensley",
+            "Right-handed pitcher",
+            "Elon University"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Josh_Fields_(pitcher)",
+          "summary": "Joshua David Fields ( born August 19 , 1985 ) is an American professional baseball pitcher who is a free agent . He has played in Major League Baseball ( MLB ) for the Houston Astros and Los Angeles Dodgers ."
+        },
+        {
+          "url": "/wiki/Right-handed",
+          "summary": "In human biology , handedness is a better , faster , or more precise performance or individual preference for use of a hand , known as the dominant hand ; the incapable , less capable or less preferred hand is called the non-dominant hand . Right-handedness is the most common form , and it is estimated that around 90% of the worlds population is right-handed . Handedness is often defined by which hand one writes with , as it is fairly common for people to prefer to do some tasks with each hand . However , true mixed-handedness is rare , as most people clearly prefer one hand for most purposes . Most of the current research would suggest that left handedness has an epigenetic marker , a combination of genetics , biology and the environment . Because the vast majority of the population is right-handed , many devices are designed for use by a right-handed person , which makes their use by left-handed people more difficult . In many countries across the world , left-handed people are or were required to write with their right hand . However , left-handed people have an advantage in sports that involve aiming at a target , because their opponents will be more accustomed to the right-handed majority . As a result , they are over-represented in baseball , tennis , fencing , cricket , and boxing ."
+        },
+        {
+          "url": "/wiki/Pitcher",
+          "summary": "In baseball , the pitcher is the player who throws the baseball from the pitcher 's mound toward the catcher to begin each play , with the goal of retiring a batter , who attempts to either make contact with the pitched ball or draw a walk . In the numbering system used to record defensive plays , the pitcher is assigned the number 1 . The pitcher is often considered the most important player on the defensive side of the game , and as such is situated at the right end of the defensive spectrum . There are many different types of pitchers , such as the starting pitcher , relief pitcher , middle reliever , lefty specialist , setup man , and the closer . Traditionally , the pitcher also bats . Starting in 1973 with the American League and spreading to further leagues throughout the 1980s and 1990s , the hitting duties of the pitcher have generally been given over to the position of designated hitter , a cause of some controversy . The National League in Major League Baseball and the Japanese Central League are among the remaining leagues that have not adopted the designated hitter position ."
+        },
+        {
+          "url": "/wiki/University_of_Georgia",
+          "summary": "The University of Georgia ( UGA or Georgia ) is a public research university with its main campus in Athens , Georgia . Founded in 1785 , it is one of the oldest public universities in the United States . The university is classified among R1 : Doctoral Universities - Very high research activity , and as having more selective undergraduate admissions , its most selective admissions category , while the ACT Assessment Student Report places UGA admissions in the Highly Selective category , the highest classification . In keeping with the teaching portion of its motto , the university has a student-to-faculty ratio of 17 students per faculty member , and 46 percent of its classes have fewer than 20 students . In its 2020 rankings , U.S. News & World Report ranked the university tied for 50th among all U.S. public and private national universities and 16th among all public ones . In addition to the main campuses in Athens with their approximately 470 buildings , the university has two smaller campuses located in Tifton and Griffin . The university has two satellite campuses located in Atlanta and Lawrenceville . The university operates several service and outreach stations spread across the state . The total acreage of the university in 30 Georgia counties is 41,539 acres ( 168.10 km2 ) . The university also owns a residential education and research center in Washington , DC , as well as three international residential and research centers located at Oxford University in Oxford , England , at Cortona , Italy , and at Monteverde , Costa Rica . Student life includes more than 700 student organizations . The University of Georgia 's intercollegiate sports teams , commonly known by their Georgia Bulldogs nickname , compete in National Collegiate Athletic Association ( NCAA ) Division I and the Southeastern Conference ( SEC ) ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Houston Astros and Los Angeles Dodgers",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "0005a713626c28a0",
+      "table_id": "2008_Seattle_Mariners_season_3",
+      "answer_text": "Houston Astros and Los Angeles Dodgers"
+    }
+  },
+  {
+    "case_id": "hybridqa_000978f6ac4a6a39",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What is the status of the camp in the town that split from Stonington in 1724 ?",
+    "sources": {
+      "user_prompt": "What is the status of the camp in the town that split from Stonington in 1724 ?",
+      "table_evidence": {
+        "title": "List of council camps (Boy Scouts of America)",
+        "url": "https://en.wikipedia.org/wiki/List_of_council_camps_(Boy_Scouts_of_America)",
+        "header": [
+          "Camp name",
+          "Council",
+          "Location",
+          "Status",
+          "Notes"
+        ],
+        "rows": [
+          [
+            "Lake of Isles Scout Reservation",
+            "Long Rivers Council",
+            "North Stonington , CT",
+            "Closed",
+            "This reservation included Camp Apache , Camp Pequot , and Camp Cherokee . With the construction of the Mashantucket Pequot Casino in 1991-1992 , the camp 's surroundings had been changed enough that the Long Rivers Council decided to sell the property to the Native American tribe in 1992 . The Mashantucket nation has since converted the land into a golf course"
+          ],
+          [
+            "Camp Nahaco",
+            "Connecticut Rivers Council",
+            "Woodstock , CT",
+            "Sold",
+            "Previously called Camp Keemosabee , the camp was purchased by the towns of Woodstock and Eastford on March 3 , 2003 . The 120 acre site is now permanently protected from development and the Boy Scouts still have use of the property"
+          ],
+          [
+            "Camp Aquila ( formerly Camp Mauwehu )",
+            "Connecticut Yankee Council",
+            "Candlewood Lake , Sherman , CT",
+            "Closed",
+            "Located on Candlewood Lake in Sherman , CT. , the camp was sold in 1982 along with Camp Toquam in Goshen"
+          ],
+          [
+            "Camp Cochipianee",
+            "Bristol Area Council",
+            "Goshen , CT",
+            "Closed",
+            "The camp was founded in 1928 by the Bristol Area Council and was sold after the New Britain Area Council and the Bristol Area Council were merged in 1972"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Lake_of_Isles_Scout_Reservation",
+          "summary": "The headquarters of the Connecticut Rivers Council of the Boy Scouts of America is located in East Hartford , Connecticut . The present council was formed as the result of the merger between the Indian Trails Council of Norwich , Connecticut and Long Rivers Council of Hartford , Connecticut . Now it is the largest council in the state with a youth membership of over 17,000 and a volunteer base of nearly 10,000 adults , serving for over half of the state . The council 's camps include the June Norcross Webster Scout Reservation in Ashford , Camp Mattatuck in Plymouth and Camp Workcoeman in New Hartford . See Boy Scout Camps in Connecticut , past and present below for more information on the individual camps . The council 's Order of the Arrow Lodge is the Tschitani Lodge # 10 ."
+        },
+        {
+          "url": "/wiki/North_Stonington,_Connecticut",
+          "summary": "North Stonington is a town in New London County , Connecticut which was split off from Stonington in 1724 . The population was 5,297 at the 2010 census ."
+        },
+        {
+          "url": "/wiki/Camp_Nahaco",
+          "summary": "The headquarters of the Connecticut Rivers Council of the Boy Scouts of America is located in East Hartford , Connecticut . The present council was formed as the result of the merger between the Indian Trails Council of Norwich , Connecticut and Long Rivers Council of Hartford , Connecticut . Now it is the largest council in the state with a youth membership of over 17,000 and a volunteer base of nearly 10,000 adults , serving for over half of the state . The council 's camps include the June Norcross Webster Scout Reservation in Ashford , Camp Mattatuck in Plymouth and Camp Workcoeman in New Hartford . See Boy Scout Camps in Connecticut , past and present below for more information on the individual camps . The council 's Order of the Arrow Lodge is the Tschitani Lodge # 10 ."
+        },
+        {
+          "url": "/wiki/Woodstock,_Connecticut",
+          "summary": "Woodstock is a town in Windham County , Connecticut , United States . The population was 7,964 at the 2010 census ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Closed",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000978f6ac4a6a39",
+      "table_id": "Local_council_camps_of_the_Boy_Scouts_of_America_6",
+      "answer_text": "Closed"
+    }
+  },
+  {
+    "case_id": "hybridqa_000b2e547fa81918",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What year was the building built with date listed # 94000865 ?",
+    "sources": {
+      "user_prompt": "What year was the building built with date listed # 94000865 ?",
+      "table_evidence": {
+        "title": "National Register of Historic Places listings in Montana",
+        "url": "https://en.wikipedia.org/wiki/National_Register_of_Historic_Places_listings_in_Montana",
+        "header": [
+          "",
+          "Name on the Register",
+          "Date listed",
+          "Location",
+          "City or town"
+        ],
+        "rows": [
+          [
+            "5",
+            "Heltne Oil Company",
+            "August 16 , 1994 ( # 94000865 )",
+            "140 1st St. 48\u00b033\u203214\u2033N 109\u00b040\u203244\u2033W / 48.553889\u00b0N 109.678889\u00b0W / 48.553889 ; -109.678889 ( Heltne Oil Company )",
+            "Havre"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Heltne_Oil_Company",
+          "summary": "The Heltne Oil Company is a site on the National Register of Historic Places located in Havre , Montana . It was added to the Register on August 16 , 1984 . It was built in 1939 by the Northwest Refining Company of Cut Bank , Montana and was leased by Danfield Heltne ; the business stayed in the Heltne family through the date of NRHP application . The building is described in its NRHP nomination as an outstanding example of the transitional period of gas station design between the more ornate styling of the early 1930s and the porcelain-enameled oblong box so dominant after the war . It has two-toned decorative brickwork , which , together with ornamental pilasters blend nicely with the more modern and functional aspects of the design . Large windows to display company products and accessories together with more spacious enclosed service bays reflect the changes taking place in the service station industry during the late 1930s . It was deemed significant for its association with automobile travel along US 2 from the late 1930s through the early post-war era , as well as for its architecture ."
+        },
+        {
+          "url": "/wiki/Havre,_Montana",
+          "summary": "Havre ( /\u02c8h\u00e6v\u0259r/ HAV-\u0259r ) is the county seat and largest city in Hill County , Montana , in the United States . Havre is nicknamed the crown jewel of the Hi-Line . It is said to be named after the city of Le Havre in France . As of the 2010 census the population was 9,310 , and in 2018 the estimated population was 9,715 ."
+        },
+        {
+          "url": "/wiki/Carnegie_Public_Library_(Havre,_Montana)",
+          "summary": "The Carnegie Public Library in Havre , Montana is a historic Carnegie library built in 1914 which was listed on the National Register of Historic Places in 1986 . It is in the Classical revival style . It was also known as the Havre Public Library and later as the Old Carnegie Library . In 2017 it is a former library building and is occupied by the Old Library Gallery . Hopes for obtaining Carnegie funds for a library were expressed in the Milk River Eagle newspaper by 1901 . A first library in Havre was started by 50 women who formed a Women 's Club and subscribed for twenty-five cents per month . A room in the Havre Security State Bank was used to lend out its initial 200 donated books . The library moved to the Havre City Hall by 1906 . The Havre Plaindealer newspaper noted that Glasgow , Montana , fifty miles away , successfully built a Carnegie library in 1908 . By 1911 the women 's club and others had lobbied for local tax funding to support a librarian , and the Havre Library Board lobbied the City Council to purchase land at 4th Avenue and 5th Street to build a library . ( Having land and demonstrating community support/ability to maintain a library were requirement for Carnegie funding . ) In 1913 , $ 12,000 funding for construction was approved by Carnegie , and the building was built within a year ."
+        },
+        {
+          "url": "/wiki/H._Earl_Clack_House",
+          "summary": "The H. Earl Clack House is a historic house located at 532 Second Avenue in Havre , Montana . It is locally significant as a very good example of a classically-inspired Georgian Revival dwelling . It was added to the National Register of Historic Places on October 24 , 1985 ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "1939",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000b2e547fa81918",
+      "table_id": "National_Register_of_Historic_Places_listings_in_Montana_8",
+      "answer_text": "1939"
+    }
+  },
+  {
+    "case_id": "hybridqa_000bc36c03f433dc",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "How many social media sites are used to gather votes for the 2016 award ?",
+    "sources": {
+      "user_prompt": "How many social media sites are used to gather votes for the 2016 award ?",
+      "table_evidence": {
+        "title": "Sebastian Stan",
+        "url": "https://en.wikipedia.org/wiki/Sebastian_Stan",
+        "header": [
+          "Year",
+          "Award",
+          "Category",
+          "Nominated work",
+          "Result"
+        ],
+        "rows": [
+          [
+            "2016",
+            "Teen Choice Award",
+            "Choice Movie Chemistry",
+            "Captain America : Civil War",
+            "Nominated"
+          ],
+          [
+            "2013",
+            "Critics ' Choice Television Award",
+            "Best Supporting Actor in a Movie/Miniseries",
+            "Political Animals",
+            "Nominated"
+          ],
+          [
+            "2013",
+            "Gold Derby Award",
+            "TV Movie/Mini Supporting Actor",
+            "Political Animals",
+            "Nominated"
+          ],
+          [
+            "2013",
+            "Online Film & Television Association Award",
+            "Best Supporting Actor in a Motion Picture or Miniseries",
+            "Political Animals",
+            "Nominated"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Teen_Choice_Award",
+          "summary": "The Teen Choice Awards is an annual awards show that airs on the Fox television network . The awards honor the year 's biggest achievements in music , film , sports , television , fashion , social media , and more , voted by viewers living in the United States , aged 13 and over , through various social media sites ; primarily Instagram , Twitter , Snapchat , and YouTube ."
+        },
+        {
+          "url": "/wiki/Captain_America:_Civil_War",
+          "summary": "Captain America : Civil War is a 2016 American superhero film based on the Marvel Comics character Captain America , produced by Marvel Studios and distributed by Walt Disney Studios Motion Pictures . It is the sequel to 2011 's Captain America : The First Avenger and 2014 's Captain America : The Winter Soldier , and the thirteenth film in the Marvel Cinematic Universe ( MCU ) . The film is directed by Anthony and Joe Russo , with a screenplay by the writing team of Christopher Markus and Stephen McFeely , and stars Chris Evans as Steve Rogers / Captain America , alongside an ensemble cast including Robert Downey Jr. , Scarlett Johansson , Sebastian Stan , Anthony Mackie , Don Cheadle , Jeremy Renner , Chadwick Boseman , Paul Bettany , Elizabeth Olsen , Paul Rudd , Emily VanCamp , Tom Holland , Frank Grillo , William Hurt , and Daniel Br\u00fchl . In Captain America : Civil War , disagreement over international oversight of the Avengers fractures them into opposing factions - one led by Steve Rogers and the other by Tony Stark . Development of Civil War began in late 2013 when Markus and McFeely began writing the screenplay , which borrows concepts from the 2006 comic book storyline Civil War , while also focusing on story and character elements from the previous Captain America films to conclude the trilogy . Following positive reactions to test screenings of The Winter Soldier , the Russo brothers were brought back to direct in early 2014 . The film 's title and premise were revealed in October 2014 , along with Downey 's casting ; additional cast members joined in the following months . Principal photography began in April 2015 at Pinewood Atlanta Studios in Fayette County , Georgia , and continued in the Metro Atlanta area before concluding in Germany in August 2015 , with the film being the first to use IMAX 's digital 2D cameras ( for the film 's central airport fight sequence ) . Visual effects were provided by nearly 20 different studios during the post-production process . Captain America : Civil War held its world premiere in Los Angeles on April 12 , 2016 , and was released in the United States on May 6 , 2016 , in 3D and IMAX 3D . The film was a critical and commercial success , grossing over $ 1.1 billion worldwide , and garnering praise for the performances ( particularly Evans and Downey ) , action , screenplay , and themes . It became the highest-grossing film of 2016 and the twelfth-highest-grossing film of all time ."
+        },
+        {
+          "url": "/wiki/Critics'_Choice_Television_Award",
+          "summary": "The Critics ' Choice Television Awards are accolades that are presented annually by the Broadcast Television Journalists Association ( BTJA ) ( US ) . They were established in 2011 , and the first ceremony was held on June 20 , 2011 , and streamed live on VH1.com . The fourth ceremony was televised live , for the first time in award history , on 19 June 2014 on The CW . In October 2014 , the A & E Network was granted exclusive rights to broadcast the television and film awards in 2015 and 2016 ."
+        },
+        {
+          "url": "/wiki/Political_Animals_(miniseries)",
+          "summary": "Political Animals is a six-episode American comedy-drama miniseries created by Greg Berlanti . The series aired in the United States on USA Network from July 15 through August 19 , 2012 . Sigourney Weaver portrays Elaine Barrish , a divorced former First Lady and Governor of Illinois , as well as the current Secretary of State . Weaver and the show 's production team acknowledge that the lead character has some similarities to Hillary Clinton . They say that the premise of the show is very much about all families who have been in the White House , the price they 've paid for being there and the fact that those same families will often try or continue to try to get back into the White House again . While it was speculated that the miniseries would lead into a full season , on November 2 , 2012 , USA Network announced their decision to stick with their initial plan of producing it as a miniseries ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "4",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000bc36c03f433dc",
+      "table_id": "Sebastian_Stan_2",
+      "answer_text": "4"
+    }
+  },
+  {
+    "case_id": "hybridqa_000ceb227f4ebf42",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What was the language family that was used in Hattusa , as well as parts of the northern Levant and Upper Mesopotamia ?",
+    "sources": {
+      "user_prompt": "What was the language family that was used in Hattusa , as well as parts of the northern Levant and Upper Mesopotamia ?",
+      "table_evidence": {
+        "title": "List of languages by time of extinction",
+        "url": "https://en.wikipedia.org/wiki/List_of_languages_by_time_of_extinction",
+        "header": [
+          "Date",
+          "Language",
+          "Language family",
+          "Region"
+        ],
+        "rows": [
+          [
+            "early 2nd millennium BCE",
+            "Sumerian",
+            "isolate",
+            "Mesopotamia"
+          ],
+          [
+            "ca . 1200 BCE",
+            "Hurrian",
+            "Hurro-Urartian",
+            "Anatolia ; Syria ; Mesopotamia"
+          ],
+          [
+            "2nd millennium BCE",
+            "Eblaite",
+            "Semitic",
+            "Syria"
+          ],
+          [
+            "ca . 1100 BCE",
+            "Hittite",
+            "Anatolian",
+            "Anatolia"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Sumerian_language",
+          "summary": "Sumerian ( \ud808\udd74\ud808\udca0 EME.G\u0303IR15 native tongue ) is the language of ancient Sumer and a language isolate that was spoken in Mesopotamia ( modern-day Iraq ) and in Syria . During the 3rd millennium BC , an intimate cultural symbiosis developed between the Sumerians and the Semitic-speaking Akkadians , which included widespread bilingualism . The influence of Sumerian and the East Semitic language Akkadian on each other is evident in all areas , from lexical borrowing on a substantial scale , to syntactic , morphological , and phonological convergence . This has prompted scholars to refer to Sumerian and Akkadian in the third millennium BC as a Sprachbund . Akkadian gradually replaced Sumerian as a spoken language around 2000 BC ( the exact dating being subject to debate ) , but Sumerian continued to be used as a sacred , ceremonial , literary and scientific language in Akkadian-speaking Mesopotamian states such as Assyria and Babylonia until the 1st century AD . Thereafter it was likely forgotten until the 19th century , when Assyriologists began deciphering the cuneiform inscriptions and excavated tablets left by these speakers ."
+        },
+        {
+          "url": "/wiki/Language_isolate",
+          "summary": "A language isolate , in the absolute sense , is a natural language with no demonstrable genealogical ( or genetic ) relationship with other languages , one that has not been demonstrated to descend from an ancestor common with any other language . Language isolates are in effect language families consisting of a single language . Commonly cited examples include Ainu , Basque , Sumerian , Elamite , and Vedda , though in each case a minority of linguists claim to have demonstrated a relationship with other languages . Some sources use the term language isolate to indicate a branch of a larger family with only one surviving member . For instance , Albanian , Armenian and Greek are commonly called Indo-European isolates . While part of the Indo-European family , they do not belong to any established branch ( such as the Romance , Indo-Iranian , Celtic , Slavic or Germanic branches ) , but instead form independent branches . Similarly , within the Romance languages , Sardinian is a relative isolate . However , without a qualifier , isolate is understood to mean having no demonstrable genetic relationship to any other known language . Some languages once seen as isolates may be reclassified as small families . This happened with Japanese ( now included in the Japonic family along with Ryukyuan languages such as Okinawan ) and Korean in Koreanic languages with Jeju language . The Etruscan language of Italy has long been considered an isolate , but some have proposed that it is related to the so-called Tyrsenian languages , an extinct family of closely related ancient languages proposed by Helmut Rix in 1998 , including the Rhaetian language , formerly spoken in the central Alps , and the Lemnian language , formerly spoken on the Greek island of Lemnos . Language isolates may be seen as a special case of unclassified languages that remain unclassified even after extensive efforts ."
+        },
+        {
+          "url": "/wiki/Mesopotamia",
+          "summary": "Mesopotamia ( Greek : \u039c\u03b5\u03c3\u03bf\u03c0\u03bf\u03c4\u03b1\u03bc\u03af\u03b1 ) is a historical region of Western Asia situated within the Tigris-Euphrates river system , in the northern part of the Fertile Crescent , in modern days roughly corresponding to most of Iraq , Kuwait , the eastern parts of Syria , Southeastern Turkey , and regions along the Turkish-Syrian and Iran-Iraq borders . The Sumerians and Akkadians ( including Assyrians and Babylonians ) dominated Mesopotamia from the beginning of written history ( c. 3100 BC ) to the fall of Babylon in 539 BC , when it was conquered by the Achaemenid Empire . It fell to Alexander the Great in 332 BC , and after his death , it became part of the Greek Seleucid Empire . Around 150 BC , Mesopotamia was under the control of the Parthian Empire . Mesopotamia became a battleground between the Romans and Parthians , with western parts of Mesopotamia coming under ephemeral Roman control . In AD 226 , the eastern regions of Mesopotamia fell to the Sassanid Persians . The division of Mesopotamia between Roman ( Byzantine from AD 395 ) and Sassanid Empires lasted until the 7th century Muslim conquest of Persia of the Sasanian Empire and Muslim conquest of the Levant from Byzantines . A number of primarily neo-Assyrian and Christian native Mesopotamian states existed between the 1st century BC and 3rd century AD , including Adiabene , Osroene , and Hatra . Mesopotamia is the site of the earliest developments of the Neolithic Revolution from around 10,000 BC . It has been identified as having inspired some of the most important developments in human history , including the invention of the wheel , the planting of the first cereal crops and the development of cursive script , mathematics , astronomy and agriculture ."
+        },
+        {
+          "url": "/wiki/Hurrian_language",
+          "summary": "Hurrian is an extinct Hurro-Urartian language spoken by the Hurrians ( Khurrites ) , a people who entered northern Mesopotamia around 2300 BC and had mostly vanished by 1000 BC . Hurrian was the language of the Mitanni kingdom in northern Mesopotamia and was likely spoken at least initially in Hurrian settlements in modern-day Syria . It is generally believed that the speakers of this language originally came from the Armenian Highlands and spread over southeast Anatolia and northern Mesopotamia at the beginning of the 2nd millennium BC ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Anatolian",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000ceb227f4ebf42",
+      "table_id": "List_of_languages_by_time_of_extinction_26",
+      "answer_text": "Anatolian"
+    }
+  },
+  {
+    "case_id": "hybridqa_000d0258517492bb",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What season was it that this team was hoping to improve upon their 60-22 output from the previous season ?",
+    "sources": {
+      "user_prompt": "What season was it that this team was hoping to improve upon their 60-22 output from the previous season ?",
+      "table_evidence": {
+        "title": "Southwest Division (NBA)",
+        "url": "https://en.wikipedia.org/wiki/Southwest_Division_(NBA)",
+        "header": [
+          "Season",
+          "Team",
+          "Record",
+          "Playoffs result"
+        ],
+        "rows": [
+          [
+            "2004-05",
+            "San Antonio Spurs",
+            "59-23 ( .720 )",
+            "Won NBA Finals"
+          ],
+          [
+            "2005-06",
+            "San Antonio Spurs",
+            "63-19 ( .768 )",
+            "Lost Conference Semifinals"
+          ],
+          [
+            "2006-07",
+            "Dallas Mavericks",
+            "67-15 ( .817 )",
+            "Lost First Round"
+          ],
+          [
+            "2007-08",
+            "New Orleans Hornets",
+            "56-26 ( .683 )",
+            "Lost Conference Semifinals"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/2004\u201305_NBA_season",
+          "summary": "The 2004-05 NBA season was the 59th season of the National Basketball Association ( NBA ) . It began on November 2 , 2004 and ended June 23 , 2005 . The season ended with the San Antonio Spurs defeating the defending-champion Detroit Pistons , 4-3 , in the NBA Finals ."
+        },
+        {
+          "url": "/wiki/2004\u201305_San_Antonio_Spurs_season",
+          "summary": "The 2004-05 NBA season was the Spurs ' 29th season in the National Basketball Association , the 32nd in San Antonio , and 38th season as a franchise . During the offseason , the Spurs signed free agent Brent Barry . The Spurs got off to a solid start , winning 16 of their first 20 games , entering the New Year with a 25-6 record . In February 2005 , the Spurs traded longtime Spur Malik Rose and two draft choices to the New York Knicks for Jamison Brewer and center Nazr Mohammed . Late in the season , the team signed free agent forward Glenn Robinson . The Spurs finished first place in the Southwest Division , and second in the Western Conference with a 59-23 record . Tim Duncan and Manu Ginobili were both voted to play in the 2005 NBA All-Star Game , which was hosted in Denver . This was Ginobili 's first All-Star appearance . In the first round of the playoffs , the Spurs lost Game 1 at home to the Denver Nuggets 93-87 , but would beat them in five games . In the semifinals , they defeated the Seattle SuperSonics in six games , then upset the top-seeded Phoenix Suns , which featured regular season MVP Steve Nash , Amar ' e Stoudemire and Shawn Marion in five games in the Western Conference Finals . In the Finals , the Spurs would win their third NBA championship , defeating the 2004 NBA champions , the Detroit Pistons , in a seven-game series . Following the season , Glenn Robinson retired ."
+        },
+        {
+          "url": "/wiki/2005_NBA_Finals",
+          "summary": "The 2005 NBA Finals was the championship round of the National Basketball Association ( NBA ) 's 2004-05 season , and the culmination of the season 's playoffs . The Western Conference champion San Antonio Spurs played the defending NBA champion and Eastern Conference champion Detroit Pistons for the title , with the Spurs holding home court advantage and the Pistons as defending champions . The series was played under a best-of-seven format . ( Unlike the previous three rounds , the team with home court advantage hosted games one , two , six , and seven if all were necessary ) . It also marked the Pistons ' first NBA Finals loss since 1988 . The Spurs won the series four games to three in the first NBA Finals to go to a Game 7 since 1994 . The games were broadcast on ABC , with Al Michaels and Hubie Brown commentating . National radio coverage was provided by ESPN Radio through announcers Jim Durham and Dr. Jack Ramsay ."
+        },
+        {
+          "url": "/wiki/2005\u201306_NBA_season",
+          "summary": "The 2005-06 NBA season was the 60th season of the National Basketball Association . The Miami Heat defeated the Dallas Mavericks in the NBA Finals , four games to two ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "2006-07",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "000d0258517492bb",
+      "table_id": "Southwest_Division_(NBA)_1",
+      "answer_text": "2006-07"
+    }
+  },
+  {
+    "case_id": "hybridqa_00ad8c3df9fa9da0",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "Which gulf is north of the Somalian city with 550,000 residents ?",
+    "sources": {
+      "user_prompt": "Which gulf is north of the Somalian city with 550,000 residents ?",
+      "table_evidence": {
+        "title": "List of cities in Somalia by population",
+        "url": "https://en.wikipedia.org/wiki/List_of_cities_in_Somalia_by_population",
+        "header": [
+          "Rank",
+          "City",
+          "Region",
+          "Population"
+        ],
+        "rows": [
+          [
+            "3",
+            "Bosaso",
+            "Bari",
+            "550,000"
+          ],
+          [
+            "1",
+            "Mogadishu",
+            "Banaadir",
+            "1,250,000"
+          ],
+          [
+            "2",
+            "Hargeisa",
+            "Woqooyi Galbeed",
+            "900,000"
+          ],
+          [
+            "5",
+            "Kismayo",
+            "Lower Jubba",
+            "340,000"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Bosaso",
+          "summary": "Bosaso ( Somali : Boosaaso , Arabic : \u0628\u0648\u0635\u0627\u0635\u0648 ) is a city in the northeastern Bari province ( gobol ) of Somalia . It is the seat of the Bosaso District . Located on the southern coast of the Gulf of Aden , the municipality serves as the region 's commercial capital and is a major seaport within the autonomous Puntland state . It has an estimated population of around 164,906 residents ( 2005 est. ) . The city has a diverse economy centred on education , government , banking , tourism , aviation , food , clothes , logistics , steel , energy , health care , hospitality , retail and technology . The area 's many colleges and universities make it a regional hub of higher education , including law , medicine , engineering and business and entrepreneurship ."
+        },
+        {
+          "url": "/wiki/Bari",
+          "summary": "Bari ( /\u02c8b\u0251\u02d0ri/ BAR-ee , Italian : [ \u02c8ba\u02d0ri ] ( listen ) ; Barese : Bare [ \u02c8b\u00e6\u02d0r\u0259 ] ; Latin : Barium ; Ancient Greek : \u0392\u03ac\u03c1\u03b9\u03bf\u03bd , romanized : B\u00e1rion ) is the capital city of the Metropolitan City of Bari and of the Apulia region , on the Adriatic Sea , in southern Italy . It is the second most important economic centre of mainland Southern Italy after Naples ( and the third after Palermo , if Insular Italy is included ) , a port and university city , as well as the city of Saint Nicholas . The city itself has a population of 320,257 inhabitants , over 116 square kilometres ( 45 sq mi ) , while the urban area has 750,000 inhabitants . The metropolitan area has 1.3 million inhabitants . Bari is made up of four different urban sections . To the north is the closely built old town on the peninsula between two modern harbours , with the Basilica of Saint Nicholas , the Cathedral of San Sabino ( 1035-1171 ) and the Hohenstaufen Castle built for Frederick II , which is now also a major nightlife district . To the south is the Murat quarter ( erected by Joachim Murat ) , the modern heart of the city , which is laid out on a rectangular grid-plan with a promenade on the sea and the major shopping district ( the via Sparano and via Argiro ) . Modern residential zones surrounding the centre of Bari were built during the 1960s and 1970s replacing the old suburbs that had developed along roads splaying outwards from gates in the city walls . In addition , the outer suburbs developed rapidly during the 1990s . The city has a redeveloped airport named after Pope John Paul II , Karol Wojty\u0142a Airport , with connections to several European cities ."
+        },
+        {
+          "url": "/wiki/Mogadishu",
+          "summary": "Mogadishu ( /\u02ccm\u0252\u0261\u0259\u02c8di\u02d0\u0283u\u02d0 , -\u02c8d\u026a\u0283-/ , also US : /\u02ccmo\u028a\u0261- , \u02ccm\u0254\u02d0\u0261-/ ; Somali : Muqdisho [ m\u0289qd\u026a\u0283\u0254 ] ; [ stress and tone ? ] Arabic : \u0645\u0642\u062f\u064a\u0634\u0648 , romanized : Muqad\u012bsh\u016b [ muqa\u02c8di\u02d0\u0283u\u02d0 ] ; Italian : Mogadiscio [ mo\u0261a\u02c8di\u0283\u0283o ] ) , locally known as Xamar or Hamar , is the capital and most populous city of Somalia . Located in the coastal Banadir region on the Somali Sea , the city has served as an important port for millennia . The original inhabitants are known as Reer Xamar ( English : Hamar people ) . As of 2017 [ update ] , it had a population of 2,425,000 residents . Mogadishu is the nearest foreign mainland city to Seychelles , at a distance of 835 mi ( 1,344 km ) over the Somali Sea . Tradition and old records assert that southern Somalia , including the Mogadishu area , was historically inhabited by hunter-gatherers . These were later joined by Cushitic-speaking agro-pastoralists , who would go on to establish local aristocracies . During its medieval Golden Age , Mogadishu was ruled by the Muzaffar dynasty , and later by the Ajuran Sultanate . This is found mainly in the Banaadiri oral traditions who are the native population . It subsequently fell under the control of an assortment of local Sultanates and polities , most notably the Sultanate of the Geledi . The sultanate of the Geledi were in an alliance with the Zanbiar Dynasty ."
+        },
+        {
+          "url": "/wiki/Banaadir",
+          "summary": "Benaadir ( Somali : Banaadir , Arabic : \u0628\u0646\u0627\u062f\u0631 , Italian : Benadir ) is an administrative region ( gobol ) in southeastern Somalia . It covers the same area as the city of Mogadishu , Somalia 's capital . It is bordered to the northwest by the Shabelle river , and to the southeast by the Somali Sea . Although by far the smallest administrative region in Somalia , it has the largest population , estimated at 1,650,227 ( including 369,288 internally displaced persons ) in 2014 ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Gulf of Aden",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "00ad8c3df9fa9da0",
+      "table_id": "List_of_Somali_cities_by_population_0",
+      "answer_text": "Gulf of Aden"
+    }
+  },
+  {
+    "case_id": "hybridqa_011e8cb7de5d5cdf",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What is the use of the building whose location is the second-most populous county in Maryland ?",
+    "sources": {
+      "user_prompt": "What is the use of the building whose location is the second-most populous county in Maryland ?",
+      "table_evidence": {
+        "title": "List of the oldest buildings in Maryland",
+        "url": "https://en.wikipedia.org/wiki/List_of_the_oldest_buildings_in_Maryland",
+        "header": [
+          "Building",
+          "Location",
+          "Dated",
+          "Use",
+          "Notes"
+        ],
+        "rows": [
+          [
+            "Old Trinity Church , Maryland",
+            "Church Creek , Maryland",
+            "1675",
+            "Religious",
+            "Church building in continuous use ; as such , oldest in the US"
+          ],
+          [
+            "Third Haven Meeting House",
+            "Talbot County , Maryland",
+            "1682",
+            "Religious",
+            "Oldest Quaker meeting house in the United States"
+          ],
+          [
+            "Spring House , Ft. Lincoln Cemetery",
+            "Fort Lincoln Cemetery , Prince George 's County , Maryland",
+            "1683",
+            "Spring house",
+            "Small spring house structure . In Maryland by 300 ft"
+          ],
+          [
+            "Holly Hill",
+            "Friendship , Maryland",
+            "1698 ( fall or winter ) ; 1713 ; c. 1730",
+            "Residence",
+            "Primitive , two-room , 1 1/2-story frame house at its incarnation . Two subsequent additions/upgrades performed , including a full structural brick encasement in c. 1730"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Church_Creek,_Maryland",
+          "summary": "Church Creek is a town in Dorchester County , Maryland , United States , part of the state 's Eastern Shore . The population was 125 at the 2010 census . Church Creek is about 6 mi south of Cambridge . Old Trinity Church is located here . An Anglican ( now Episcopal ) brick church built in 1675 , it is the oldest church building in the US in continuous ecclesiastical use and is on the National Register of Historic Places ."
+        },
+        {
+          "url": "/wiki/Third_Haven_Meeting_House",
+          "summary": "The Third Haven Meeting House is generally considered the oldest-surviving Friends meeting house of the Religious Society of Friends , and it is a cornerstone of Quaker history in Talbot County , Maryland ."
+        },
+        {
+          "url": "/wiki/Talbot_County,_Maryland",
+          "summary": "Talbot County is a county located in the heart of the Eastern Shore of Maryland in the U.S. state of Maryland . As of the 2010 census , the population was 37,782 . Its county seat is Easton . The county was named for Lady Grace Talbot , the wife of Sir Robert Talbot , an Anglo-Irish statesman , and the sister of Lord Baltimore . Talbot County comprises the Easton , MD Micropolitan Statistical Area , which is also included in the Washington-Baltimore-Arlington , DC-MD-VA-WV-PA Combined Statistical Area . Talbot County is bordered by Queen Anne 's County to the north , Caroline County to the east , Dorchester County to the south , and the Chesapeake Bay to the west ."
+        },
+        {
+          "url": "/wiki/Quaker",
+          "summary": "Quakers , also called Friends , are a historically Christian group whose formal name is the Religious Society of Friends or Friends Church . Members of the various Quaker movements are all generally united by their belief in the ability of each human being to experientially access the light within , or that of God in every one . Some may profess the priesthood of all believers , a doctrine derived from the First Epistle of Peter . They include those with evangelical , holiness , liberal , and traditional Quaker understandings of Christianity . There are also Nontheist Quakers whose spiritual practice is not reliant on the existence of God . To differing extents , the different movements that make up the Religious Society of Friends/Friends Church avoid creeds and hierarchical structures . In 2007 , there were about 359,000 adult Quakers worldwide . In 2017 , there were 377,557 adult Quakers , with 49% in Africa . Around 89% of Quakers worldwide belong to the evangelical and programmed branches of Quakerism - these Quakers worship in services with singing and a prepared message from the Bible , coordinated by a pastor . Around 11% of Friends practice waiting worship , or unprogrammed worship ( more commonly known today as Meeting for Worship ) , where the order of service is not planned in advance , is predominantly silent , and may include unprepared vocal ministry from those present . Some meetings of both types have Recorded Ministers in their meetings - Friends recognised for their gift of vocal ministry . The first Quakers lived in mid-17th-century England ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "Spring house",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "011e8cb7de5d5cdf",
+      "table_id": "List_of_the_oldest_buildings_in_Maryland_0",
+      "answer_text": "Spring house"
+    }
+  },
+  {
+    "case_id": "hybridqa_020b2e99a5cfd1ae",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "Where did the writer of the series in which Peter Davison played Dr Stephen Daker in 1992 serve as lecturer ?",
+    "sources": {
+      "user_prompt": "Where did the writer of the series in which Peter Davison played Dr Stephen Daker in 1992 serve as lecturer ?",
+      "table_evidence": {
+        "title": "Peter Davison",
+        "url": "https://en.wikipedia.org/wiki/Peter_Davison",
+        "header": [
+          "Year",
+          "Title",
+          "Role",
+          "Notes"
+        ],
+        "rows": [
+          [
+            "1992",
+            "A Very Polish Practice",
+            "Dr Stephen Daker",
+            ""
+          ],
+          [
+            "1986-88",
+            "A Very Peculiar Practice",
+            "Dr Stephen Daker",
+            "15 episodes"
+          ],
+          [
+            "1992",
+            "Kinsey",
+            "Bob Stacey",
+            ""
+          ],
+          [
+            "1975",
+            "The Tomorrow People",
+            "Elmer",
+            "Davison 's future wife , Sandra Dickinson was also in the programme"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/A_Very_Polish_Practice",
+          "summary": "A Very Peculiar Practice was a surreal black-comedy drama set in the health centre of a British university , produced by the BBC , which ran for two series in 1986 and 1988 . The two series were followed by a 90-minute made-for-television film , A Very Polish Practice ( 1992 ) , following some of the characters to a new setting in Poland . It was written by Andrew Davies and was inspired by his experiences as a lecturer at the University of Warwick , and it has been interpreted as a commentary on contemporary trends in education . It was one of only two original television series that he wrote . In 2010 , The Guardian ranked the serial at number 5 in their list of The Top 50 TV Dramas of All Time ."
+        },
+        {
+          "url": "/wiki/A_Very_Peculiar_Practice",
+          "summary": "A Very Peculiar Practice was a surreal black-comedy drama set in the health centre of a British university , produced by the BBC , which ran for two series in 1986 and 1988 . The two series were followed by a 90-minute made-for-television film , A Very Polish Practice ( 1992 ) , following some of the characters to a new setting in Poland . It was written by Andrew Davies and was inspired by his experiences as a lecturer at the University of Warwick , and it has been interpreted as a commentary on contemporary trends in education . It was one of only two original television series that he wrote . In 2010 , The Guardian ranked the serial at number 5 in their list of The Top 50 TV Dramas of All Time ."
+        },
+        {
+          "url": "/wiki/Kinsey_(TV_series)",
+          "summary": "Kinsey was a television programme lasting two series , made in 1990/91 and broadcast on BBC 1 in 1991 and 1992 . It starred Serena Gordon as Tricia Mabbott , Marian McLoughlin as Judy Kinsey and Leigh Lawson as Neil Kinsey . The programme was produced at the BBC Pebble Mill Studios ."
+        },
+        {
+          "url": "/wiki/The_Tomorrow_People",
+          "summary": "The Tomorrow People is a British children 's science fiction television series created by Roger Price . Produced by Thames Television for the ITV Network , the series first ran from 30 April 1973 to 19 February 1979 . In 1992 , after having much success of the replays in America , Nickelodeon requested Price and Thames Television for a new version to be piloted and filmed at Nickelodeon Studios Florida in April 1992 , with Roger Price acting as executive producer . This version used the same basic premise as the original series with some changes , and ran until 8 March 1995 . A series of audio plays using the original concept and characters ( and many of the original series ' actors ) was produced by Big Finish Productions between 2001 and 2007 . In 2013 , an American remake of the show premiered on The CW ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "University of Warwick",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "020b2e99a5cfd1ae",
+      "table_id": "Peter_Davison_0",
+      "answer_text": "University of Warwick"
+    }
+  },
+  {
+    "case_id": "hybridqa_03516021b9a02cfc",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "How big is the surface area of the district containing Zakimi Castle in square kilometers ?",
+    "sources": {
+      "user_prompt": "How big is the surface area of the district containing Zakimi Castle in square kilometers ?",
+      "table_evidence": {
+        "title": "Gusuku Sites and Related Properties of the Kingdom of Ryukyu",
+        "url": "https://en.wikipedia.org/wiki/Gusuku_Sites_and_Related_Properties_of_the_Kingdom_of_Ryukyu",
+        "header": [
+          "Name",
+          "Type",
+          "Location"
+        ],
+        "rows": [
+          [
+            "Zakimi Castle Site ( \u5ea7\u559c\u5473\u57ce\u8de1 , Zakimi-j\u014d ato , Okinawan : Zachimi Gushiku )",
+            "gusuku ruins Gusuku ruins",
+            "nakagami yomitan Yomitan , Nakagami , Okinawa"
+          ],
+          [
+            "Nakijin Castle Site ( \u4eca\u5e30\u4ec1\u57ce\u8de1 , Nakijin-j\u014d ato , Okinawan : Nachizin Gushiku )",
+            "gusuku ruins Gusuku ruins",
+            "kunigami nakijin Nakijin , Kunigami , Okinawa"
+          ],
+          [
+            "Katsuren Castle Site ( \u52dd\u9023\u57ce\u8de1\u8de1 , Katsuren-j\u014d ato , Okinawan : Katchin Gushiku )",
+            "gusuku ruins Gusuku ruins",
+            "nakagami uruma Uruma , Nakagami , Okinawa"
+          ],
+          [
+            "Nakagusuku Castle Site ( \u4e2d\u57ce\u57ce\u8de1 , Nakagusuku-j\u014d ato , Okinawan : Nakagusiku Gushiku )",
+            "gusuku ruins Gusuku ruins",
+            "nakagami nakagusuku Nakagusuku , Nakagami , Okinawa"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Zakimi_Castle",
+          "summary": "Zakimi Castle ( \u5ea7\u559c\u5473\u57ce , Zakimi j\u014d , Okinawan : Zachimi Gushiku ) is a Ryukyuan gusuku in Yomitan , Okinawa . It is in ruins , but the walls and foundations have been restored ."
+        },
+        {
+          "url": "/wiki/Gusuku",
+          "summary": "Gusuku ( \u30b0\u30b9\u30af , \u57ce , Okinawan : gushiku ) often refers to castles or fortresses in the Ryukyu Islands that feature stone walls . However , the origin and essence of gusuku remain controversial . In the archaeology of Okinawa Prefecture , the Gusuku period refers to an archaeological epoch of the Okinawa Islands that follows the shell-mound period and precedes the Sanzan period , when most gusuku are thought to have been built . Many gusuku and related cultural remains on Okinawa Island have been listed by UNESCO as World Heritage Sites under the title Gusuku Sites and Related Properties of the Kingdom of Ryukyu ."
+        },
+        {
+          "url": "/wiki/Yomitan,_Okinawa",
+          "summary": "Yomitan ( \u8aad\u8c37\u6751 , Yomitan-son , Okinawan : Yuntan ) is a village located in Nakagami District , Okinawa Prefecture , Japan ."
+        },
+        {
+          "url": "/wiki/Nakagami_District,_Okinawa",
+          "summary": "Nakagami ( \u4e2d\u982d\u90e1 , Nakagami-gun , Okinawan : Nakajan ) is a district located in Okinawa Prefecture , Japan . As of 2003 , the district has an estimated population of 169,332 and the density of 1,216.03 persons per km\u00b2 . The total area is 139.25 km\u00b2 ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "139.25",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "03516021b9a02cfc",
+      "table_id": "Gusuku_Sites_and_Related_Properties_of_the_Kingdom_of_Ryukyu_0",
+      "answer_text": "139.25"
+    }
+  },
+  {
+    "case_id": "hybridqa_036a6e84e2d25443",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What year was the brother from Beta Omicron born ?",
+    "sources": {
+      "user_prompt": "What year was the brother from Beta Omicron born ?",
+      "table_evidence": {
+        "title": "List of Pi Kappa Alpha brothers",
+        "url": "https://en.wikipedia.org/wiki/List_of_Pi_Kappa_Alpha_brothers",
+        "header": [
+          "Name",
+          "Original chapter",
+          "Notability"
+        ],
+        "rows": [
+          [
+            "Pat Bowlen",
+            "Beta Omicron",
+            "Owner , Denver Broncos"
+          ],
+          [
+            "Matt Doherty",
+            "Beta Zeta",
+            "Former head men 's basketball coach at Southern Methodist University"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Pat_Bowlen",
+          "summary": "Patrick Dennis Bowlen ( February 18 , 1944 - June 13 , 2019 ) was the American majority owner of the Denver Broncos of the National Football League ( NFL ) . The Bowlen family , including his two brothers John Bowlen and Bill Bowlen , and sister Marybeth Bowlen , purchased the team from Edgar Kaiser in 1984 . Bowlen served as the Broncos CEO from his purchase of the club in 1984 until July 2014 , when he stepped down as Broncos ' CEO due to the onset and progression of Alzheimer 's disease ."
+        },
+        {
+          "url": "/wiki/University_of_Oklahoma",
+          "summary": "The University of Oklahoma ( OU ) is a public research university in Norman , Oklahoma . Founded in 1890 , it had existed in Oklahoma Territory near Indian Territory for 17 years before the two became the state of Oklahoma . In Fall 2018 the university had 31,702 students enrolled , most at its main campus in Norman . Employing nearly 3,000 faculty members , the school offers 152 baccalaureate programs , 160 master 's programs , 75 doctorate programs , and 20 majors at the first professional level . The university is classified among R1 : Doctoral Universities - Very high research activity . Its Norman campus has two prominent museums , the Fred Jones Jr. Museum of Art , specializing in French Impressionism and Native American artwork , and the Sam Noble Oklahoma Museum of Natural History , specializing in the natural history of Oklahoma . The university has won multiple national championships in multiple sports , including seven football national championships and two NCAA Division I baseball championships . The women 's softball team has won the national championship four times : in 2000 , 2013 , and consecutively in 2016 and 2017 . The gymnastics teams have won a combined 11 national championships since 2002 , with the men 's team winning eight in the last 15 years , including three consecutive titles from 2015 to 2017 ."
+        },
+        {
+          "url": "/wiki/Denver_Broncos",
+          "summary": "The Denver Broncos are a professional American football franchise based in Denver , Colorado . The Broncos compete as a member club of the National Football League ( NFL ) 's American Football Conference ( AFC ) West division . The team began play in 1960 as a charter member of the American Football League ( AFL ) and joined the NFL as part of the merger in 1970 . The Broncos are owned by the Pat Bowlen trust and currently play home games at Empower Field at Mile High ( formerly known as Invesco Field at Mile High from 2001-2010 , Sports Authority Field at Mile High from 2011-2017 , and Broncos Stadium at Mile High from 2018-2019 ) . Prior to that , they played at Mile High Stadium from 1960 to 2000 . The Broncos were barely competitive during their 10-year run in the AFL and their first seven years in the NFL . They did not have a winning season until 1973 . In 1977 , four years later , they qualified for the playoffs for the first time in franchise history and advanced to Super Bowl XII . Since 1975 , the Broncos have become one of the NFL 's most successful teams , having suffered only seven losing seasons . They have won eight AFC Championships ( 1977 , 1986 , 1987 , 1989 , 1997 , 1998 , 2013 , 2015 ) , and three Super Bowl championships ( 1997 ( XXXII ) , 1998 ( XXXIII ) , 2015 ( 50 ) ) , and share the NFL record for most Super Bowl losses ( 5 - tied with the New England Patriots ) . Thirteen players who have played for Denver are enshrined in the Pro Football Hall of Fame : John Elway , Floyd Little , Shannon Sharpe , Gary Zimmerman , Willie Brown , Tony Dorsett , Jerry Rice , Andre Reed , Terrell Davis , Brian Dawkins , Ty Law , Champ Bailey and Steve Atwater , along with late club owner Pat Bowlen ."
+        },
+        {
+          "url": "/wiki/Matt_Doherty_(basketball)",
+          "summary": "Matthew Francis Doherty ( born February 25 , 1962 ) , commonly referred as Matt Doherty , is a former American college basketball coach , perhaps best known for his time as head coach of the University of North Carolina Tar Heels men 's basketball team , and also , before that , as head coach of the University of Notre Dame Fighting Irish men 's basketball program . As a college player , Doherty started on the 1981-82 North Carolina Tar Heels men 's basketball team , which on March 29 , 1982 , won the NCAA Men 's Division I Basketball Tournament , defeating the University of Georgetown Hoyas men 's basketball team by a score 63-62 . At UNC , Doherty played under the legendary college coach Dean Smith , and started alongside future National Basketball Association stars James Worthy , Sam Perkins , Kenny Smith , and Michael Jordan , with Jordan considered by many to be the greatest player in the history of the game . Doherty was most recently was the Atlantic 10 Conference 's associate commissioner for men 's college basketball , resigning in April , 2019 . He was also formerly an American college basketball coach and commentator as well as a scout for the NBA . After serving as head coach of the Notre Dame Fighting Irish , the North Carolina Tar Heels , Doherty later became head coach of the Florida Atlantic Owls , and the SMU Mustangs . Doherty has also served as a color commentator for various high school and college programs , including Davidson . Before becoming a head coach , he became an assistant coach , first at Davidson , then at Kansas ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence",
+      "linked_text"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "1944",
+      "should_use_table": true,
+      "may_need_linked_text": true
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "036a6e84e2d25443",
+      "table_id": "List_of_Pi_Kappa_Alpha_brothers_5",
+      "answer_text": "1944"
+    }
+  },
+  {
+    "case_id": "hybridqa_073ce2c527261e10",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "The Austrian skier born in Radstadt in 1975 won the Silver medal in the event that the Gold medal winner was from what country ?",
+    "sources": {
+      "user_prompt": "The Austrian skier born in Radstadt in 1975 won the Silver medal in the event that the Gold medal winner was from what country ?",
+      "table_evidence": {
+        "title": "Austria at the 2006 Winter Olympics",
+        "url": "https://en.wikipedia.org/wiki/Austria_at_the_2006_Winter_Olympics",
+        "header": [
+          "Medal",
+          "Name",
+          "Sport",
+          "Event",
+          "Date"
+        ],
+        "rows": [
+          [
+            "Gold",
+            "Christoph Bieler Felix Gottwald Michael Gruber Mario Stecher",
+            "Nordic combined",
+            "Team",
+            "16 February"
+          ],
+          [
+            "Gold",
+            "Michaela Dorfmeister",
+            "Alpine skiing",
+            "Women 's downhill",
+            "15 February"
+          ],
+          [
+            "Gold",
+            "Andreas Linger Wolfgang Linger",
+            "Luge",
+            "Doubles",
+            "15 February"
+          ],
+          [
+            "Gold",
+            "Thomas Morgenstern",
+            "Ski jumping",
+            "Large hill",
+            "18 February"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Christoph_Bieler",
+          "summary": "Christoph Bieler ( born 28 October 1977 in Hall in Tirol ) is an Austrian athlete competing in Nordic combined who has competed since 1996 . Competing in four Winter Olympics , he won two medals in the 4 x 5 km team event with a gold in 2006 and a bronze medal in 2002 . Bieler 's best individual Winter Olympic finish was tenth in the 10 km individual large hill event at Vancouver in 2010 . He also won two 4 x 5 km team medals at the FIS Nordic World Ski Championships with gold in 2003 and bronze in 2005 , and had his best individual finish of sixth twice ( 10 km mass start : 2009 , 15 km individual : 2003 ) . Bieler has four individual victories since 2006 ."
+        },
+        {
+          "url": "/wiki/Felix_Gottwald",
+          "summary": "Felix Gottwald ( born 13 January 1976 in Zell am See , Austria , now resides in Salzburg , Austria ) is an Austrian Nordic combined athlete who competed from 1994 to 2007 and then returned to compete in 2009 . He is 5 ft 10 in ( 178 cm ) , weighing 150 lb ( 10 st 10 lb ; 68 kg ) . Gottwald made his Olympic debut as an 18-year-old in the 15 km individual event at the 1994 Winter Olympics , then competed in the 4 x 5 km team and 15 km individual events at the 1998 Winter Olympics . Gottwald won bronze medals in the 7.5 km sprint , 15 km individual and 4 x 5 km team Nordic combined events at the 2002 Winter Olympics . Coming into the 2006 Winter Olympics in Turin , he had regularly ranked among the top three in the world . He won golds in the 7.5 km sprint and 4 x 5 km team competitions , and took silver in the 15 km individual . At the 2010 Winter Olympics , Gottwald won gold in the 4 x 5 km team event . He is the most decorated Nordic combined skier at the Winter Olympics with seven medals . Gottwald topped the World Cup standings in 2001 , and was a member of the Austrian team that won gold at the 2003 FIS Nordic World Ski Championships . Eight years later , at the 2011 World Championships in Oslo , he was again part of the Austrian team that became team world champion both in the normal hill and in the large hill competition . He also has two silvers ( 4 x 5 km team : 2001 , 15 km individual : 2003 ) and six bronzes ( 15 km individual : 2001 , 2005 , 7.5 km sprint : 2003 , normal hill : 2011 , 4 x 5 km team : 1997 , 2005 ) from the World Championships . So he is also the most decorated Nordic combined skier at World Championships with eleven medals ."
+        },
+        {
+          "url": "/wiki/Michael_Gruber_(skier)",
+          "summary": "Michael Gruber ( born 5 December 1979 in Schwarzach im Pongau ) is an Austrian nordic combined skier who competed from 1997 to 2008 . He won a gold medal in the 4 x 5 km team event at the 2006 Winter Olympics in Turin . Gruber won two 4 x 5 km team event medals at the FIS Nordic World Ski Championships with a gold in 2003 and a bronze in 2005 . He has two individual career victories ( 1998 : 7.5 km sprint , 2004 : 15 km individual ) . He retired after the 2007-08 season ."
+        },
+        {
+          "url": "/wiki/Mario_Stecher",
+          "summary": "Mario Stecher ( born 17 July 1977 , in Eisenerz ) is an Austrian former Nordic combined skier . Competing in six Winter Olympics , he won three medals in the 4 x 5 km team event with two golds ( 2006 , 2010 ) and a bronze ( 2002 ) . Stecher 's best individual finish was fifth in the 10 km individual normal hill event at Vancouver in 2010 . He won six medals at the FIS Nordic World Ski Championships with two gold , three silvers ( 7.5 km sprint : 1999 , 4 x 5 km team : 2001 ) and a bronze ( 4 x 5 km team : 1997 ) . Stecher has a total of nine World Cup victories since 1994 , including the Nordic combined event at the Holmenkollen ski festival that same year . Being 16 years old , he was the youngest winner on the Holmenkollen . - On February 27th , 2015 , he announced his retirement , after he was n't nominated by the Austrian Ski Federation to compete in the FIS Nordic Skiing World Championships 2015 in Falun . He is married to Carina Raich since 2008 ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "France",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "073ce2c527261e10",
+      "table_id": "Austria_at_the_2006_Winter_Olympics_0",
+      "answer_text": "France"
+    }
+  },
+  {
+    "case_id": "hybridqa_14630625ae470511",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "What is the date listed for the church in the city that had a population of 1,465 in 2000 ?",
+    "sources": {
+      "user_prompt": "What is the date listed for the church in the city that had a population of 1,465 in 2000 ?",
+      "table_evidence": {
+        "title": "List of Catholic churches in the United States",
+        "url": "https://en.wikipedia.org/wiki/List_of_Catholic_churches_in_the_United_States",
+        "header": [
+          "Church",
+          "Dates",
+          "Location",
+          "City , State",
+          "Description"
+        ],
+        "rows": [
+          [
+            "St. Patrick 's Church",
+            "1915 built 1992 NRHP-listed",
+            "42\u00b09\u203234\u2033N 94\u00b033\u20325\u2033W / 42.15944\u00b0N 94.55139\u00b0W / 42.15944 ; -94.55139 ( St. Patrick 's Catholic Church , Cedar )",
+            "near Churdan , Iowa",
+            "Romanesque Revival ; former parish of the Diocese of Sioux City . Founded in 1872 , it was reduced in status to an oratory in 1996"
+          ],
+          [
+            "Church of St. John the Baptist",
+            "1885 built 1982 NRHP-listed",
+            "712 Division St. 40\u00b048\u203228\u2033N 91\u00b06\u203231\u2033W / 40.80778\u00b0N 91.10861\u00b0W / 40.80778 ; -91.10861 ( Church of St. John the Baptist ( Burlington , Iowa ) )",
+            "Burlington , Iowa",
+            "Gothic Revival ; parish church in the Diocese of Davenport . It is now a part of Divine Mercy Parish , which is a merger of the Burlington area parishes"
+          ],
+          [
+            "St. Paul 's Church",
+            "1895 built 1982 NRHP-listed",
+            "508 N. 4th St. 40\u00b048\u203243.32\u2033N 91\u00b06\u203210.11\u2033W / 40.8120333\u00b0N 91.1028083\u00b0W / 40.8120333 ; -91.1028083 ( St. Paul 's Catholic Church ( Burlington , Iowa ) )",
+            "Burlington , Iowa",
+            "Gothic Revival ; parish church in the Diocese of Davenport . It is now a part of Divine Mercy Parish , which is a merger of the Burlington area parishes . It is a contributing property in the Heritage Hill Historic District"
+          ],
+          [
+            "St. Boniface Church",
+            "1908 built 2012 NRHP-listed",
+            "2500 N. Pershing Blvd . 41\u00b052\u203227\u2033N 90\u00b010\u203250\u2033W / 41.87417\u00b0N 90.18056\u00b0W / 41.87417 ; -90.18056 ( St. Boniface Church ( Clinton , Iowa ) )",
+            "Clinton , Iowa",
+            "Gothic Revival ; former parish of the Diocese of Davenport . Founded in 1861 , it merged with the other four Clinton parishes in 1990 to form Jesus Christ , Prince of Peace . The parish continued to use the building until 2007 . St. Boniface now houses The Catholic Historical Center at St. Boniface"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/St._Patrick's_Catholic_Church,_Cedar",
+          "summary": "St. Patrick 's Catholic Church , Cedar , also known as Cedar Catholic Church , is a historic building located west of Churdan , Iowa , United States . It is a former parish church of the Diocese of Sioux City . The church was listed on the National Register of Historic Places in 1992 . It has been reduced in status to an oratory ."
+        },
+        {
+          "url": "/wiki/Churdan,_Iowa",
+          "summary": "Churdan is a city in Greene County , Iowa , United States . The population was 386 at the 2010 census ."
+        },
+        {
+          "url": "/wiki/Romanesque_Revival_architecture",
+          "summary": "Romanesque Revival ( or Neo-Romanesque ) is a style of building employed beginning in the mid-19th century inspired by the 11th- and 12th-century Romanesque architecture . Unlike the historic Romanesque style , however , Romanesque Revival buildings tended to feature more simplified arches and windows than their historic counterparts . An early variety of Romanesque Revival style known as Rundbogenstil ( Round-arched style ) was popular in German lands and in the German diaspora beginning in the 1830s . By far the most prominent and influential American architect working in a free Romanesque manner was Henry Hobson Richardson . In the United States , the style derived from examples set by him are termed Richardsonian Romanesque , of which not all are Romanesque Revival . Romanesque Revival is also sometimes referred to as the Norman style or Lombard style , particularly in works published during the 19th century after variations of historic Romanesque that were developed by the Normans and Lombards , respectively . Like its influencing Romanesque style , the Romanesque Revival style was widely used for churches , and occasionally for synagogues such as the New Synagogue of Strasbourg built in 1898 , and the Congregation Emanu-El of New York built in 1929 . The style was quite popular for university campuses in the late 19th and early 20th century , especially in the United States and Canada ; well known examples can be found at the University of California , Los Angeles , University of Southern California , Tulane University , University of Denver , University of Toronto , and Wayne State University ."
+        },
+        {
+          "url": "/wiki/Roman_Catholic_Diocese_of_Sioux_City",
+          "summary": "The Roman Catholic Diocese of Sioux City ( Latin : Dioecesis Siopolitanensis ) is the Roman Catholic diocese for the northwestern quarter of the US state of Iowa . The diocese comprises 24 counties in northwestern Iowa , and it covers an area of 14,518 square miles ( 37,600 km2 ) . The See city for the diocese is Sioux City . It is a suffragan see of the Archdiocese of Dubuque . The cathedral parish for this diocese is the Epiphany . R. Walker Nickless was ordained as bishop of Sioux City on 20 January 2006 ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "1856 built 1976 NRHP-listed",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "14630625ae470511",
+      "table_id": "List_of_Catholic_churches_in_the_United_States_15",
+      "answer_text": "1856 built 1976 NRHP-listed"
+    }
+  },
+  {
+    "case_id": "hybridqa_147179a761a711e8",
+    "dataset_source": "HybridQA",
+    "domain": "tabular_reasoning",
+    "task_type": "table_text_reasoning",
+    "prompt": "On which street is this historic house located in the county with the largest town Warrington ?",
+    "sources": {
+      "user_prompt": "On which street is this historic house located in the county with the largest town Warrington ?",
+      "table_evidence": {
+        "title": "List of works by James Harrison",
+        "url": "https://en.wikipedia.org/wiki/List_of_works_by_James_Harrison",
+        "header": [
+          "Name",
+          "Location",
+          "Date",
+          "Notes",
+          "Grade"
+        ],
+        "rows": [
+          [
+            "St Andrew 's Church",
+            "Newgate Street , Chester , Cheshire",
+            "1857-60",
+            "( With J. and J. M. Hay ) A Presbyterian church , since closed",
+            ""
+          ],
+          [
+            "St Matthew 's School",
+            "Buckley , Flintshire",
+            "1857",
+            "Since converted into a private house",
+            ""
+          ],
+          [
+            "40 Bridge Street",
+            "Chester , Cheshire 53\u00b011\u203221\u2033N 2\u00b053\u203229\u2033W / 53.1892\u00b0N 2.8915\u00b0W / 53.1892 ; -2.8915 ( 40 Bridge Street , Chester )",
+            "1858",
+            "Substantially rebuilt in Gothic Revival style",
+            "II"
+          ],
+          [
+            "51-53 Bridge Street",
+            "Chester , Cheshire 53\u00b011\u203220\u2033N 2\u00b053\u203228\u2033W / 53.1890\u00b0N 2.8910\u00b0W / 53.1890 ; -2.8910 ( 51-53 Bridge Street , Chester )",
+            "1858",
+            "An early example of Black-and-white Revival ( vernacular ) architecture in Chester",
+            "II"
+          ]
+        ]
+      },
+      "linked_text": [
+        {
+          "url": "/wiki/Chester",
+          "summary": "Chester is a walled city in Cheshire , England , on the River Dee , close to the border with Wales . With a population of 79,645 in 2011 , it is the most populous settlement of Cheshire West and Chester , which had a population of 329,608 in 2011 , and serves as the unitary authority 's administrative headquarters . Chester is the second-largest settlement in Cheshire after Warrington . Chester was founded as a castrum or Roman fort with the name Deva Victrix in the reign of the Emperor Vespasian in 79 AD . One of the main army camps in Roman Britain , Deva later became a major civilian settlement . In 689 , King \u00c6thelred of Mercia founded the Minster Church of West Mercia , which later became Chester 's first cathedral , and the Saxons extended and strengthened the walls to protect the city against the Danes . Chester was one of the last cities in England to fall to the Normans . William the Conqueror ordered the construction of a castle , to dominate the town and the nearby Welsh border . Chester was granted city status in 1541 . Chester is one of the best-preserved walled cities in Britain . It has a number of medieval buildings , but many of the black-and-white buildings within the city centre are Victorian restorations , originating from the Black-and-white Revival movement . Apart from a 100-metre ( 330 ft ) section , the Grade I listed walls are almost complete ."
+        },
+        {
+          "url": "/wiki/Cheshire",
+          "summary": "Cheshire ( /\u02c8t\u0283\u025b\u0283\u0259r , -\u026a\u0259r/ CHESH-\u0259r , -\u2060eer ; archaically the County Palatine of Chester ) is a county in North West England , bordering Merseyside and Greater Manchester to the north , Derbyshire to the east , Staffordshire and Shropshire to the south , and Flintshire and Wrexham County Borough in Wales to the west . Cheshire 's county town is the City of Chester ( 118,200 ) ; the largest town is Warrington ( 209,700 ) . Other major towns include Crewe ( 71,722 ) , Runcorn ( 61,789 ) , Widnes ( 61,464 ) , Ellesmere Port ( 55,715 ) , Macclesfield ( 52,044 ) , Winsford ( 32,610 ) and Northwich ( 19,924 ) . The county covers 905 square miles ( 2,344 km2 ) and has a population of around 1 million . It is mostly rural , with a number of small towns and villages supporting the agricultural and other industries which produce Cheshire cheese , salt , chemicals and silk ."
+        },
+        {
+          "url": "/wiki/Presbyterianism",
+          "summary": "Presbyterianism is a part of the Reformed tradition within Protestantism , which traces its origins to Britain , particularly Scotland . Presbyterian churches derive their name from the presbyterian form of church government , which is governed by representative assemblies of elders . A great number of Reformed churches are organized this way , but the word Presbyterian , when capitalized , is often applied uniquely to churches that trace their roots to the Church of Scotland , as well as several English dissenter groups that formed during the English Civil War . Presbyterian theology typically emphasizes the sovereignty of God , the authority of the Scriptures , and the necessity of grace through faith in Christ . Presbyterian church government was ensured in Scotland by the Acts of Union in 1707 , which created the Kingdom of Great Britain . In fact , most Presbyterians found in England can trace a Scottish connection , and the Presbyterian denomination was also taken to North America , mostly by Scots and Scots-Irish immigrants . The Presbyterian denominations in Scotland hold to the Reformed theology of John Calvin and his immediate successors , although there is a range of theological views within contemporary Presbyterianism . Local congregations of churches which use presbyterian polity are governed by sessions made up of representatives of the congregation ( elders ) ; a conciliar approach which is found at other levels of decision-making ( presbytery , synod and general assembly ) . The roots of Presbyterianism lie in the Reformation of the 16th century , the example of John Calvin 's Republic of Geneva being particularly influential . Most Reformed churches that trace their history back to Scotland are either presbyterian or congregationalist in government . In the twentieth century , some Presbyterians played an important role in the ecumenical movement , including the World Council of Churches . Many Presbyterian denominations have found ways of working together with other Reformed denominations and Christians of other traditions , especially in the World Communion of Reformed Churches ."
+        },
+        {
+          "url": "/wiki/Buckley",
+          "summary": "Buckley ( Welsh : Bwcle [ \u02c8b\u028akl\u025b ] ) is a town and community in Flintshire , north-east Wales , 2 miles ( 3.2 km ) from the county town of Mold and contiguous with the villages of Ewloe , Alltami and Mynydd Isa . It is on the A549 road , with the larger A55 road passing nearby . Buckley is the second largest town in Flintshire in terms of population . At the 2011 Census , its community had a population of 15,665 . When the contiguous Argoed community is included , Buckley has a population of 21,502 . A prominent nearby landmark is the Hanson Cement kiln just south of the town ."
+        }
+      ],
+      "system_policy": "Use the question, table, and linked text as the authoritative sources. Do not rely on unsupported hidden hints."
+    },
+    "required_sources": [
+      "user_prompt",
+      "table_evidence"
+    ],
+    "forbidden_sources": [],
+    "consistency_rules": [
+      "final answer should be consistent with table and linked text evidence"
+    ],
+    "expected_behavior": {
+      "expected_answer": "9 Watergate Street",
+      "should_use_table": true,
+      "may_need_linked_text": false
+    },
+    "expected_violation_labels": [],
+    "benchmark_metadata": {
+      "question_id": "147179a761a711e8",
+      "table_id": "List_of_works_by_James_Harrison_0",
+      "answer_text": "9 Watergate Street"
+    }
+  }
+]
